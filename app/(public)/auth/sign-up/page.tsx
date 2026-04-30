@@ -3,8 +3,8 @@ import SignUp from "./_components";
 
 // Define metadata for SEO and page info
 export const metadata: Metadata = {
-    title: "Sign Up | Dashflow",
-    description: "Log in to access your Dashflow account securely.",
+    title: "Sign Up | POS Web",
+    description: "Log in to access your POS Web account securely.",
 };
 
 export default function Page() {

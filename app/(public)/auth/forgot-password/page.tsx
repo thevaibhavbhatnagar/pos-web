@@ -6,12 +6,12 @@ import ForgotPassword from '@/app/(public)/auth/forgot-password/_components';
  * Helps improve SEO and page information.
  */
 export const metadata: Metadata = {
-    title: 'Forgot Password - Domain', // Title displayed in the browser tab.
+    title: 'Forgot Password | POS Web', // Title displayed in the browser tab.
     description: 'Reset your password easily with our secure process.', // Meta description for search engines.
 };
 
 /**
- * Forgot Password Page Component.
+ * Forgot Password Page Component.  
  * Renders the ForgotPassword component within a full-screen layout.
  */
 export default function Page() {

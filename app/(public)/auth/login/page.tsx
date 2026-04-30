@@ -3,7 +3,7 @@ import Login from "@/app/(public)/auth/login/_components";
 
 // Define metadata for SEO and page info
 export const metadata: Metadata = {
-    title: "Login | Dashflow",
+    title: "Login | POS Web",
     description: "Log in to access your Dashflow account securely.",
 };
 

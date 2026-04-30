@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dashflow",
-  description: "Dashflow System",
+  title: "POS Web",
+  description: "POS Web System",
 };
 
 export default function RootLayout({
