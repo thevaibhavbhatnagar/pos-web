@@ -1,5 +1,4 @@
-import React from "react";
-import Link from "next/link";
+import React from "react"; 
 import { Mail, Lock } from "lucide-react";
 
 import Button from "@/ui/button";
@@ -53,14 +52,14 @@ const AdminLoginForm: React.FC<Props> = ({
           />
         </div>
 
-        <div className="flex items-center justify-end mt-[-10px]">
+        {/* <div className="flex items-center justify-end mt-[-10px]">
           <Link
             href="/auth/forgot-password"
             className="text-sm text-primary font-medium hover:text-primary/80 transition-colors"
           >
             Forgot password?
           </Link>
-        </div>
+        </div> */}
 
         <Button
           type="submit"
