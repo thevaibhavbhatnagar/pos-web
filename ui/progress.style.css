@@ -1,0 +1,14 @@
+/* styles/nprogress.css or ui/nprogress.style.css */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-primary); /* your accent color */
+  z-index: 9999;
+}
