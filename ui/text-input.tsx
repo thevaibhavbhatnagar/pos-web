@@ -50,12 +50,15 @@ const TextInput: React.FC<TextInputProps> = ({
 
   className = "w-full",
   labelClassName = "text-primary-foreground font-normal",
-  inputClassName = "rounded-md border border-grey-200",
+  inputClassName = "rounded-md border border-grey-200 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary transition-all",
 
   maxLength,
 
   disable,
   required = true,
+
+  startContent,
+  endContent,
 
   readOnly = false,
   variant = "primary"
@@ -73,17 +76,29 @@ const TextInput: React.FC<TextInputProps> = ({
         </Label>
       )}
 
-      <Input
-        id={id}
-        placeholder={placeholder}
-        value={value?.toString() || ""}
-        onChange={onChange}
-        disabled={disable}
-        readOnly={readOnly}
-        maxLength={type !== "number" ? maxLength : undefined}
-        className={inputClassName}
-        variant={variant}
-      />
+      <div className="relative w-full">
+        {startContent && (
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
+            {startContent}
+          </div>
+        )}
+        <Input
+          id={id}
+          placeholder={placeholder}
+          value={value?.toString() || ""}
+          onChange={onChange}
+          disabled={disable}
+          readOnly={readOnly}
+          maxLength={type !== "number" ? maxLength : undefined}
+          className={`w-full ${startContent ? 'pl-10' : ''} ${endContent ? 'pr-10' : ''} ${inputClassName}`}
+          variant={variant}
+        />
+        {endContent && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
+            {endContent}
+          </div>
+        )}
+      </div>
 
       {error && errorMessage && (
         <FieldError>{errorMessage}</FieldError>

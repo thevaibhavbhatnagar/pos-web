@@ -33,23 +33,23 @@ const SignUpForm: React.FC<Props> = ({
     <React.Fragment>
       <ProgressBar loading={useSignUpFormik.isSubmitting} />
 
-      <div className="w-full flex flex-col justify-center px-8 h-full gap-4">
+      <div className="w-full flex flex-col justify-center">
         {/* Header */}
-        <div className="mb-5 flex flex-col gap-4">
+        <div className="mb-8 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-bold text-primary-foreground xl:text-xl">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
               Sign Up
             </h2>
 
             <Link
               href="/auth/login"
-              className="text-sm font-normal text-primary hover:underline"
+              className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
               Already have an account?
             </Link>
           </div>
 
-          <p className="text-sm text-grey">
+          <p className="text-sm sm:text-base font-normal text-slate-500 dark:text-slate-400">
             Create your account to continue
           </p>
         </div>
@@ -58,7 +58,7 @@ const SignUpForm: React.FC<Props> = ({
         <form
           onSubmit={useSignUpFormik.handleSubmit}
           method="POST"
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-6"
         >
           <div className="flex flex-col gap-5">
             {/* Full Name */}
@@ -122,7 +122,7 @@ const SignUpForm: React.FC<Props> = ({
 
           <Button
             type="submit"
-          // isLoading={useSignUpFormik.isSubmitting}
+            className="w-full h-12 text-base font-medium rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-0.5 mt-2"
           >
             Sign Up
           </Button>

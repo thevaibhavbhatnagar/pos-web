@@ -21,7 +21,7 @@ const ForgotPasswordRequestForm: React.FC<Props> = ({ switchComponent, setEmail 
   return (
     <React.Fragment>
       <ProgressBar loading={useForgotPasswordFormik.isSubmitting} />
-      <div className="w-full flex flex-col justify-center px-8 h-full gap-2">
+      <div className="w-full flex flex-col justify-center  h-full gap-2">
         {/* <Image src={ForgotPassword} alt="OTP Confirmation not found" width={200} height={200} className="w-full max-w-32 md:max-w-40 md:h-44" /> */}
 
         <div className="flex flex-col gap-4">
