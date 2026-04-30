@@ -32,6 +32,7 @@ interface Props<T extends Record<string, any>> {
 
   onChange?: (value: string) => void;
   labelClassName?: string;
+  autoFocus?: boolean;
 }
 
 export default function SelectField<T extends Record<string, any>>({
@@ -46,6 +47,7 @@ export default function SelectField<T extends Record<string, any>>({
   isDisabled = false,
   labelClassName = "text-primary-foreground font-normal",
   onChange,
+  autoFocus = false,
 }: Props<T>) {
   const value = (getIn(formik.values, name) as string) || "";
   const error = getIn(formik.errors, name) as string | undefined;
@@ -80,14 +82,15 @@ export default function SelectField<T extends Record<string, any>>({
         fullWidth={fullWidth}
         onBlur={() => formik.setFieldTouched(name, true)}
         placeholder={placeholder}
+        autoFocus={autoFocus}
       >
-        <Autocomplete.Trigger className="rounded-2xl">
+        <Autocomplete.Trigger className="rounded-lg border-slate-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
           <Autocomplete.Value />
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
 
-        <Autocomplete.Popover className="z-[9999] bg-white dark:bg-zinc-900 border shadow-xl rounded-2xl overflow-hidden">
+        <Autocomplete.Popover className="z-[9999] bg-white dark:bg-zinc-900 border shadow-xl rounded-xl overflow-hidden">
           <Autocomplete.Filter filter={contains}>
             <div className="p-2 border-b">
               <SearchField variant="secondary">

@@ -6,7 +6,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex overflow-y-auto h-screen w-full bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-slate-100">
+    <div className="flex overflow-y-auto h-screen w-full">
       {/* Left Side - Branding (Desktop only) */}
       <div className="hidden lg:flex w-1/2 flex-col justify-between p-12 relative overflow-hidden bg-white dark:bg-zinc-900 border-r border-slate-200 dark:border-zinc-800">
         {/* Abstract Background Shapes */}
@@ -23,12 +23,15 @@ export default function RootLayout({
         </div>
 
         <div className="relative z-10 max-w-lg animate-in fade-in slide-in-from-left-8 duration-1000 delay-300">
-          <h1 className="text-5xl font-extrabold leading-[1.1] mb-6">
-            Smart POS Management <br/>
-            <span className="text-primary">for Modern Businesses</span>
+          <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight text-slate-900 dark:text-white">
+            Smart POS <br/>
+            Management <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+              for Modern Businesses
+            </span>
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400">
-            Streamline your sales, inventory, and operations in one elegant, powerful dashboard built for speed and reliability.
+          <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+            Streamline your sales, inventory, and operations with our elegant, powerful dashboard built for growth and reliability.
           </p>
         </div>
         

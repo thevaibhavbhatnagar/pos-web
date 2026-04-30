@@ -26,8 +26,9 @@ interface PasswordInputProps {
 
   required?: boolean;
   disabled?: boolean;
-  readOnly?: boolean;
   variant?: "primary" | "secondary";
+  startContent?: React.ReactNode;
+  autoFocus?: boolean;
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({
@@ -43,12 +44,14 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   className = "w-full",
   labelClassName = "text-primary-foreground font-normal",
-  inputClassName = "rounded-2xl border border-grey-200",
+  inputClassName = "rounded-lg border border-slate-200 focus-within:ring-2 focus-within:ring-yellow-400 focus-within:border-yellow-400 transition-all",
 
   required = true,
   disabled = false,
   readOnly = false,
-  variant="primary"
+  variant="primary",
+  startContent,
+  autoFocus = false
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -66,6 +69,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
       )}
 
       <div className="relative w-full">
+        {startContent && (
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
+            {startContent}
+          </div>
+        )}
         <Input
           id={id}
           value={value}
@@ -73,7 +81,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           placeholder={placeholder}
           disabled={disabled}
           readOnly={readOnly}
-          className={`w-full pr-10 ${inputClassName}`}
+          autoFocus={autoFocus}
+          className={`w-full ${startContent ? 'pl-10' : ''} pr-10 ${inputClassName}`}
           variant={variant}          
         />
 

@@ -1,10 +1,10 @@
 "use client"; // Enables client-side rendering for this component
 
-import React, { useState } from "react";
-import AuthCard from "../../_components";
+import React, { useState } from "react"; 
 import { Tabs } from "@heroui/react";
 import AdminLoginForm from "./admin-login-form";
 import BranchLoginForm from "./branch-login-form";
+import AuthCard from "../../_components";
 // Main Login component
 const Login: React.FC = () => {
 

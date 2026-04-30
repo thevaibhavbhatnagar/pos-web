@@ -33,7 +33,8 @@ interface TextInputProps {
   endContent?: React.ReactNode;
 
   readOnly?: boolean;
-  variant?: "primary" | "secondary"
+  variant?: "primary" | "secondary";
+  autoFocus?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -50,7 +51,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
   className = "w-full",
   labelClassName = "text-primary-foreground font-normal",
-  inputClassName = "rounded-2xl border border-grey-200 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary transition-all",
+  inputClassName = "rounded-lg border border-slate-200 focus-within:ring-2 focus-within:ring-yellow-400 focus-within:border-yellow-400 transition-all",
 
   maxLength,
 
@@ -61,7 +62,8 @@ const TextInput: React.FC<TextInputProps> = ({
   endContent,
 
   readOnly = false,
-  variant = "primary"
+  variant = "primary",
+  autoFocus = false
 }) => {
   return (
     <TextField
@@ -89,6 +91,7 @@ const TextInput: React.FC<TextInputProps> = ({
           onChange={onChange}
           disabled={disable}
           readOnly={readOnly}
+          autoFocus={autoFocus}
           maxLength={type !== "number" ? maxLength : undefined}
           className={`w-full ${startContent ? 'pl-10' : ''} ${endContent ? 'pr-10' : ''} ${inputClassName}`}
           variant={variant}
