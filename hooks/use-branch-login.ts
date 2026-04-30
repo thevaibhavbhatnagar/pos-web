@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { AxiosResponse } from "axios";
 
-import { loginValidationSchema } from "@/validations/login.validation"; // Validation schema for login form
+import { branchLoginValidationSchema } from "@/validations/branch-login.validation"; // Validation schema for login form
 
 import apiEndpoints from "@/utils/endpoints"; // API endpoints configuration
 import axiosInstance, {
@@ -15,17 +15,12 @@ import { toast } from "@heroui/react";
 // Define the structure of form values
 interface LoginFormValues {
   email: string;
+  branch?: string;
   password: string;
 }
 
-// Define the type for switching login components
-type SwitchComponentType = React.Dispatch<
-  React.SetStateAction<"LOGIN_COMPONENT" | "LOGIN_VERIFICATION_COMPONENT">
->;
-
 // Custom hook for handling login logic and UI state management
-const useLogin = (
-  switchComponent: SwitchComponentType,
+const useBranchLogin = (
   setEmail: (value: string) => void,
   setPassword: (value: string) => void,
 ) => {
@@ -34,12 +29,12 @@ const useLogin = (
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Formik instance for managing login form state and validation
-  const useLoginFormik = useFormik<LoginFormValues>({
+  const formik = useFormik<LoginFormValues>({
     initialValues: {
       email: "", // Initial value for email
       password: "", // Initial value for password
     },
-    validationSchema: loginValidationSchema, // Yup validation schema for form validation
+    validationSchema: branchLoginValidationSchema, // Yup validation schema for form validation
     onSubmit: async (values: LoginFormValues) => {
       try {
         setErrorMessage(null); // Clear any previous error messages
@@ -52,8 +47,6 @@ const useLogin = (
           { email, password },
         );
 
-        // Switch to the login verification component after a successful login request
-        switchComponent("LOGIN_VERIFICATION_COMPONENT");
         // Store the user's email for later use (e.g., verification step)
         setEmail(values.email);
 
@@ -86,7 +79,7 @@ const useLogin = (
   });
 
   // Return the Formik instance and error message for use in the component
-  return { useLoginFormik, errorMessage };
+  return { formik, errorMessage };
 };
 
-export default useLogin;
+export default useBranchLogin;

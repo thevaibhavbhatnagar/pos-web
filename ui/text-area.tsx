@@ -73,7 +73,7 @@ const TextAreaField: React.FC<TextAreaProps> = ({
         maxLength={maxLength}
         disabled={disabled}
         readOnly={readOnly}
-        className="w-full rounded-md border border-border bg-white dark:bg-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full rounded-2xl border border-border bg-white dark:bg-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
       />
 
       {hasError && <FieldError>{errorMessage}</FieldError>}

@@ -75,7 +75,7 @@ export default function InputOTP({
                         <HeroInputOTP.Slot
                             key={index}
                             index={index}
-                            className="flex-1 h-12 rounded-md border border-grey-200"
+                            className="flex-1 h-12 rounded-2xl border border-grey-200"
                         />
                     ))}
                 </HeroInputOTP.Group>

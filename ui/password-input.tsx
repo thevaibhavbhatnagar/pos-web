@@ -43,7 +43,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   className = "w-full",
   labelClassName = "text-primary-foreground font-normal",
-  inputClassName = "rounded-md border border-grey-200",
+  inputClassName = "rounded-2xl border border-grey-200",
 
   required = true,
   disabled = false,

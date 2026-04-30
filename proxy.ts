@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const PUBLIC_ROUTES = ["/", "/auth/login","/auth/sign-up", "/auth/forgot-password", "/auth/silent-logout", "/unauthorized"];
+const PUBLIC_ROUTES = ["/", "/auth/login", "/auth/forgot-password", "/auth/silent-logout", "/unauthorized"];
 
 export async function proxy(request: NextRequest) {
 

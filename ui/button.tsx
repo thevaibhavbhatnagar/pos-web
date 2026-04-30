@@ -25,7 +25,7 @@ interface Props {
 
 const Button: React.FC<Props> = ({
   children,
-  className = "w-full rounded-lg font-normal",
+  className = "w-full rounded-2xl font-normal",
   size = "md",
   startIcon: StartIcon,
   endIcon: EndIcon,
