@@ -105,7 +105,7 @@ export const useMenu = () => {
         }));
     };
 
-    return buildMenu(data.modules);
+    return buildMenu(data.modules ?? []);
   }, [data]);
 
   return { menu, isLoading };

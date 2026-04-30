@@ -25,6 +25,7 @@ interface PasswordInputProps {
   inputClassName?: string;
 
   required?: boolean;
+  readOnly?:boolean;
   disabled?: boolean;
   variant?: "primary" | "secondary";
   startContent?: React.ReactNode;

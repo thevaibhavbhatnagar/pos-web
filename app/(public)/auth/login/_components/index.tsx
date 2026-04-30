@@ -15,9 +15,9 @@ const Login: React.FC = () => {
 
     return (
         <AuthCard>
-            <div className="flex flex-col gap-1 mb-6 text-center sm:text-left">
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-                    Welcome Back
+            <div className="flex flex-col gap-4 mb-6 text-center sm:text-left">
+                <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    Sign In
                 </h2>
                 <p className="text-sm sm:text-base font-normal text-slate-500 dark:text-slate-400">
                     Please enter your credentials to access your account
