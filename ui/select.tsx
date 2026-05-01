@@ -45,7 +45,7 @@ export default function SelectField<T extends Record<string, any>>({
   fullWidth = true,
   isRequired = false,
   isDisabled = false,
-  labelClassName = "text-primary-foreground font-normal",
+  labelClassName = "text-fields-foreground font-normal ",
   onChange,
   autoFocus = false,
 }: Props<T>) {
@@ -84,7 +84,7 @@ export default function SelectField<T extends Record<string, any>>({
         placeholder={placeholder}
         autoFocus={autoFocus}
       >
-        <Autocomplete.Trigger className="rounded-lg border-slate-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400">
+        <Autocomplete.Trigger className="rounded-lg border border-slate-200 transition-all">
           <Autocomplete.Value />
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator />

@@ -8,8 +8,12 @@ export interface UserListType {
         id:string;
         name:string;        
     };
+    branchId: string;
+    branch:{
+        id:string;
+        name:string;
+    };
     // type: string;
-    mobileNumber: string;
-    isVerified?: string;
+    mobileNumber: string; 
     password: string; 
 }

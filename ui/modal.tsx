@@ -43,7 +43,7 @@ const Modal: React.FC<Props> = ({
     <HeroModal>
       <HeroModal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
         <HeroModal.Container size={size} placement="center">
-          <HeroModal.Dialog>
+          <HeroModal.Dialog className="bg-white">
             {() => (
               <>
                 <HeroModal.Header className="flex flex-col gap-1">

@@ -100,11 +100,10 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
                 title="Delete Confirmation"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
-                // footerActions={[
-                //     { label: "Close", color: "danger", radius: "sm", onPress: () => onOpenChange() },
-                //     { label: "Confirm", color: "primary", radius: "sm", variant: "solid", onPress: () => onDelete(role?.id) },
-                // ]}
-                size='sm'
+                footerActions={[
+                    { label: "Close", radius: "sm", variant: "danger-soft", onPress: () => onOpenChange() },
+                    { label: "Confirm", radius: "sm", onPress: () => onDelete(role?.id) },
+                ]}
             >
                 <div className="flex items-center justify-center">
                     <div className="flex items-center justify-center rounded-full bg-[#FFECEC] p-3">

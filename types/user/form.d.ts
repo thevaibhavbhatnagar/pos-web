@@ -3,7 +3,8 @@ export interface UserFormType {
     email: string;
     name: string;
     role: string;
+    branchId: string;
     // type: string;
-    mobileNumber: string; 
+    // mobileNumber: string; 
     password: string;
 }

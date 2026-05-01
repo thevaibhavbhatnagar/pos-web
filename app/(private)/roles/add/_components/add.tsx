@@ -44,7 +44,7 @@ const Add: React.FC<Props> = ({ formik, permissions }) => {
   );
 
   return (
-    <div className="py-3 w-full h-full flex flex-col gap-4 bg-white dark:bg-content1 rounded-lg">
+    <div className="py-3 w-full h-full flex flex-col gap-4 bg-surface rounded-lg">
       <div className="flex gap-2 px-3 items-center  justify-between w-full">
         <div className="flex w-full gap-2">
           <div className="rounded-lg bg-primary/10 text-primary flex items-center justify-center aspect-square w-6 h-6 ">

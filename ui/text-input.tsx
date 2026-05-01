@@ -50,8 +50,8 @@ const TextInput: React.FC<TextInputProps> = ({
   errorMessage = "",
 
   className = "w-full",
-  labelClassName = "text-primary-foreground font-normal",
-  inputClassName = "rounded-lg border border-slate-200 focus-within:ring-2 focus-within:ring-yellow-400 focus-within:border-yellow-400 transition-all",
+  labelClassName = "text-fields-foreground font-normal",
+  inputClassName = "rounded-lg border border-slate-200 transition-all",
 
   maxLength,
 

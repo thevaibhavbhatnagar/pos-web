@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <Provider>
       <SidebarProvider>
         <AppSidebar />
-        <main className="flex-1 flex flex-col overflow-x-auto bg-grey-200 dark:bg-content2">
+        <main className="flex-1 flex flex-col overflow-x-auto bg-grey-200">
           {/* <NavBar /> */}
           <div className="px-6">{children}</div>
         </main>

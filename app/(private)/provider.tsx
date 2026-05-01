@@ -9,7 +9,7 @@ type Props = {
 
 const Provider = ({ children }: Props) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <RouteGuardProvider>
         {children}
       </RouteGuardProvider>

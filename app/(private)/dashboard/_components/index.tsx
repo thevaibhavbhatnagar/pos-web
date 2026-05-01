@@ -36,7 +36,7 @@ const Table: React.FC<Props> = ({ branches, page, limit, totalPages }) => {
 
   return (
     <div className="pt-20">
-      <DataTable columns={columns} data={branches} pagination={{page:page,rowsPerPage:limit,totalPages:totalPages,}}/>
+      {/* <DataTable columns={columns} data={branches} pagination={{page:page,rowsPerPage:limit,totalPages:totalPages,}}/> */}
     </div>
   );
 };

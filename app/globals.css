@@ -215,3 +215,23 @@
    --color-sidebar-inactive-icon: var(--sidebar-inactive-icon);
    --color-sidebar-hover-bg: var(--sidebar-hover-bg);
 }
+
+.table__row, 
+.table__cell,
+tr[role="row"],
+td[role="gridcell"],
+th[role="columnheader"] {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.table__header,
+.table__column {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
