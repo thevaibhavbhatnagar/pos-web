@@ -1,32 +1,15 @@
-import React from "react"; 
-import { Lock } from "lucide-react";
+import React from "react";
+import { Mail, Lock } from "lucide-react";
 
 import Button from "@/ui/button";
+import TextInput from "@/ui/text-input";
 import ProgressBar from "@/ui/progress-bar";
 import PasswordInput from "@/ui/password-input";
-import SelectField from "@/ui/select";
+import useLogin from "@/hooks/use-login";
 
-import useBranchLogin from "@/hooks/use-branch-login";
 
-interface Props {
-  setEmail: (value: string) => void;
-  setPassword: (value: string) => void;
-}
-
-const branchOptions = [
-  { label: "Kota Main Branch", value: "kota_main" },
-  { label: "Jaipur Branch", value: "jaipur" },
-  { label: "Delhi Branch", value: "delhi" },
-];
-
-const BranchLoginForm: React.FC<Props> = ({
-  setEmail,
-  setPassword,
-}) => {
-  const { formik } = useBranchLogin(
-    setEmail,
-    setPassword
-  );
+const LoginForm: React.FC = () => {
+  const { formik } = useLogin();
 
   return (
     <React.Fragment>
@@ -34,16 +17,16 @@ const BranchLoginForm: React.FC<Props> = ({
 
       <form onSubmit={formik.handleSubmit} method="POST" className="flex flex-col gap-5">
         <div className="flex flex-col gap-4">
-          <SelectField
-            name="branch"
-            label="Select Branch"
-            placeholder="Choose branch"
-            options={branchOptions}
-            formik={formik} 
-            onChange={(value) => {
-              console.log("Selected branch:", value);
-            }}
+          <TextInput
+            label="Email"
+            name="email"
+            placeholder="Enter your email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            startContent={<Mail size={18} />}
             autoFocus
+            error={!!formik.errors.email && !!formik.touched.email}
+            errorMessage={formik.errors.email}
           />
 
           <PasswordInput
@@ -78,4 +61,4 @@ const BranchLoginForm: React.FC<Props> = ({
   );
 };
 
-export default BranchLoginForm;
+export default LoginForm;

@@ -1,17 +1,15 @@
 "use client"; // Enables client-side rendering for this component
 
-import React, { useState } from "react"; 
-import { Tabs } from "@heroui/react";
-import AdminLoginForm from "./admin-login-form";
-import BranchLoginForm from "./branch-login-form";
-import AuthCard from "../../_components";
+import React from "react";
+import LoginForm from "@/app/(public)/auth/login/_components/login-form";
+import AuthCard from "@/app/(public)/auth/_components";
+
+type Props = {
+    branches: { label: string; value: string }[];
+}
+
 // Main Login component
-const Login: React.FC = () => {
-
-    // State to store the user's email or phone number entered during login
-    const [email, setEmail] = useState<string>("");
-
-    const [password, setPassword] = useState<string>("");
+const Login: React.FC<Props> = () => {
 
     return (
         <AuthCard>
@@ -23,27 +21,7 @@ const Login: React.FC = () => {
                     Please enter your credentials to access your account
                 </p>
             </div>
-
-            <Tabs className="w-full max-w-md">
-                <Tabs.ListContainer>
-                    <Tabs.List aria-label="Options" className="rounded-2xl p-1 bg-slate-100 dark:bg-zinc-800">
-                        <Tabs.Tab id="admin">
-                            Admin
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                        <Tabs.Tab id="branch">
-                            Branch
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                    </Tabs.List>
-                </Tabs.ListContainer>
-                <Tabs.Panel className="pt-3" id="admin">
-                    <AdminLoginForm />
-                </Tabs.Panel>
-                <Tabs.Panel className="pt-3" id="branch">
-                    <BranchLoginForm setEmail={setEmail} setPassword={setPassword} />
-                </Tabs.Panel>
-            </Tabs>
+            <LoginForm />
         </AuthCard>
     );
 };

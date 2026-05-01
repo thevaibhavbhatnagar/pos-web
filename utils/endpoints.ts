@@ -42,10 +42,12 @@ const apiEndpoints = {
     delete: "/v1/company",
   },
   branch: {
-    create: "/v1/branch",
-    list: "/v1/branch",
-    update: "/v1/branch",
-    delete: "/v1/branch",
+    create: "/v1/branches",
+    list: "/v1/branches",
+    update: "/v1/branches",
+    delete: "/v1/branches",
+
+    lookup:"/v1/branches/lookup"
   },
   class: {
     create: "/v1/class",

@@ -1,29 +1,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import { AxiosResponse } from "axios";
 
-import { branchLoginValidationSchema } from "@/validations/branch-login.validation"; // Validation schema for login form
-
-import apiEndpoints from "@/utils/endpoints"; // API endpoints configuration
-import axiosInstance, {
-  handleAxiosError,
-  isConflictWithContext,
-} from "@/utils/axiosInstance"; // Configured Axios instance and error handler
+import { LoginValidationSchema } from "@/validations/login.validation"; // Validation schema for login form
 import { toast } from "@heroui/react";
+import { signIn } from "next-auth/react";
+import { handleAxiosError, isConflictWithContext } from "@/utils/axiosInstance";
 
 // Define the structure of form values
 interface LoginFormValues {
   email: string;
-  branch?: string;
   password: string;
 }
 
 // Custom hook for handling login logic and UI state management
-const useBranchLogin = (
-  setEmail: (value: string) => void,
-  setPassword: (value: string) => void,
-) => {
+const useLogin = () => {
   const router = useRouter();
   // State to store error messages related to login attempts
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -34,23 +25,25 @@ const useBranchLogin = (
       email: "", // Initial value for email
       password: "", // Initial value for password
     },
-    validationSchema: branchLoginValidationSchema, // Yup validation schema for form validation
+    validationSchema: LoginValidationSchema, // Yup validation schema for form validation
     onSubmit: async (values: LoginFormValues) => {
       try {
         setErrorMessage(null); // Clear any previous error messages
 
-        // Destructure 'email' from form values and rename it to 'email' for the API payload
-        const { email: email, password } = values;
-        // Send a POST request to the login endpoint with the user's email and password
-        await axiosInstance.post<AxiosResponse>(
-          apiEndpoints.authentication.login,
-          { email, password },
-        );
+        const response = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
 
-        // Store the user's email for later use (e.g., verification step)
-        setEmail(values.email);
+        if (response?.error) {
+          setErrorMessage("Invalid credentials");
+          toast.danger("Invalid credentials");
+          return;
+        }
+        toast.success("Login successful");
 
-        setPassword(values.password);
+        router.push("/dashboard");
       } catch (error: unknown) {
         // Handle and extract error message
         const message = handleAxiosError(error);
@@ -82,4 +75,4 @@ const useBranchLogin = (
   return { formik, errorMessage };
 };
 
-export default useBranchLogin;
+export default useLogin;
