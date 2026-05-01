@@ -62,17 +62,17 @@ export const DataTable = <T extends { id: string | number }>({
   return (
     <div className="w-full space-y-4">
       {topContent}
-      <div className={`rounded-lg overflow-hidden bg-grey-300 h-[520px] flex flex-col ${wrapperClassName}`}>
-        <Table variant="primary" className="min-w-full h-full flex flex-col">
+      <div className={`h-[520px] flex flex-col ${wrapperClassName}`}>
+        <Table variant="secondary" className="min-w-full h-full flex flex-col">
           <Table.ScrollContainer className="flex-1 overflow-y-auto">
-            <Table.Content aria-label="Data table">
-              <Table.Header className="sticky top-0 z-20 bg-content2">
+            <Table.Content aria-label="Data table" >
+              <Table.Header className="sticky top-0 z-20">
                 {columns.map((column, index) => (
                   <Table.Column
                     key={String(column.key)}
                     id={String(column.key)}
                     isRowHeader={index === 0}
-                    className="bg-content2 font-semibold uppercase"
+                    className="font-semibold  uppercase !rounded-none first:!rounded-none last:!rounded-none bg-primary/10 text-field-foreground"
                   >
                     {column.label}
                   </Table.Column>
@@ -94,10 +94,9 @@ export const DataTable = <T extends { id: string | number }>({
                   return (
                     <Table.Row
                       id={item.id}
-                      className="odd:bg-content1 even:bg-content2/60 hover:bg-content2"
                     >
                       {columns.map((column) => (
-                        <Table.Cell key={String(column.key)}>
+                        <Table.Cell key={String(column.key)} >
                           {column.key === "srNo"
                             ? ((pagination?.page || 1) - 1) *
                             (pagination?.rowsPerPage || 10) +
@@ -115,7 +114,7 @@ export const DataTable = <T extends { id: string | number }>({
           </Table.ScrollContainer>
 
           {pagination && (
-            <Table.Footer className="sticky bottom-0 z-20 bg-background border-t">
+            <Table.Footer className="sticky bottom-0 z-20 border-t">
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="text-sm text-default-500">
                   {start} to {end} of {pagination.totalItems || 0} results

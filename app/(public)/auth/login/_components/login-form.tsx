@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
 
         <Button
           type="submit"
-          className="w-full h-12 text-base font-medium"
+          className="w-full h-10 text-base font-medium"
         >
           Login
         </Button>

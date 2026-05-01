@@ -256,17 +256,21 @@ export function AppSidebar() {
               <ChartPie color="var(--primary)" size={25} />
               <Link href={"/"} className="text-xl font-bold">DashFlow</Link>
             </div>
-            <div className="bg-surface-secondary hover:bg-content2 transition-colors p-1.5 rounded-full">
+            <div className="transition-colors p-1.5 rounded-full">
               <PanelLeft
                 onClick={toggle}
                 size={18}
-                className="text-foreground cursor-pointer"
+                className="text-grey  cursor-pointer"
               /> </div>
           </div>
         ) : (
           <div className="flex items-center px-2 py-[0.25rem] relative translate-x-1 hover:bg-surface-secondary rounded-xl transition-colors cursor-pointer">
-            <ChevronsRightIcon size={20} onClick={toggle} className="text-foreground" />
-          </div>
+             <PanelLeft
+              onClick={toggle}
+              size={18}
+              className="text-grey cursor-pointer rotate-[180deg]"
+            />
+             </div>
         )}
       </SidebarHeader>
 

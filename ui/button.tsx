@@ -25,8 +25,8 @@ interface Props {
 
 const Button: React.FC<Props> = ({
   children,
-  className = "w-full rounded-xl font-normal",
-  size = "md",
+  className = "w-full rounded-lg font-normal",
+  size = "sm",
   startIcon: StartIcon,
   endIcon: EndIcon,
   onClick,
@@ -38,7 +38,7 @@ const Button: React.FC<Props> = ({
     <HeroButton
       type={type}
       onPress={onClick}
-      className={`bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${className}`}
+      className={`text-white font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${className}`}
       size={size}
       variant={variant}
       isDisabled={disabled}
