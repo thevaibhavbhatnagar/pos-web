@@ -8,19 +8,8 @@ import PasswordInput from "@/ui/password-input";
 
 import useAdminLogin from "@/hooks/use-admin-login";
 
-interface Props {
-  setEmail: (value: string) => void;
-  setPassword: (value: string) => void;
-}
-
-const AdminLoginForm: React.FC<Props> = ({
-  setEmail,
-  setPassword,
-}) => {
-  const { formik } = useAdminLogin(
-    setEmail,
-    setPassword
-  );
+const AdminLoginForm: React.FC = () => {
+  const { formik } = useAdminLogin();
 
   return (
     <React.Fragment>

@@ -22,7 +22,7 @@ export default function RootLayout({
           </Link>
         </div>
 
-        <div className="relative z-10 max-w-lg animate-in fade-in slide-in-from-left-8 duration-1000 delay-300">
+        {/* <div className="relative z-10 max-w-lg animate-in fade-in slide-in-from-left-8 duration-1000 delay-300">
           <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight text-slate-900 dark:text-white">
             Smart POS <br />
             Management <br />
@@ -33,7 +33,7 @@ export default function RootLayout({
           <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
             Streamline your sales, inventory, and operations with our elegant, powerful dashboard built for growth and reliability.
           </p>
-        </div>
+        </div> */}
 
         <div className="relative z-10 text-sm font-medium text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
           © {new Date().getFullYear()} DashFlow Inc. All rights reserved.

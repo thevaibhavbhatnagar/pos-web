@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
-import { AxiosResponse } from "axios";
+import { useFormik } from "formik"; 
 
-import {  AdminLoginValidationSchema } from "@/validations/admin-login.validation"; // Validation schema for login form
-
-import apiEndpoints from "@/utils/endpoints"; // API endpoints configuration
-import axiosInstance, {
-  handleAxiosError,
-  isConflictWithContext,
-} from "@/utils/axiosInstance"; // Configured Axios instance and error handler
+import { AdminLoginValidationSchema } from "@/validations/admin-login.validation"; // Validation schema for login form
 import { toast } from "@heroui/react";
+import { signIn } from "next-auth/react";
+import { handleAxiosError, isConflictWithContext } from "@/utils/axiosInstance";
 
 // Define the structure of form values
 interface LoginFormValues {
@@ -19,10 +14,7 @@ interface LoginFormValues {
 }
 
 // Custom hook for handling login logic and UI state management
-const useAdminLogin = ( 
-  setEmail: (value: string) => void,
-  setPassword: (value: string) => void,
-) => {
+const useAdminLogin = () => {
   const router = useRouter();
   // State to store error messages related to login attempts
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -38,18 +30,20 @@ const useAdminLogin = (
       try {
         setErrorMessage(null); // Clear any previous error messages
 
-        // Destructure 'email' from form values and rename it to 'email' for the API payload
-        const { email: email, password } = values;
-        // Send a POST request to the login endpoint with the user's email and password
-        await axiosInstance.post<AxiosResponse>(
-          apiEndpoints.authentication.login,
-          { email, password },
-        );
- 
-        // Store the user's email for later use (e.g., verification step)
-        setEmail(values.email);
+        const response = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
 
-        setPassword(values.password);
+        if (response?.error) {
+          setErrorMessage("Invalid credentials");
+          toast.danger("Invalid credentials");
+          return;
+        }
+        toast.success("Login successful");
+
+        router.push("/dashboard");
       } catch (error: unknown) {
         // Handle and extract error message
         const message = handleAxiosError(error);

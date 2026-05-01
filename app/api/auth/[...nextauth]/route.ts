@@ -4,40 +4,86 @@ import Credentials from "next-auth/providers/credentials";
 import axiosInstance from "@/utils/axiosInstance";
 import apiEndpoints from "@/utils/endpoints";
 
+type AppUser = {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  role: string;
+  branchId?: string | null;
+  branchName?: string | null;
+};
+
+type SessionUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  branchId?: string | null;
+  branchName?: string | null;
+};
 
 declare module "next-auth" {
+  interface User extends AppUser {
+    accessToken: string;
+  }
+
   interface Session {
     accessToken?: string;
+    user: SessionUser;
   }
 }
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string;
+    user?: SessionUser;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
 
   providers: [
     Credentials({
-      name: "OTP Login",
+      name: "Admin Login",
       credentials: {
         email: { label: "Email", type: "text" },
-        otp: { label: "OTP", type: "text" },
+        password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials) {
         const email = credentials?.email;
-        const otp = credentials?.otp;
-        if (!email || !otp) return null;
+        const password = credentials?.password;
+
+        if (!email || !password) return null;
 
         try {
           const response = await axiosInstance.post(
-            apiEndpoints.authentication.loginVerify,
-            { email, otp },
+            apiEndpoints.authentication.login,
+            { email, password }
           );
-          const data: { accessToken?: string } = response.data?.data;
-          const accessToken = data?.accessToken ?? "";
 
-          if (!accessToken) return null;
-          console.log(response.data?.data?.permissions);
-          return { accessToken } as any;
-        } catch {
+          const data: {
+            accessToken?: string;
+            data?: AppUser;
+          } = response.data;
+
+          const accessToken = data?.accessToken;
+          const user = data?.data;
+
+          if (!accessToken || !user) return null;
+
+          return {
+            id: user.id,
+            name: user.name ?? null,
+            email: user.email ?? null,
+            role: user.role,
+            branchId: user.branchId ?? null,
+            branchName: user.branchName ?? null,
+            accessToken,
+          };
+        } catch (error) {
+          console.error("Authentication error:", error);
           return null;
         }
       },
@@ -45,21 +91,35 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken;
+
+        token.user = {
+          id: user.id,
+          name: user.name ?? "",
+          email: user.email ?? "",
+          role: user.role,
+          branchId: user.branchId ?? null,
+          branchName: user.branchName ?? null,
+        };
       }
+
       return token;
     },
 
-    async session({ session, token }: any) {
-      (session as any).accessToken = token.accessToken;
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      session.user = token.user!;
       return session;
     },
   },
 
-  pages: { signIn: "/auth/login" },
+  pages: {
+    signIn: "/auth/login",
+  },
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

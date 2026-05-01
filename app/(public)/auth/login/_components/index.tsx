@@ -38,7 +38,7 @@ const Login: React.FC = () => {
                     </Tabs.List>
                 </Tabs.ListContainer>
                 <Tabs.Panel className="pt-3" id="admin">
-                    <AdminLoginForm setEmail={setEmail} setPassword={setPassword} />
+                    <AdminLoginForm />
                 </Tabs.Panel>
                 <Tabs.Panel className="pt-3" id="branch">
                     <BranchLoginForm setEmail={setEmail} setPassword={setPassword} />
