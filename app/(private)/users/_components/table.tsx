@@ -106,7 +106,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
     ];
 
     return (
-        <div className='py-3 rounded-lg w-full h-full bg-white dark:bg-content1'>
+        <div className='py-3 rounded-lg w-full h-full bg-surface'>
             <div className="flex flex-col md:flex-row gap-2 md:gap-0 w-full justify-between px-3 mb-2">
                 <div className="flex gap-2 items-center">
                     <div className="rounded-lg bg-primary/10 text-primary  flex items-center justify-center aspect-square w-6 h-6 ">
@@ -122,8 +122,8 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close", radius: "sm", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", radius: "sm", onPress: () => onDelete(user?.id) },
+                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
+                    { label: "Confirm", onPress: () => onDelete(user?.id) },
                 ]}
             >
                 <div className="flex items-center justify-center">

@@ -11,9 +11,9 @@ type ModalAction = {
     | "outline"
     | "ghost"
     | "danger"
-    | "danger-soft";
-  radius?: "sm" | "md" | "lg";
+    | "danger-soft"; 
   type?: "submit" | "reset" | "button";
+  className?: string;
 };
 
 type Props = {
@@ -23,12 +23,6 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   footerActions?: ModalAction[];
   size?: "xs" | "sm" | "md" | "lg" | "cover" | "full";
-};
-
-const radiusClass = {
-  sm: "rounded-sm",
-  md: "rounded-md",
-  lg: "rounded-lg",
 };
 
 const Modal: React.FC<Props> = ({
@@ -58,7 +52,7 @@ const Modal: React.FC<Props> = ({
                       <Button
                         key={index}
                         variant={action.variant || "secondary"}
-                        className={radiusClass[action.radius || "md"]}
+                        className={`rounded-lg font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${action.className}`}
                         type={action.type}
                         onPress={action.onPress}
                       >

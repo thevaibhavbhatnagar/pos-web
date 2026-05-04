@@ -84,7 +84,7 @@ export default function SelectField<T extends Record<string, any>>({
         placeholder={placeholder}
         autoFocus={autoFocus}
       >
-        <Autocomplete.Trigger className="rounded-lg border border-slate-200 transition-all">
+        <Autocomplete.Trigger className="rounded-lg border border-primary transition-all">
           <Autocomplete.Value />
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator />

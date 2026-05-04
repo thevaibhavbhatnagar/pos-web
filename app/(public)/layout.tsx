@@ -1,7 +1,8 @@
 import { ChartPie } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import logo from "@/public/assets/logo.jpg"
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -14,15 +15,21 @@ export default function RootLayout({
         <div className="absolute bottom-[-10%] right-[-10%] w-[30rem] h-[30rem] bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
 
         <div className="relative z-10 flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
-          <div className="bg-primary p-2.5 rounded-xl shadow-lg shadow-primary/30">
+          <div className="bg-white p-2.5 rounded-xl shadow-lg shadow-primary/30">
             <ChartPie className="text-primary-foreground" size={28} />
+            {/* <Image 
+            src={logo} 
+            alt="Logo" 
+            width={32}
+            height={32}
+            /> */}
           </div>
-          <Link href="/" className="text-2xl font-bold tracking-tight">
-            DashFlow
-          </Link>
+          {/* <Link href="/" className="text-2xl font-bold tracking-tight">
+            Aamchi Mumbai
+          </Link> */}
         </div>
 
-        <div className="relative z-10 max-w-lg animate-in fade-in slide-in-from-left-8 duration-1000 delay-300">
+        {/* <div className="relative z-10 max-w-lg animate-in fade-in slide-in-from-left-8 duration-1000 delay-300">
           <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight text-slate-900 dark:text-white">
             Smart POS <br />
             Management <br />
@@ -33,11 +40,14 @@ export default function RootLayout({
           <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
             Streamline your sales, inventory, and operations with our elegant, powerful dashboard built for growth and reliability.
           </p>
-        </div>
+        </div> */}
 
-        <div className="relative z-10 text-sm font-medium text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
-          © {new Date().getFullYear()} DashFlow Inc. All rights reserved.
-        </div>
+        {/* <div className="relative z-10 text-sm font-medium text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+          <span className="block mt-1 text-xs text-slate-400">
+            Designed & Developed by 
+          </span>
+          © {new Date().getFullYear()} Vrinda AI. All rights reserved.
+        </div> */}
       </div>
 
       {/* Right Side - Auth Container */}

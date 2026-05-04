@@ -14,7 +14,7 @@ interface Props {
   type?: "submit" | "button" | "reset";
   variant?:
     | "primary"
-    | "secondary"
+    | "secondary" 
     | "tertiary"
     | "ghost"
     | "outline"
@@ -31,14 +31,14 @@ const Button: React.FC<Props> = ({
   endIcon: EndIcon,
   onClick,
   type = "submit",
-  variant = "primary",
+  variant = "ghost",
   disabled = false,
 }) => {
   return (
     <HeroButton
       type={type}
       onPress={onClick}
-      className={`text-white font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${className}`}
+      className={`font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${className}`}
       size={size}
       variant={variant}
       isDisabled={disabled}

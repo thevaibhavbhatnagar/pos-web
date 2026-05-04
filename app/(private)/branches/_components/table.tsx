@@ -89,7 +89,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                     </div>
                     <h2 className='text-base font-medium'>Branches List</h2>
                 </div>
-                <Search />
+                {/* <Search /> */}
             </div>
             <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage }} wrapperClassName="max-h-[400px]" />
             <Modal
@@ -97,8 +97,8 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close",radius: "sm", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", radius: "sm",  onPress: () => onDelete(branch?.id) },
+                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
+                    { label: "Confirm", variant: "ghost", onPress: () => onDelete(branch?.id) },
                 ]}
                 size='sm'
             >
