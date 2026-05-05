@@ -29,117 +29,29 @@ const apiEndpoints = {
     update: "/v1/users",
     delete: "/v1/users",
   },
-  publisher: {
-    create: "/v1/publishers",
-    list: "/v1/publishers",
-    update: "/v1/publishers",
-    delete: "/v1/publishers",
-  },
-  company: {
-    create: "/v1/company",
-    list: "/v1/company",
-    update: "/v1/company",
-    delete: "/v1/company",
-  },
   branch: {
     create: "/v1/branches",
     list: "/v1/branches",
     update: "/v1/branches",
     delete: "/v1/branches",
 
-    lookup:"/v1/branches/lookup"
+    lookup: "/v1/branches/lookup",
   },
-  class: {
-    create: "/v1/class",
-    list: "/v1/class",
-    update: "/v1/class",
-    delete: "/v1/class",
-  },
-  subject: {
-    create: "/v1/subjects",
-    list: "/v1/subjects",
-    update: "/v1/subjects",
-    delete: "/v1/subjects",
-  },
-  book: {
-    create: "/v1/books",
-    list: "/v1/books",
-    update: "/v1/books",
-    delete: "/v1/books",
+  category: {
+    create: "/v1/categories",
+    list: "/v1/categories",
+    update: "/v1/categories",
+    delete: "/v1/categories",
 
-    byPublisherId: (publisherId: string) =>
-      `/v1/purchase-order/books?publisherId=${publisherId}`, // move this to purchase-order later if needed
-    byId: (id: string) => `/v1/books/${id}`,
+    lookup: "/v1/categories/lookup",
   },
-  purchaseOrder: {
-    create: "/v1/purchase-order",
-    list: "/v1/purchase-order",
-    update: "/v1/purchase-order",
-    delete: "/v1/purchase-order",
+  product: {
+    create: "/v1/products",
+    list: "/v1/products",
+    update: "/v1/products",
+    delete: "/v1/products",
 
-    details: "/v1/purchase-order",
-
-    getPoNumber: "/v1/purchase-order/next-number",
-  },
-  purchaseReturn: {
-    create: "/v1/purchase-returns",
-    list: "/v1/purchase-returns",
-    update: "/v1/purchase-returns",
-    delete: "/v1/purchase-returns",
-
-    details: "/v1/purchase-returns",
-
-    getPrNumber: "/v1/purchase-returns/next-number",
-    byPublisherId: (publisherId: string) =>
-      `/v1/purchase-returns/grns?publisherId=${publisherId}`, // move this to purchase-order later if needed
-    byPurchaseOrderId: (publisherId: string) =>
-      `/v1/purchase-returns/grns/${publisherId}`, // move this to purchase-order later if needed
-  },
-  grn: {
-    create: "/v1/grns",
-    list: "/v1/grns",
-    update: "/v1/grns",
-    delete: "/v1/grns",
-
-    details: "/v1/grns",
-
-    getGrnNumber: "/v1/grns/next-number",
-    byPublisherId: (publisherId: string) =>
-      `/v1/grns/purchase-orders?publisherId=${publisherId}`, // move this to purchase-order later if needed
-    byPurchaseOrderId: (publisherId: string) =>
-      `/v1/grns/purchase-orders/${publisherId}`, // move this to purchase-order later if needed
-  },
-  companyInvoice: {
-    create: "/v1/company-invoice",
-    list: "/v1/company-invoice",
-    update: "/v1/company-invoice",
-    delete: "/v1/company-invoice",
-  },
-  companyInvoiceReturn: {
-    create: "/v1/company-invoice-return",
-    list: "/v1/company-invoice-return",
-    update: "/v1/company-invoice-return",
-    delete: "/v1/company-invoice-return",
-  },
-  materialTransfer: {
-    create: "/v1/material-transfer",
-    list: "/v1/material-transfer",
-    update: "/v1/material-transfer",
-    delete: "/v1/material-transfer",
-  },
-  admin: {
-    invoice: {
-      create: "/v1-invoice",
-      list: "/v1-invoice",
-      update: "/v1-invoice",
-      delete: "/v1-invoice",
-    },
-    invoiceOrder: {
-      create: "/v1-invoice-return",
-      list: "/v1-invoice-return",
-      update: "/v1-invoice-return",
-      delete: "/v1-invoice-return",
-    },
+    lookup: "/v1/products/lookup",
   },
 };
 export default apiEndpoints;
