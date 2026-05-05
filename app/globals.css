@@ -11,104 +11,107 @@
 .default,
 [data-theme="light"],
 [data-theme="default"] {
-   /* Core Colors */
-   --accent: oklch(78% 0.16 85);
-   /* yellow accent */
-   --accent-foreground: oklch(20% 0.02 85);
+  /* Core Colors */
+  --accent: oklch(78% 0.16 85);
+  /* yellow accent */
+  --accent-foreground: oklch(20% 0.02 85);
 
-   --background: oklch(98% 0.02 95);
-   /* soft yellow bg */
-   --foreground: oklch(20% 0.02 85);
+  --background: oklch(98% 0.02 95);
+  /* soft yellow bg */
+  --foreground: oklch(20% 0.02 85);
 
-   --border: oklch(90% 0.03 90);
+  --border: oklch(90% 0.03 90);
 
-   /* Brand */
-   --brand: #EAB308;
-   --brand-foreground: #000000;
+  /* Brand */
+  --brand: #eab308;
+  --brand-foreground: #000000;
 
-   /* Status */
-   --danger: oklch(65.32% 0.2335 25.74);
-   --danger-foreground: #ffffff;
+  /* Status */
+  --danger: oklch(65.32% 0.2335 25.74);
+  --danger-foreground: #ffffff;
 
-   --success: oklch(73.29% 0.1941 150.81);
-   --success-foreground: #000000;
+  --success: oklch(73.29% 0.1941 150.81);
+  --success-foreground: #000000;
 
-   --warning: oklch(80% 0.18 85);
-   --warning-foreground: #000000;
+  --warning: oklch(80% 0.18 85);
+  --warning-foreground: #000000;
 
-   /* Default */
-   --default: #FFFBEB;
-   --default-foreground: #1F2937;
+  /* Default */
+  --default: #fffbeb;
+  --default-foreground: #1f2937;
 
-   /* Inputs */
-   --field-background: #FFFFFF;
-   --field-foreground: #1F2937;
-   --field-placeholder: #9CA3AF;
+  /* Inputs */
+  --field-background: #ffffff;
+  --field-foreground: #1f2937;
+  --field-placeholder: #9ca3af;
 
-   /* Surfaces */
-   --surface: #FFFFFF;
-   --surface-foreground: #1F2937;
+  /* Surfaces */
+  --surface: #ffffff;
+  --surface-foreground: #1f2937;
 
-   --surface-secondary: #FEF3C7;
-   --surface-secondary-foreground: #1F2937;
+  --surface-secondary: #fef3c7;
+  --surface-secondary-foreground: #1f2937;
 
-   --surface-tertiary: #FDE68A;
-   --surface-tertiary-foreground: #1F2937;
+  --surface-tertiary: #fde68a;
+  --surface-tertiary-foreground: #1f2937;
 
-   /* Misc */
-   --muted: #6B7280;
-   --overlay: rgba(255, 255, 255, 0.8);
-   --overlay-foreground: #1F2937;
+  /* Misc */
+  --muted: #6b7280;
+  --overlay: rgba(255, 255, 255, 0.8);
+  --overlay-foreground: #1f2937;
 
-   --scrollbar: #FDE68A;
-   --separator: #FCD34D;
+  --scrollbar: #fde68a;
+  --separator: #fcd34d;
 
-   --focus: #EAB308;
+  --focus: #eab308;
 
-   /* Radius */
-   --radius: 0.5rem;
-   --field-radius: 0.75rem;
+  /* Radius */
+  --radius: 0.5rem;
+  --field-radius: 0.75rem;
 
-   /* Font */
-   --font-sans: var(--font-inter);
+  /* Font */
+  --font-sans: var(--font-inter);
 
-   /* =========================
+  /* =========================
      CUSTOM COLORS
   ========================= */
-   --primary: #EAB308;
-   --secondary: #FEF9C3;
-   --tertiary: #FFFBEB;
-   --surface: #FFFFFF;
+  --primary: #eab308;
+  --secondary: #fef9c3;
+  --tertiary: #fffbeb;
+  --surface: #ffffff;
 
-   --primary-foreground: #000000;
+  --primary-foreground: #000000;
 
-   --grey-100: #4B5563;
-   --grey-200: #F3F4F6;
-   --grey-300: #E5E7EB;
-   --grey-400: #FEF9C3;
-   --grey: #6B7280;
-   --grey-600: #bbc3d2;
+  --grey-100: #4b5563;
+  --grey-200: #f3f4f6;
+  --grey-300: #e5e7eb;
+  --grey-400: #fef9c3;
+  --grey: #6b7280;
+  --grey-600: #bbc3d2;
 
-   /* Chips */
-   --chip-active: #FEF3C7;
-   --chip-inactive: #FEE2E2;
-   --chip-pending: #FFEDD5;
+  /* Chips - Light Theme */
+  --chip-active: #dcfce7; /* soft green */
+  --chip-inactive: #fee2e2; /* soft red */
+  --chip-pending: #fef3c7; /* soft yellow */
 
-   --chip-text-active: #92400E;
-   --chip-text-inactive: #991B1B;
-   --chip-text-pending: #92400E;
+  /* Optional text colors (recommended) */
+  --chip-active-text: #166534;
+  --chip-inactive-text: #991b1b;
+  --chip-pending-text: #92400e;
 
-   /* Sidebar */
-   --sidebar-active-bg: linear-gradient(90deg,
-         color-mix(in srgb, #EAB308 25%, transparent) 0%,
-         color-mix(in srgb, #EAB308 5%, transparent) 100%);
-   --sidebar-active-border: color-mix(in srgb, #EAB308 40%, transparent);
-   --sidebar-active-highlight: rgba(255, 255, 255, 0.6);
-   --sidebar-active-text: #B45309;
+  /* Sidebar */
+  --sidebar-active-bg: linear-gradient(
+    90deg,
+    color-mix(in srgb, #eab308 25%, transparent) 0%,
+    color-mix(in srgb, #eab308 5%, transparent) 100%
+  );
+  --sidebar-active-border: color-mix(in srgb, #eab308 40%, transparent);
+  --sidebar-active-highlight: rgba(255, 255, 255, 0.6);
+  --sidebar-active-text: #b45309;
 
-   --sidebar-inactive-text: #6B7280;
-   --sidebar-inactive-icon: #9CA3AF;
-   --sidebar-hover-bg: color-mix(in srgb, #EAB308 10%, transparent);
+  --sidebar-inactive-text: #6b7280;
+  --sidebar-inactive-icon: #9ca3af;
+  --sidebar-hover-bg: color-mix(in srgb, #eab308 10%, transparent);
 }
 
 /* =========================
@@ -116,107 +119,110 @@
 ========================= */
 .dark,
 [data-theme="dark"] {
-   color-scheme: dark;
+  color-scheme: dark;
 
-   --background: oklch(12% 0.02 85);
-   --foreground: #FFFFFF;
+  --background: oklch(12% 0.02 85);
+  --foreground: #ffffff;
 
-   --border: #374151;
+  --border: #374151;
 
-   --brand: #EAB308;
-   --brand-foreground: #000000;
+  --brand: #eab308;
+  --brand-foreground: #000000;
 
-   --default: #1F2937;
-   --default-foreground: #FFFFFF;
+  --default: #1f2937;
+  --default-foreground: #ffffff;
 
-   --field-background: #111827;
-   --field-foreground: #FFFFFF;
-   --field-placeholder: #9CA3AF;
+  --field-background: #111827;
+  --field-foreground: #ffffff;
+  --field-placeholder: #9ca3af;
 
-   --surface: #111827;
-   --surface-foreground: #FFFFFF;
+  --surface: #111827;
+  --surface-foreground: #ffffff;
 
-   --surface-secondary: #0000008a;
-   --surface-secondary-foreground: #FFFFFF;
+  --surface-secondary: #0000008a;
+  --surface-secondary-foreground: #ffffff;
 
-   --surface-tertiary: #374151;
-   --surface-tertiary-foreground: #FFFFFF;
+  --surface-tertiary: #374151;
+  --surface-tertiary-foreground: #ffffff;
 
-   --muted: #9CA3AF;
-   --overlay: rgba(0, 0, 0, 0.7);
-   --overlay-foreground: #FFFFFF;
+  --muted: #9ca3af;
+  --overlay: rgba(0, 0, 0, 0.7);
+  --overlay-foreground: #ffffff;
 
-   --scrollbar: #374151;
-   --separator: #374151;
+  --scrollbar: #374151;
+  --separator: #374151;
 
-   --focus: #FACC15;
+  --focus: #facc15;
 
-   /* Custom */
-   --primary: #FACC15;
-   --secondary: #78350F;
-   --tertiary: #451A03;
-   --surface: #000000;
+  /* Custom */
+  --primary: #facc15;
+  --secondary: #78350f;
+  --tertiary: #451a03;
+  --surface: #000000;
 
-   --primary-foreground: #000000;
+  --primary-foreground: #000000;
 
-   --grey-100: #D1D5DB;
-   --grey-200: #1b1a16;
-   --grey-300: #1F2937;
-   --grey-400: #5e5b5b;
-   --grey: #9CA3AF;
-   --grey-600: #6B7280;
+  --grey-100: #d1d5db;
+  --grey-200: #1b1a16;
+  --grey-300: #1f2937;
+  --grey-400: #5e5b5b;
+  --grey: #9ca3af;
+  --grey-600: #6b7280;
 
-   /* Chips */
-   --chip-active: #78350F;
-   --chip-inactive: #7F1D1D;
-   --chip-pending: #92400E;
+  /* Chips - Dark Theme */
+  --chip-active: #14532d; /* dark green */   
+  --chip-inactive: #7f1d1d; /* dark red */
+  --chip-pending: #78350f; /* dark amber */
 
-   --chip-text-active: #FDE68A;
-   --chip-text-inactive: #FECACA;
-   --chip-text-pending: #FCD34D;
+  /* Optional text colors */
+  --chip-active-text: #bbf7d0;
+  --chip-inactive-text: #fecaca;
+  --chip-pending-text: #fde68a;
 
-   /* Sidebar */
-   --sidebar-active-bg: linear-gradient(90deg,
-         color-mix(in srgb, #FACC15 35%, transparent) 0%,
-         color-mix(in srgb, #FACC15 10%, transparent) 100%);
-   --sidebar-active-border: color-mix(in srgb, #FACC15 60%, transparent);
-   --sidebar-active-highlight: rgba(255, 255, 255, 0.1);
-   --sidebar-active-text: #FACC15;
+  /* Sidebar */
+  --sidebar-active-bg: linear-gradient(
+    90deg,
+    color-mix(in srgb, #facc15 35%, transparent) 0%,
+    color-mix(in srgb, #facc15 10%, transparent) 100%
+  );
+  --sidebar-active-border: color-mix(in srgb, #facc15 60%, transparent);
+  --sidebar-active-highlight: rgba(255, 255, 255, 0.1);
+  --sidebar-active-text: #facc15;
 
-   --sidebar-inactive-text: #9CA3AF;
-   --sidebar-inactive-icon: #6B7280;
-   --sidebar-hover-bg: color-mix(in srgb, #FACC15 15%, transparent);
+  --sidebar-inactive-text: #9ca3af;
+  --sidebar-inactive-icon: #6b7280;
+  --sidebar-hover-bg: color-mix(in srgb, #facc15 15%, transparent);
 }
 
 /* =====================
    TAILWIND MAPPING
 ===================== */
 @theme {
-   --color-primary: var(--primary);
-   --color-secondary: var(--secondary);
-   --color-tertiary: var(--tertiary);
-   --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-surface: var(--surface);
 
-   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-foreground: var(--primary-foreground);
 
-   --color-grey-100: var(--grey-100);
-   --color-grey-200: var(--grey-200);
-   --color-grey-300: var(--grey-300);
-   --color-grey-400: var(--grey-400);
-   --color-grey: var(--grey);
-   --color-grey-600: var(--grey-600);
+  --color-grey-100: var(--grey-100);
+  --color-grey-200: var(--grey-200);
+  --color-grey-300: var(--grey-300);
+  --color-grey-400: var(--grey-400);
+  --color-grey: var(--grey);
+  --color-grey-600: var(--grey-600);
 
-   --color-chip-active: var(--chip-active);
-   --color-chip-inactive: var(--chip-inactive);
-   --color-chip-pending: var(--chip-pending);
+  --color-chip-active: var(--chip-active);
+  --color-chip-inactive: var(--chip-inactive);
+  --color-chip-pending: var(--chip-pending);
 
-   --color-sidebar-active-bg: var(--sidebar-active-bg);
-   --color-sidebar-active-border: var(--sidebar-active-border);
-   --color-sidebar-active-highlight: var(--sidebar-active-highlight);
-   --color-sidebar-active-text: var(--sidebar-active-text);
-   --color-sidebar-inactive-text: var(--sidebar-inactive-text);
-   --color-sidebar-inactive-icon: var(--sidebar-inactive-icon);
-   --color-sidebar-hover-bg: var(--sidebar-hover-bg);
+  --color-sidebar-active-bg: var(--sidebar-active-bg);
+  --color-sidebar-active-border: var(--sidebar-active-border);
+  --color-sidebar-active-highlight: var(--sidebar-active-highlight);
+  --color-sidebar-active-text: var(--sidebar-active-text);
+  --color-sidebar-inactive-text: var(--sidebar-inactive-text);
+  --color-sidebar-inactive-icon: var(--sidebar-inactive-icon);
+  --color-sidebar-hover-bg: var(--sidebar-hover-bg);
 }
 
 .table__row,
@@ -224,16 +230,16 @@
 tr[role="row"],
 td[role="gridcell"],
 th[role="columnheader"] {
-   height: 36px !important;
-   min-height: 36px !important;
-   padding-top: 0 !important;
-   padding-bottom: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .table__header,
 .table__column {
-   height: 40px !important;
-   min-height: 40px !important;
-   padding-top: 0 !important;
-   padding-bottom: 0 !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }

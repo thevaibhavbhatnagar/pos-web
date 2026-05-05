@@ -63,8 +63,8 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 <Chip size='sm'
                     className={
                         value.isActive
-                            ? "bg-chips-active text-chips-text-active dark:bg-chips-active-dark dark:text-chips-text-active-dark"
-                            : "bg-chips-pending text-chips-text-pending dark:bg-chips-pending-dark dark:text-chips-text-pending-dark"
+                            ? "bg-chip-active text-chip-text-active dark:bg-chip-active-dark dark:text-chip-text-active-dark"
+                            : "bg-chip-pending text-chip-text-pending dark:bg-chip-pending-dark dark:text-chip-text-pending-dark"
                     } >{value.isActive ? "Active" : "Inactive"}</Chip>
             )
         },
