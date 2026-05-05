@@ -62,6 +62,9 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
             renderCell: (_, rowIndex) => (rowIndex ?? 0) + 1, // rowIndex starts at 0
         },
         { key: "name", label: "Name", renderCell: (value) => value?.name ?? "N/A" },
+        { key: "price", label: "Price", renderCell: (value) => value?.price ?? "N/A" },
+        { key: "category", label: "Category", renderCell: (value) => value?.category.name ?? "N/A" },
+        { key: "isKotRequired", label: "Kot Required", renderCell: (value) => value?.isKotRequired ? "Yes" : "No" },
         {
             key: "isActive", label: "Status", renderCell: (value) => (
                 <Chip size='sm'

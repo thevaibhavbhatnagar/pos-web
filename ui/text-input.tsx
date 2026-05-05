@@ -51,7 +51,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
   className = "w-full",
   labelClassName = "text-fields-foreground font-normal",
-  inputClassName = "rounded-lg border border-primary transition-all",
+  inputClassName = "rounded-lg border border-grey-600 transition-all",
 
   maxLength,
 
@@ -93,7 +93,7 @@ const TextInput: React.FC<TextInputProps> = ({
           readOnly={readOnly}
           autoFocus={autoFocus}
           maxLength={type !== "number" ? maxLength : undefined}
-          className={`w-full ${startContent ? 'pl-10' : ''} ${endContent ? 'pr-10' : ''} ${inputClassName}`}
+          className={`w-full ${startContent ? 'pl-10' : ''} ${endContent ? 'pr-10' : ''} ${inputClassName} bg-surface`}
           variant={variant}
         />
         {endContent && (

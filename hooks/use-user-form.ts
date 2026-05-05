@@ -76,6 +76,9 @@ const useUserForm = ({ user, onResetToAdd, onSuccess }: Props) => {
                     //  UPDATE (PATCH)
                     response = await axiosInstance.patch(`${apiEndpoints.user.update}/${user.id}`, payload).catch(() => null);
 
+                    //  Show success toast once
+                    toast.success(response?.data?.message );
+
                 } else {
                     //  CREATE (POST)
                     response = await axiosInstance.post(apiEndpoints.user.create, payload).catch(() => null);
@@ -90,7 +93,7 @@ const useUserForm = ({ user, onResetToAdd, onSuccess }: Props) => {
 
 
                 // Tell parent we switched back to add mode
-                // onResetToAdd?.();
+                onResetToAdd?.();
 
                 // Optional callback
                 onSuccess?.();

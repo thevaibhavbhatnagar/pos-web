@@ -55,6 +55,10 @@ const useCategoryForm = ({ category, onResetToAdd, onSuccess }: Props) => {
                 if (category?.id) {
                     //  UPDATE (PATCH)
                     response = await axiosInstance.patch(`${apiEndpoints.category.update}/${category?.id}`, payload).catch(() => null);
+                    
+                    //  Show success toast once
+                    toast.success(response?.data?.message );
+
 
                 } else {
                     //  CREATE (POST)
@@ -70,7 +74,7 @@ const useCategoryForm = ({ category, onResetToAdd, onSuccess }: Props) => {
 
 
                 // Tell parent we switched back to add mode
-                // onResetToAdd?.();
+                onResetToAdd?.();
 
                 // Optional callback
                 onSuccess?.();

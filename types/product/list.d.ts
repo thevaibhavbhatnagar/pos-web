@@ -5,6 +5,7 @@ export interface ProductListType {
   price: string;
   isKotRequired: boolean;
   categoryId: string;
+  category: { id: string; name: string };
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

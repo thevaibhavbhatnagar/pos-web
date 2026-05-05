@@ -68,9 +68,10 @@ export default function SelectField<T extends Record<string, any>>({
 
       <Autocomplete<Option, "single">
         items={options as unknown as Iterable<Option>}
-        value={value || null}                 // ✅ NEW
-        onChange={(key) => {                  // ✅ NEW
+        value={value || null}
+        onChange={(key) => {
           const newValue = key ? String(key) : "";
+
           formik.setFieldValue(name, newValue);
           formik.setFieldTouched(name, true);
           onChange?.(newValue);
@@ -84,7 +85,7 @@ export default function SelectField<T extends Record<string, any>>({
         placeholder={placeholder}
         autoFocus={autoFocus}
       >
-        <Autocomplete.Trigger className="rounded-lg border border-primary transition-all">
+        <Autocomplete.Trigger className="rounded-lg border border-grey-600 bg-surface transition-all">
           <Autocomplete.Value />
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator />

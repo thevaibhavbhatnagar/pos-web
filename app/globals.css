@@ -87,6 +87,7 @@
    --grey-300: #E5E7EB;
    --grey-400: #FEF9C3;
    --grey: #6B7280;
+   --grey-600: #bbc3d2;
 
    /* Chips */
    --chip-active: #FEF3C7;
@@ -163,6 +164,7 @@
    --grey-300: #1F2937;
    --grey-400: #5e5b5b;
    --grey: #9CA3AF;
+   --grey-600: #6B7280;
 
    /* Chips */
    --chip-active: #78350F;
@@ -202,6 +204,7 @@
    --color-grey-300: var(--grey-300);
    --color-grey-400: var(--grey-400);
    --color-grey: var(--grey);
+   --color-grey-600: var(--grey-600);
 
    --color-chip-active: var(--chip-active);
    --color-chip-inactive: var(--chip-inactive);
@@ -216,22 +219,21 @@
    --color-sidebar-hover-bg: var(--sidebar-hover-bg);
 }
 
-.table__row, 
+.table__row,
 .table__cell,
 tr[role="row"],
 td[role="gridcell"],
 th[role="columnheader"] {
-  height: 36px !important;
-  min-height: 36px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+   height: 36px !important;
+   min-height: 36px !important;
+   padding-top: 0 !important;
+   padding-bottom: 0 !important;
 }
 
 .table__header,
 .table__column {
-  height: 40px !important;
-  min-height: 40px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+   height: 40px !important;
+   min-height: 40px !important;
+   padding-top: 0 !important;
+   padding-bottom: 0 !important;
 }
-

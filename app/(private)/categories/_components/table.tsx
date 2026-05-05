@@ -102,7 +102,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 </div>
                 {/* <Search /> */}
             </div>
-            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage }} wrapperClassName="max-h-[400px]" />
+            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage }} wrapperClassName="max-h-[448px]" />
             <Modal
                 title="Delete Confirmation"
                 isOpen={isOpen}

@@ -50,7 +50,8 @@ const useBranchForm = ({ branch, onResetToAdd, onSuccess }: Props) => {
                     // Send POST request to update the existing branch ID
                     const response = await axiosInstance.patch(`${apiEndpoints.branch.update}/${branch.id}`, payload);
 
-                    toast.success(response?.data?.message);
+                    //  Show success toast once
+                    toast.success(response?.data?.message );
 
                     // Tell parent we switched back to add mode
                     onResetToAdd?.();
@@ -59,7 +60,8 @@ const useBranchForm = ({ branch, onResetToAdd, onSuccess }: Props) => {
                     // Send POST request to create a new branch 
                     const response = await axiosInstance.post(`${apiEndpoints.branch.create}`, payload);
 
-                    toast.success(response?.data?.message);
+                    //  Show success toast once
+                    toast.success(response?.data?.message );
 
                     // Reset the form ONLY after creating new
                     useBranchFormik.resetForm();
