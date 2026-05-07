@@ -60,6 +60,14 @@ const apiEndpoints = {
     list: "/v1/orders",
     update: "/v1/orders",
     delete: "/v1/orders",
-  }
+  },
+  kot: {
+    create: "/v1/kots",
+    list: "/v1/kots",
+    update: "/v1/kots",
+    delete: "/v1/kots",
+
+    details: (kotId: string) => `/v1/kots/${kotId}`,
+  },
 };
 export default apiEndpoints;
