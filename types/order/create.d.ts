@@ -10,8 +10,6 @@ export interface OrderFormValues {
   branchId: string;
   userId: string;
 
-  paymentMethod: PaymentMethod;
-
   discountAmount?: number;
   taxAmount?: number;
 

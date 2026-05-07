@@ -115,8 +115,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
             const payload = {
                 branchId: order.branchId,
                 userId: order.userId,
-
-                paymentMethod: order.paymentMethod,
+ 
 
                 discountAmount: order.discountAmount,
                 taxAmount: order.taxAmount,
@@ -287,8 +286,6 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                         branchId: branchId || '',
                         userId: userId || '',
 
-                        paymentMethod: 'CASH',
-
                         discountAmount: 0,
                         taxAmount: 0,
 
@@ -299,7 +296,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                         })),
                     })
                 }>
-                    Pay
+                    KOT & Print
                 </Button>
             </div>
 

@@ -58,12 +58,12 @@ const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
 
                 if (product?.id) {
                     //  UPDATE (PATCH)
-                    response = await axiosInstance.patch(`${apiEndpoints.product.update}/${product?.id}`, payload).catch(() => null);
+                    response = await axiosInstance.patch(`${apiEndpoints.product.update}/${product?.id}`, payload);
                     //  Show success toast once
                     toast.success(response?.data?.message);
                 } else {
                     //  CREATE (POST)
-                    response = await axiosInstance.post(apiEndpoints.product.create, payload).catch(() => null);
+                    response = await axiosInstance.post(apiEndpoints.product.create, payload);
 
                     //  Show success toast once
                     toast.success(response?.data?.message);
