@@ -52,6 +52,14 @@ const apiEndpoints = {
     delete: "/v1/products",
 
     lookup: "/v1/products/lookup",
+
+    getProductsByCategory: (categoryId: string) => `/v1/products/category?category_id=${categoryId}`,
   },
+  order:{
+    create: "/v1/orders",
+    list: "/v1/orders",
+    update: "/v1/orders",
+    delete: "/v1/orders",
+  }
 };
 export default apiEndpoints;
