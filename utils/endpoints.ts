@@ -53,13 +53,16 @@ const apiEndpoints = {
 
     lookup: "/v1/products/lookup",
 
-    getProductsByCategory: (categoryId: string) => `/v1/products/category?category_id=${categoryId}`,
+    getProductsByCategory: (categoryId: string) =>
+      `/v1/products/category?category_id=${categoryId}`,
   },
-  order:{
+  order: {
     create: "/v1/orders",
     list: "/v1/orders",
     update: "/v1/orders",
     delete: "/v1/orders",
+    
+    details: (orderId: string) => `/v1/orders/${orderId}`,
   },
   kot: {
     create: "/v1/kots",

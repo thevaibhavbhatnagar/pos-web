@@ -59,7 +59,7 @@ const KotComponent: React.FC<Props> = ({ kot }) => {
       toast.success(data.message || "Status updated successfully");
       router.push("/kots");
     },
-    
+
 
     onError: (error: any) => {
       toast.danger(

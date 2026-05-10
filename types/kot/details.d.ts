@@ -3,6 +3,7 @@ export interface KotDetailsType {
   kotNo: string;
   orderId: string;
   order: Order;
+  kotItems: KotItem[];
   status: 'PENDING' | 'PREPARING' | 'READY' | 'SERVED';
   createdAt: string;
 }
@@ -42,4 +43,16 @@ export interface OrderItem {
   quantity: number;
   price: number;
   total?: number;
+}
+
+
+export interface KotItem {
+  id: string;
+
+  kotId: string;
+
+  orderItemId: string;
+  orderItem: OrderItem;
+
+  quantity: number;
 }

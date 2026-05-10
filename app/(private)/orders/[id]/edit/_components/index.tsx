@@ -1,37 +1,23 @@
 "use client"
 import React from 'react'
-import { useRouter } from 'next/navigation' 
+import { OrderDetailsType } from '@/types/order/details'
+import Items from './items';
+import { ProductListType } from '@/types/product/list';
 
-import Add from './add' 
-import useRoleEditForm from '@/hooks/use-role-edit-form'
-
-import { RoleDetailsType } from '@/types/role/details' 
-import { PermissionsByModuleType } from '@/types/permission/list'
-import { GroupedModule } from '@/types/permission/details'
-
-type Props = { 
-  roles: { label: string; value: string }[]; 
-  role: RoleDetailsType;
-  permissions:GroupedModule[]
-
+type Props = {
+  order: OrderDetailsType;
+  categories: { label: string; value: string }[];
+  products: ProductListType[];
 }
 
-const RoleComponent: React.FC<Props> = ({roles, role, permissions}) => {
-  const router = useRouter();
-
-  const { useRoleEditFormik } = useRoleEditForm({ 
-    role:role,
-    onSuccess: () => {window.location.href = "/roles";},
-  });
+const OrderComponent: React.FC<Props> = ({ order,categories,products }) => {
 
   return (
     <div className='my-4 flex flex-col gap-4'>
-      {/* {JSON.stringify(role)} */}
-      <Add formik={useRoleEditFormik} roles={roles} permissions={permissions} />
-      {/* <Table data={users} onEdit={(user: UserFormType) => setUser(user)} onResetToAdd={() => setUser(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} /> */}
+      <Items order={order} categories={categories} products={products} />
     </div>
   )
 }
 
-export default RoleComponent
+export default OrderComponent
 
