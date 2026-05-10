@@ -32,7 +32,7 @@ type ChipProps = {
     className?: string;
 };
 
-const Items: React.FC<Props> = ({ order, categories, products,id }) => {
+const Items: React.FC<Props> = ({ order, categories, products, id }) => {
     const router = useRouter();
 
     const [items, setItems] = useState<CartItem[]>([]);
@@ -203,7 +203,7 @@ const Items: React.FC<Props> = ({ order, categories, products,id }) => {
     };
 
     return (
-        <div className="">
+        <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4 mb-6 bg-white p-4 rounded-lg">
                 <div className="flex items-center justify-between gap-4">
                     <p>Order</p>
@@ -371,34 +371,34 @@ const Items: React.FC<Props> = ({ order, categories, products,id }) => {
                         <h2 className="text-lg font-semibold">
                             Previous KOTs (Same Order)
                         </h2>
-                        <div className="flex justify-between"><div>Items</div> <div>Qty.</div> </div>
 
                         <div className="grid grid-cols-1 gap-4 w-full">
                             {order?.kots?.length > 0 ? (
-                                order.kots.map((kot) =>
-                                    kot.items.map((item) => (
-                                        <div
-                                            key={item.id}
-                                            className="border p-2 rounded"
-                                        >
-                                            <div className="flex justify-between items-center mt-2">
-                                                <h3>{item.product.name}</h3>
-                                                 <p>{item.quantity}</p>
-
-                                                {/* <Button
-                                                    className="rounded-full w-8 h-8"
-                                                    onClick={() => removeFromCart(item.id)}
-                                                >
-                                                    <Trash2 />
-                                                </Button> */}
-                                            </div>
-
-                                            <div className="flex justify-between items-center mt-2">
-                                                {/* <p>Qty: {item.quantity}</p> */}
-                                                {/* <p>₹{item.product.price}</p> */}
-                                            </div>
+                                order.kots.map((kot, index) =>
+                                    <div key={kot.id} className="">
+                                        <div className="flex justify-between items-center">
+                                            <div>KOT no : #{index + 1}</div>
+                                            <div>{kot.status}</div>
                                         </div>
-                                    ))
+                                        <div className="flex justify-between"><div>Items</div> <div>Qty.</div> </div>
+
+                                        {kot.items.map((item) => (
+                                            <div
+                                                key={item.id}
+                                                className="border p-2 rounded"
+                                            >
+                                                <div className="flex justify-between items-center mt-2">
+                                                    <h3>{item.product.name}</h3>
+                                                    <p>{item.quantity}</p>
+                                                </div>
+
+                                                <div className="flex justify-between items-center mt-2">
+                                                    {/* <p>Qty: {item.quantity}</p> */}
+                                                    {/* <p>₹{item.product.price}</p> */}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 )
                             ) : (
                                 <div>
@@ -407,7 +407,7 @@ const Items: React.FC<Props> = ({ order, categories, products,id }) => {
                             )}
                         </div>
 
-                         <Button className="mt-2 w-full" onClick={() => router.push('/kots')}>
+                        <Button className="mt-2 w-full" onClick={() => router.push('/kots')}>
                             View All KOTs
                         </Button>
 
@@ -415,6 +415,29 @@ const Items: React.FC<Props> = ({ order, categories, products,id }) => {
                 </div>
 
                 {/* {JSON.stringify(items)} */}
+            </div>
+            <div className="flex items-center gap-4 mb-6 bg-white p-4 rounded-lg">
+                <div className="flex flex-col gap-2 mb-6 bg-white p-4 rounded-lg">
+                    <div className="flex justify-between items-center">
+                        <p>Previous Total</p>
+                        <p>₹{order?.totalAmount || 0}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p>New Items Total</p>
+                        <p>₹{total}</p>
+                    </div>
+
+                    <div className="border-t pt-2 flex justify-between items-center font-semibold">
+                        <p>Final Total Amount</p>
+                        <p>
+                            ₹
+                            {(Number(order?.totalAmount || 0) + total).toFixed(2)}
+                        </p>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     );
