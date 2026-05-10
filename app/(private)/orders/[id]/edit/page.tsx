@@ -54,7 +54,7 @@ export default async function Page({ params, searchParams }: Props) {
   console.log("order________________", order)
 
   return (
-    <OrderComponent order={order} products={products} categories={categories} />
+    <OrderComponent order={order} products={products} categories={categories} id={id}/>
   )
 }
 

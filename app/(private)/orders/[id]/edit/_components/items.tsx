@@ -15,6 +15,7 @@ type Props = {
     order: OrderDetailsType;
     categories: { label: string; value: string }[];
     products: ProductListType[];
+    id: string;
 };
 
 type CartItem = {
@@ -31,7 +32,7 @@ type ChipProps = {
     className?: string;
 };
 
-const Items: React.FC<Props> = ({ order, categories, products }) => {
+const Items: React.FC<Props> = ({ order, categories, products,id }) => {
     const router = useRouter();
 
     const [items, setItems] = useState<CartItem[]>([]);
@@ -118,7 +119,7 @@ const Items: React.FC<Props> = ({ order, categories, products }) => {
     const branchId = data?.user?.branchId;
     const userId = data?.user?.id;
 
-    const createOrder = useMutation({
+    const updateOrder = useMutation({
         mutationFn: async (order: OrderFormValues) => {
             const payload = {
                 branchId: order.branchId,
@@ -138,8 +139,8 @@ const Items: React.FC<Props> = ({ order, categories, products }) => {
                 })),
             };
 
-            const response = await axiosInstance.post(
-                apiEndpoints.order.create,
+            const response = await axiosInstance.patch(
+                `${apiEndpoints.order.update}/${id}`,
                 payload
             );
 
@@ -348,7 +349,7 @@ const Items: React.FC<Props> = ({ order, categories, products }) => {
                         </div>
 
                         <Button className="mt-2 w-full" onClick={() =>
-                            createOrder.mutate({
+                            updateOrder.mutate({
                                 branchId: branchId || '',
                                 userId: userId || '',
 
@@ -368,7 +369,7 @@ const Items: React.FC<Props> = ({ order, categories, products }) => {
                     </div>
                     <div className="flex flex-col gap-4 bg-surface p-4">
                         <h2 className="text-lg font-semibold">
-                            Previous KOTs
+                            Previous KOTs (Same Order)
                         </h2>
                         <div className="flex justify-between"><div>Items</div> <div>Qty.</div> </div>
 
@@ -405,6 +406,10 @@ const Items: React.FC<Props> = ({ order, categories, products }) => {
                                 </div>
                             )}
                         </div>
+
+                         <Button className="mt-2 w-full" onClick={() => router.push('/kots')}>
+                            View All KOTs
+                        </Button>
 
                     </div>
                 </div>
