@@ -11,6 +11,7 @@ import { Column, DataTable } from '@/ui/data-table'
 import useProductDelete from '@/hooks/use-product-delete';
 import { KotListType } from '@/types/kot/list';
 import { useRouter } from 'next/navigation';
+import useKotDelete from '@/hooks/use-kot-delete';
 
 
 type Props = {
@@ -32,10 +33,10 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
     const router = useRouter();
 
     // Custom hook to handle deletion of a commission type
-    const { onDelete } = useProductDelete({ onOpenChange });
+    const { onDelete } = useKotDelete({ onOpenChange });
 
     // State to store the currently selected commission type for deletion or editing
-    const [product, setProduct] = useState<KotListType | undefined>();
+    const [kot, setKot] = useState<KotListType | undefined>();
 
     // Function to handle editing: calls parent prop function with selected commission type
     const handleEdit = (data: KotListType) => {
@@ -43,9 +44,9 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
     }
 
     // Function to handle delete action: opens the modal and sets selected commission type
-    const handleDelete = (user: KotListType) => {
+    const handleDelete = (data: KotListType) => {
         onOpen();
-        setProduct(user);
+        setKot(data);
     }
 
     const columns: Column<KotListType>[] = [
@@ -127,13 +128,13 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 {/* <Search /> */}
             </div>
             <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage, totalItems: totalItems }} />
-            {/* <Modal
+            <Modal
                 title="Delete Confirmation"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
                     { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", onPress: () => onDelete(product?.id) },
+                    { label: "Confirm", onPress: () => onDelete(kot?.id) },
                 ]}
             >
                 <div className="flex items-center justify-center">
@@ -141,8 +142,8 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                         <TriangleAlert className="text-[#FF5F5F]" size={28} />
                     </div>
                 </div>
-                <p className="text-sm text-default-600"> Are you sure you want to delete this Product? <span className='font-semibold underline'>{product?.name}</span> </p>
-            </Modal> */}
+                <p className="text-sm text-default-600"> Are you sure you want to delete this kot? <span className='font-semibold underline'>{kot?.kotNo}</span> </p>
+            </Modal>
         </div>
     )
 }

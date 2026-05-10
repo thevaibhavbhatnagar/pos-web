@@ -364,7 +364,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                 })),
                             })
                         }>
-                            KOT & Print
+                         {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
                         </Button>
                     </div>
                     <div className="flex flex-col gap-4 bg-surface p-4">
@@ -407,7 +407,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             )}
                         </div>
 
-                        <Button className="mt-2 w-full" onClick={() => router.push('/kots')}>
+                        <Button className="mt-2 w-full" >
                             View All KOTs
                         </Button>
 

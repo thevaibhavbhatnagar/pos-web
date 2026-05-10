@@ -25,6 +25,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
   const totalItems = response?.data?.meta?.total;
 
+  console.log(orders)
+
   return (
     <OrderComponent orders={orders} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
