@@ -61,7 +61,7 @@ const apiEndpoints = {
     list: "/v1/orders",
     update: "/v1/orders",
     delete: "/v1/orders",
-    
+
     details: (orderId: string) => `/v1/orders/${orderId}`,
   },
   kot: {
@@ -71,6 +71,9 @@ const apiEndpoints = {
     delete: "/v1/kots",
 
     details: (kotId: string) => `/v1/kots/${kotId}`,
+  },
+  dashboard: {
+    stats: "/v1/dashboard",
   },
 };
 export default apiEndpoints;
