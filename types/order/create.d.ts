@@ -4,6 +4,8 @@ export interface OrderItemFormValues {
   price?: number;
 }
 
+
+
 export type PaymentMethod = "CASH" | "CARD" | "UPI";
 
 export interface OrderFormValues {
@@ -12,6 +14,7 @@ export interface OrderFormValues {
 
   discountAmount?: number;
   taxAmount?: number;
+  paymentMethod: PaymentMethod;
 
   notes?: string;
 

@@ -12,10 +12,11 @@ type Props = {
   page: number;
   totalPages: number;
   rowsPerPage: number;
+  totalItems?: number;
 
 }
 
-const RoleComponent: React.FC<Props> = ({ roles, page, totalPages, rowsPerPage }) => {
+const RoleComponent: React.FC<Props> = ({ roles, page, totalPages, rowsPerPage, totalItems }) => {
 
   const router = useRouter();
 
@@ -25,7 +26,7 @@ const RoleComponent: React.FC<Props> = ({ roles, page, totalPages, rowsPerPage }
 
   return (
     <div className='my-4 flex flex-col gap-4'>
-      <Table data={roles} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+      <Table data={roles} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )
 }

@@ -45,8 +45,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
   const totalPages = productResponse?.data?.meta?.totalPages;
 
+  const totalItems = productResponse?.data?.meta?.total;
+
   return (
-    <ProductComponent products={products} categories={categories} statuses={statuses} page={page} totalPages={totalPages} rowsPerPage={limit} />
+    <ProductComponent products={products} categories={categories} statuses={statuses} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }
 

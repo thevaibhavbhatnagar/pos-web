@@ -22,9 +22,10 @@ type Props = {
     page: number;
     totalPages: number;
     rowsPerPage: number;
+    totalItems?: number;
 }
 
-const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, rowsPerPage }) => {
+const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, rowsPerPage, totalItems }) => {
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -116,7 +117,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 </div>
                 {/* <Search /> */}
             </div>
-            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage }} wrapperClassName="max-h-[400px]" />
+            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage,totalItems:totalItems }} wrapperClassName="max-h-[400px]" />
             <Modal
                 title="Delete Confirmation"
                 isOpen={isOpen}

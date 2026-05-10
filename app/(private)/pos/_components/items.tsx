@@ -115,9 +115,10 @@ const Items: React.FC<Props> = ({ categories, products }) => {
             const payload = {
                 branchId: order.branchId,
                 userId: order.userId,
- 
+
 
                 discountAmount: order.discountAmount,
+                paymentMethod: order.paymentMethod,
                 taxAmount: order.taxAmount,
 
                 notes: order.notes,
@@ -139,7 +140,12 @@ const Items: React.FC<Props> = ({ categories, products }) => {
 
         onSuccess: (data) => {
             toast.success(data.message);
+
+            setTimeout(() => {
+                router.replace("/kots");
+            }, 1200);
         },
+
 
         onError: (error: any) => {
             toast.danger(
@@ -288,6 +294,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
 
                         discountAmount: 0,
                         taxAmount: 0,
+                        paymentMethod:"CASH",
 
                         items: items.map((item) => ({
                             productId: item.id,
@@ -300,7 +307,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                 </Button>
             </div>
 
-            {JSON.stringify(items)}
+            {/* {JSON.stringify(items)} */}
         </div>
     );
 };

@@ -13,11 +13,6 @@ import { KotListType } from '@/types/kot/list';
 // Force dynamic rendering (disables Next.js static optimization)
 export const dynamic = "force-dynamic";
 
-const statuses = [
-  { label: "Active", value: "true" },
-  { label: "Inactive", value: "false" }
-
-]
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ page?: string; search?: string; sort_by?: string; sort_dir?: string; category_id?: string }> }) {
 
@@ -28,13 +23,15 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const limit = 10;
 
   // Call backend API to fetch products list
-  const response = await  axiosInstance.get(apiEndpoints.kot.list);
+  const response = await  axiosInstance.get(apiEndpoints.kot.list, {params: {page, limit}});
 
   const kots: KotListType[] = response?.data?.data || [];
   
   const totalPages = response?.data?.meta?.totalPages;
 
+  const totalItems = response?.data?.meta?.total;
+
   return (
-    <KotComponent kots={kots} page={page} totalPages={totalPages} rowsPerPage={limit} />
+    <KotComponent kots={kots} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }

@@ -5,8 +5,8 @@ import axiosInstance from '@/utils/axiosInstance';
 
 import UserComponent from './_components'
 import { UserListType } from '@/types/user/list';
-import { RoleListType } from '@/types/role/list';
-import { BranchListType } from '@/app/(public)/auth/login/page';
+import { RoleListType } from '@/types/role/list'; 
+import { BranchListType } from '@/types/branch/list';
 
 
 // Force dynamic rendering (disables Next.js static optimization)
@@ -21,7 +21,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const limit = 10;
 
   // Call backend API to fetch user list
-  const [userResponse, roleResponse,branchResponse] = await Promise.all([
+  const [userResponse, roleResponse, branchResponse] = await Promise.all([
     axiosInstance.get(apiEndpoints.user.list, { params: { page, limit } }),
     axiosInstance.get(apiEndpoints.role.list, { params: { page: 1, limit: 100 } }),
     axiosInstance.get(apiEndpoints.branch.list, { params: { page: 1, limit: 100 } })
@@ -47,8 +47,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
   const totalPages = userResponse?.data?.meta?.totalPages;
 
+  const totalItems = userResponse?.data?.meta?.total; 
+
   return (
-    <UserComponent users={users} page={page} totalPages={totalPages} rowsPerPage={limit} branches={branches} roles={roles} />
+    <UserComponent users={users} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} branches={branches} roles={roles} />
   )
 }
 

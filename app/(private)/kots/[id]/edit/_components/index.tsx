@@ -1,15 +1,89 @@
 "use client";
 
-import React from "react";
-import { Chip } from "@heroui/react";
+import React, { useEffect, useMemo } from "react";
+import { Chip, toast } from "@heroui/react";
 import { KotDetailsType } from "@/types/kot/details";
 import Table from "./table";
 
 type Props = {
   kot: KotDetailsType;
 };
-
+import Select from '@/ui/select'
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "@/utils/axiosInstance";
+import apiEndpoints from "@/utils/endpoints";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 const KotComponent: React.FC<Props> = ({ kot }) => {
+  const router = useRouter();
+
+  const statusOptions = useMemo(
+    () => [
+      {
+        label: "Pending",
+        value: "PENDING",
+      },
+      {
+        label: "Preparing",
+        value: "PREPARING",
+      },
+      {
+        label: "Ready",
+        value: "READY",
+      },
+      {
+        label: "Served",
+        value: "SERVED",
+      },
+    ],
+    []
+  );
+
+
+
+  const updateStatusMutation = useMutation({
+    mutationFn: async (status: string) => {
+      const payload = {
+        status,
+      };
+
+      const response = await axiosInstance.patch(
+        `${apiEndpoints.kot.update}/${kot.id}`,
+        payload
+      );
+
+      return response.data;
+    },
+
+    onSuccess: (data) => {
+      toast.success(data.message || "Status updated successfully");
+      router.push("/kots");
+    },
+    
+
+    onError: (error: any) => {
+      toast.danger(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    },
+  });
+  const formik = useFormik({
+    initialValues: {
+      status: kot?.status,
+    },
+
+    onSubmit: () => { },
+  });
+
+  useEffect(() => {
+    if (
+      formik.values.status &&
+      formik.values.status !== kot.status
+    ) {
+      updateStatusMutation.mutate(formik.values.status);
+    }
+  }, [formik.values.status]);
+
   return (
     <div className="space-y-4  py-8 p-4">
       {/* Header */}
@@ -21,11 +95,18 @@ const KotComponent: React.FC<Props> = ({ kot }) => {
           </p>
         </div>
 
-        <Chip
-          size="sm" 
-        >
-          {kot?.status}
-        </Chip>
+        <div className="flex items-center gap-3">
+
+          <div className="w-44">
+            <Select
+              label=""
+              name="status"
+              placeholder="Change Status"
+              options={statusOptions}
+              formik={formik}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Info Cards */}

@@ -15,9 +15,10 @@ type Props = {
   page: number;
   totalPages: number;
   rowsPerPage: number;
+  totalItems?: number;
 }
 
-const BranchesComponent: React.FC<Props> = ({ branches, page, totalPages, rowsPerPage }) => {
+const BranchesComponent: React.FC<Props> = ({ branches, page, totalPages, rowsPerPage,totalItems }) => {
 
   const [branch, setBranch] = useState<BranchFormType | undefined>(undefined);
 
@@ -32,7 +33,7 @@ const BranchesComponent: React.FC<Props> = ({ branches, page, totalPages, rowsPe
   return (
     <div className='my-4 flex flex-col gap-4'>
       <Add useBranchFormik={useBranchFormik} isEdit={!!branch} onResetToAdd={() => setBranch(undefined)} />
-      <Table data={branches} onEdit={(branch: BranchFormType) => setBranch(branch)} onResetToAdd={() => setBranch(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+      <Table data={branches} onEdit={(branch: BranchFormType) => setBranch(branch)} onResetToAdd={() => setBranch(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )
 }

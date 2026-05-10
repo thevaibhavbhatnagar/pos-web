@@ -16,9 +16,10 @@ type Props = {
   rowsPerPage: number; 
   categories : CategoryListType[];
   statuses : { label: string; value: string }[];
+  totalItems?: number;
 }
 
-const CategoryComponent: React.FC<Props> = ({categories,page, totalPages, rowsPerPage,statuses }) => {
+const CategoryComponent: React.FC<Props> = ({categories,page, totalPages, rowsPerPage,statuses,totalItems }) => {
 
   const [category, setCategory] = useState<CategoryFormType | undefined>(undefined);
 
@@ -33,7 +34,7 @@ const CategoryComponent: React.FC<Props> = ({categories,page, totalPages, rowsPe
   return (
     <div className='my-4 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <Add formik={useCategoryFormik} isEdit={!!category} onResetToAdd={() => setCategory(undefined)}  statuses={statuses}/>
-      <Table data={categories} onEdit={(category: CategoryFormType) => setCategory(category)} onResetToAdd={() => setCategory(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+      <Table data={categories} onEdit={(category: CategoryFormType) => setCategory(category)} onResetToAdd={() => setCategory(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )
 }

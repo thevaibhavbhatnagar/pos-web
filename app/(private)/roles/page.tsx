@@ -23,8 +23,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
   const totalPages = response?.data?.meta?.totalPages;
 
+  const totalItems = response?.data?.meta?.total;
+
   return (
-    <RoleComponent roles={roles} page={page} totalPages={totalPages} rowsPerPage={limit} />
+    <RoleComponent roles={roles} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }
 

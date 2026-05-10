@@ -15,11 +15,12 @@ type Props = {
   page: number;
   totalPages: number;
   rowsPerPage: number;
+  totalItems?: number;
   roles: { label: string; value: string }[]
   branches: { label: string; value: string }[]
 }
 
-const UserComponent: React.FC<Props> = ({ users, page, totalPages, rowsPerPage,roles,branches }) => {
+const UserComponent: React.FC<Props> = ({ users, page, totalPages, rowsPerPage,totalItems,roles,branches }) => {
 
   const [user, setUser] = useState<UserFormType | undefined>(undefined);
 
@@ -34,7 +35,7 @@ const UserComponent: React.FC<Props> = ({ users, page, totalPages, rowsPerPage,r
   return (
     <div className='my-4 flex flex-col gap-4'>
       <Add useUserFormik={useUserFormik} isEdit={!!user} onResetToAdd={() => setUser(undefined)} branches={branches} roles={roles}/>
-      <Table data={users} onEdit={(user: UserFormType) => setUser(user)} onResetToAdd={() => setUser(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+      <Table data={users} onEdit={(user: UserFormType) => setUser(user)} onResetToAdd={() => setUser(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )
 }

@@ -9,6 +9,7 @@ export interface OrderListType {
 
   paymentMethod: string;
   status: string;
+  paymentStatus:string;
 
   notes: string | null;
 

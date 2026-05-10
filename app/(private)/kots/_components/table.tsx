@@ -8,19 +8,20 @@ import Modal from '@/ui/modal';
 import { Column, DataTable } from '@/ui/data-table'
 
 
-import useProductDelete from '@/hooks/use-product-delete'; 
+import useProductDelete from '@/hooks/use-product-delete';
 import { KotListType } from '@/types/kot/list';
 import { useRouter } from 'next/navigation';
 
 
 type Props = {
-    data: KotListType[];  
+    data: KotListType[];
     page: number;
     totalPages: number;
     rowsPerPage: number;
+    totalItems?: number;
 }
 
-const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
+const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItems }) => {
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
     const onOpen = () => setIsOpen(true);
     const onOpenChange = () => setIsOpen(false);
 
-    const router = useRouter(); 
+    const router = useRouter();
 
     // Custom hook to handle deletion of a commission type
     const { onDelete } = useProductDelete({ onOpenChange });
@@ -38,7 +39,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
 
     // Function to handle editing: calls parent prop function with selected commission type
     const handleEdit = (data: KotListType) => {
-         router.push(`/kots/${data.id}/edit`)
+        router.push(`/kots/${data.id}/edit`)
     }
 
     // Function to handle delete action: opens the modal and sets selected commission type
@@ -54,38 +55,63 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
             renderCell: (_, rowIndex) => (rowIndex ?? 0) + 1, // rowIndex starts at 0
         },
         { key: "kotNo", label: "Kot No", renderCell: (value) => value?.kotNo ?? "N/A" },
-        { key: "orderNo", label: "Order No", renderCell: (value) => value?.orderId ?? "N/A" },        
+        { key: "orderNo", label: "Order No", renderCell: (value) => value?.orderId ?? "N/A" },
 
         {
-            key: "status", label: "Status", renderCell: (value) => (
-                <Chip size='sm'
-                    className={
-                        value.status
-                            ? "bg-chip-active text-chip-text-active dark:bg-chip-active-dark dark:text-chip-text-active-dark"
-                            : "bg-chip-pending text-chip-text-pending dark:bg-chip-pending-dark dark:text-chip-text-pending-dark"
-                    } >{value.status ? "Active" : "Inactive"}</Chip>
-            )
-        }, 
+            key: "status",
+            label: "Status",
+
+            renderCell: (value) => {
+                const statusStyles: Record<string, string> = {
+                    PENDING:
+                        "bg-[var(--chip-pending)] text-[var(--chip-pending-text)]",
+
+                    PREPARING:
+                        "bg-[var(--chip-inactive)] text-[var(--chip-inactive-text)]",
+
+                    READY:
+                        "bg-[var(--chip-active)] text-[var(--chip-active-text)]",
+
+                    SERVED:
+                        "bg-[var(--chip-active)] text-[var(--chip-active-text)]",
+                };
+
+                return (
+                    <Chip
+                        size="sm"
+                        className={
+                            statusStyles[
+                            value.status as keyof typeof statusStyles
+                            ]
+                        }
+                    >
+                        {value.status}
+                    </Chip>
+                );
+            },
+        },
         {
             key: "action", label: "Action", renderCell: (value) =>
-                <div className="relative flex items-center gap-2">
-                    {/* EDIT */}
-                    <button
-                        onClick={() => handleEdit(value)}
-                        className="p-1.5 rounded-md text-muted hover:text-primary hover:bg-primary/10 transition"
-                    >
-                        <Pencil size={18} />
-                    </button>
+                value.status === "PENDING" && (
+                    <div className="relative flex items-center gap-2">
+                        {/* EDIT */}
+                        <button
+                            onClick={() => handleEdit(value)}
+                            className="p-1.5 rounded-md text-muted hover:text-primary hover:bg-primary/10 transition"
+                        >
+                            <Pencil size={18} />
+                        </button>
 
-                    {/* DELETE */}
-                    <button
-                        onClick={() => handleDelete(value)}
-                        className="p-1.5 rounded-md text-muted hover:text-red-500 hover:bg-red-500/10 transition"
-                    >
-                        <Trash2 size={18} />
-                    </button>
+                        {/* DELETE */}
+                        <button
+                            onClick={() => handleDelete(value)}
+                            className="p-1.5 rounded-md text-muted hover:text-red-500 hover:bg-red-500/10 transition"
+                        >
+                            <Trash2 size={18} />
+                        </button>
 
-                </div>
+                    </div>
+                )
         }
     ];
 
@@ -100,7 +126,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
                 </div>
                 {/* <Search /> */}
             </div>
-            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage }} wrapperClassName="max-h-[400px]" />
+            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage, totalItems: totalItems }} />
             {/* <Modal
                 title="Delete Confirmation"
                 isOpen={isOpen}

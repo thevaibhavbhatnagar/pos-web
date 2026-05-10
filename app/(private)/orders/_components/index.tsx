@@ -12,10 +12,11 @@ type Props = {
   page: number;
   totalPages: number;
   rowsPerPage: number;
+  totalItems?: number;
 
 }
 
-const OrderComponent: React.FC<Props> = ({ orders, page, totalPages, rowsPerPage }) => {
+const OrderComponent: React.FC<Props> = ({ orders, page, totalPages, rowsPerPage,totalItems }) => {
 
   const router = useRouter();
 
@@ -25,7 +26,7 @@ const OrderComponent: React.FC<Props> = ({ orders, page, totalPages, rowsPerPage
 
   return (
     <div className='my-4 flex flex-col gap-4'>
-      <Table data={orders} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+      <Table data={orders} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )
 }

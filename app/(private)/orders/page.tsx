@@ -23,8 +23,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
   const totalPages = response?.data?.meta?.totalPages;
 
+  const totalItems = response?.data?.meta?.total;
+
   return (
-    <OrderComponent orders={orders} page={page} totalPages={totalPages} rowsPerPage={limit} />
+    <OrderComponent orders={orders} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }
 

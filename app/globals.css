@@ -89,22 +89,35 @@
   --grey: #6b7280;
   --grey-600: #bbc3d2;
 
-  /* Chips - Light Theme */
-  --chip-active: #dcfce7; /* soft green */
-  --chip-inactive: #fee2e2; /* soft red */
-  --chip-pending: #fef3c7; /* soft yellow */
-
-  /* Optional text colors (recommended) */
-  --chip-active-text: #166534;
-  --chip-inactive-text: #991b1b;
+  /* Pending */
+  --chip-pending: #fef3c7;
   --chip-pending-text: #92400e;
 
+  /* Preparing */
+  --chip-preparing: #ffedd5;
+  --chip-preparing-text: #c2410c;
+
+  /* Active / Success */
+  --chip-active: #dcfce7;
+  --chip-active-text: #166534;
+
+  /* Inactive / Error */
+  --chip-inactive: #fee2e2;
+  --chip-inactive-text: #991b1b;
+
+  /* Ready */
+  --chip-ready: #dcfce7;
+  --chip-ready-text: #166534;
+
+  /* Served */
+  --chip-served: #dbeafe;
+  --chip-served-text: #1d4ed8;
+
+
   /* Sidebar */
-  --sidebar-active-bg: linear-gradient(
-    90deg,
-    color-mix(in srgb, #eab308 25%, transparent) 0%,
-    color-mix(in srgb, #eab308 5%, transparent) 100%
-  );
+  --sidebar-active-bg: linear-gradient(90deg,
+      color-mix(in srgb, #eab308 25%, transparent) 0%,
+      color-mix(in srgb, #eab308 5%, transparent) 100%);
   --sidebar-active-border: color-mix(in srgb, #eab308 40%, transparent);
   --sidebar-active-highlight: rgba(255, 255, 255, 0.6);
   --sidebar-active-text: #b45309;
@@ -169,22 +182,34 @@
   --grey: #9ca3af;
   --grey-600: #6b7280;
 
-  /* Chips - Dark Theme */
-  --chip-active: #14532d; /* dark green */   
-  --chip-inactive: #7f1d1d; /* dark red */
-  --chip-pending: #78350f; /* dark amber */
-
-  /* Optional text colors */
-  --chip-active-text: #bbf7d0;
-  --chip-inactive-text: #fecaca;
+  /* Pending */
+  --chip-pending: #78350f;
   --chip-pending-text: #fde68a;
 
+  /* Preparing */
+  --chip-preparing: #9a3412;
+  --chip-preparing-text: #fdba74;
+
+  /* Active / Success */
+  --chip-active: #14532d;
+  --chip-active-text: #bbf7d0;
+
+  /* Inactive / Error */
+  --chip-inactive: #7f1d1d;
+  --chip-inactive-text: #fecaca;
+
+  /* Ready */
+  --chip-ready: #166534;
+  --chip-ready-text: #bbf7d0;
+
+  /* Served */
+  --chip-served: #1e3a8a;
+  --chip-served-text: #bfdbfe;
+
   /* Sidebar */
-  --sidebar-active-bg: linear-gradient(
-    90deg,
-    color-mix(in srgb, #facc15 35%, transparent) 0%,
-    color-mix(in srgb, #facc15 10%, transparent) 100%
-  );
+  --sidebar-active-bg: linear-gradient(90deg,
+      color-mix(in srgb, #facc15 35%, transparent) 0%,
+      color-mix(in srgb, #facc15 10%, transparent) 100%);
   --sidebar-active-border: color-mix(in srgb, #facc15 60%, transparent);
   --sidebar-active-highlight: rgba(255, 255, 255, 0.1);
   --sidebar-active-text: #facc15;
