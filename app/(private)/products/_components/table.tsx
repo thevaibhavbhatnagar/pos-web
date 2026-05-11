@@ -44,6 +44,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
         const payload = {
             id: data.id, 
             name: data.name, 
+            image: data.image,
             price: data.price,
             isKotRequired: data.isKotRequired.toString(),
             categoryId: data.categoryId,

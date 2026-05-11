@@ -11,7 +11,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
-import NoImage from '../../../../../../public/assets/no-image.webp'; 
+import NoImage from '../../../../../../public/assets/no-image.webp';
 
 type Props = {
     order: OrderDetailsType;
@@ -252,18 +252,18 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="border p-2 rounded"
+                                    className="border shadow bg-surface p-2 rounded-lg"
                                 >
+
+                                    <Image
+                                        width={50}
+                                        height={50}
+                                        src={product.image || NoImage}
+                                        alt={product.name}
+                                        className="w-full h-32 object-cover mb-2"
+                                    />
+
                                     <h3>{product.name}</h3>
-                                       <Image
-                                    width={50}
-                                    height={50}
-                                    src={product.image || NoImage}
-                                    alt={product.name}
-                                    className="w-full h-32 object-cover mb-2"
-                                />
-
-
                                     <div className="flex justify-between items-center mt-2">
                                         <p>₹{product.price}</p>
 
@@ -374,28 +374,29 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                 })),
                             })
                         }>
-                         {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
+                            {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
                         </Button>
                     </div>
                     <div className="flex flex-col gap-4 bg-surface p-4">
-                        <h2 className="text-lg font-semibold">
-                            Previous KOTs (Same Order)
+                        <h2 className="flex items-center gap-2">
+                            <p className='text-lg font-semibold'> Previous KOTs </p>
+                            <span className="text-sm font-light text-gray-400">(Same Order)</span>
                         </h2>
 
                         <div className="grid grid-cols-1 gap-4 w-full">
                             {order?.kots?.length > 0 ? (
                                 order.kots.map((kot, index) =>
-                                    <div key={kot.id} className="">
+                                    <div key={kot.id} className="bg-gray-100 p-2 rounded-lg">
                                         <div className="flex justify-between items-center">
-                                            <div>KOT no : #{index + 1}</div>
-                                            <div>{kot.status}</div>
+                                            <p className='text-sm font-semibold'>KOT #{index + 1}</p>
+                                            <p className={`text-xs font-light ${statusStyles[kot.status]}`}>{kot.status}</p>
                                         </div>
                                         <div className="flex justify-between"><div>Items</div> <div>Qty.</div> </div>
 
                                         {kot.items.map((item) => (
                                             <div
                                                 key={item.id}
-                                                className="border p-2 rounded"
+                                                className=""
                                             >
                                                 <div className="flex justify-between items-center mt-2">
                                                     <h3>{item.product.name}</h3>
@@ -417,7 +418,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             )}
                         </div>
 
-                        <Button className="mt-2 w-full" >
+                        <Button className="mt-2 w-full" onClick={()=>router.push("/kots")} >
                             View All KOTs
                         </Button>
 
@@ -426,29 +427,63 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
 
                 {/* {JSON.stringify(items)} */}
             </div>
-            <div className="flex items-center gap-4 mb-6 bg-white p-4 rounded-lg">
-                <div className="flex flex-col gap-2 mb-6 bg-white p-4 rounded-lg">
-                    <div className="flex justify-between items-center">
-                        <p>Previous Total</p>
-                        <p>₹{order?.totalAmount || 0}</p>
-                    </div>
+        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+  <div className="flex items-center justify-between border-b border-dashed pb-3">
+    <div>
+      <h3 className="text-lg font-semibold text-gray-800">
+        Order Summary
+      </h3>
+      <p className="text-sm text-gray-500">
+        Updated billing overview
+      </p>
+    </div>
 
-                    <div className="flex justify-between items-center">
-                        <p>New Items Total</p>
-                        <p>₹{total}</p>
-                    </div>
+    <div className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+      Updated
+    </div>
+  </div>
 
-                    <div className="border-t pt-2 flex justify-between items-center font-semibold">
-                        <p>Final Total Amount</p>
-                        <p>
-                            ₹
-                            {(Number(order?.totalAmount || 0) + total).toFixed(2)}
-                        </p>
-                    </div>
-                </div>
+  <div className="mt-4 space-y-4">
+    <div className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3">
+      <p className="text-sm font-medium text-gray-600">
+        Previous Total
+      </p>
 
+      <p className="text-base font-semibold text-gray-800">
+        ₹{Number(order?.totalAmount || 0).toFixed(2)}
+      </p>
+    </div>
 
-            </div>
+    <div className="flex items-center justify-between rounded-xl bg-blue-50 px-4 py-3">
+      <p className="text-sm font-medium text-blue-700">
+        New Items Total
+      </p>
+
+      <p className="text-base font-semibold text-blue-800">
+        ₹{total.toFixed(2)}
+      </p>
+    </div>
+
+    <div className="border-t pt-4">
+      <div className="flex items-center justify-between rounded-xl bg-green-50 px-4 py-4">
+        <div>
+          <p className="text-sm text-green-700">
+            Final Total Amount
+          </p>
+
+          <p className="text-xs text-green-600">
+            Including newly added items
+          </p>
+        </div>
+
+        <p className="text-2xl font-bold text-green-700">
+          ₹
+          {(Number(order?.totalAmount || 0) + total).toFixed(2)}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
     );
 };

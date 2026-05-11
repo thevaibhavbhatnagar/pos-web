@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormikProps } from 'formik'
 
 import Button from '@/ui/button'
@@ -26,6 +26,9 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
     const [uploading, setUploading] = React.useState(false);
     const [preview, setPreview] = React.useState("");
 
+    useEffect(() => {
+        setPreview(formik.values.image || "");
+    }, [formik.values.image]);
 
     const uploadImage = async (file: File) => {
 
@@ -169,7 +172,7 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
 
                 </div>
                 <div className="flex gap-4">
-                     
+
                     <Button
                         type="submit"
                         disabled={uploading}
@@ -178,11 +181,11 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
                         {uploading
                             ? "Uploading..."
                             : isEdit
-                            ? "Update"
-                            : "Submit"}
+                                ? "Update"
+                                : "Submit"}
                     </Button>
 
-                      {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
+                    {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
                 </div>
             </form>
         </div>

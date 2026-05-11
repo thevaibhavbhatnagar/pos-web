@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
-import NoImage from '../../../../public/assets/no-image.webp'; 
+import NoImage from '../../../../public/assets/no-image.webp';
 
 type Props = {
     categories: { label: string; value: string }[];
@@ -194,7 +194,6 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                                 key={product.id}
                                 className="border p-2 rounded"
                             >
-                                <h3>{product.name}</h3>
 
                                 <Image
                                     width={50}
@@ -203,7 +202,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                                     alt={product.name}
                                     className="w-full h-32 object-cover mb-2"
                                 />
-
+                                <h3>{product.name}</h3>
                                 <div className="flex justify-between items-center mt-2">
                                     <p>₹{product.price}</p>
 
@@ -304,7 +303,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
 
                         discountAmount: 0,
                         taxAmount: 0,
-                        paymentMethod:"CASH",
+                        paymentMethod: "CASH",
 
                         items: items.map((item) => ({
                             productId: item.id,
