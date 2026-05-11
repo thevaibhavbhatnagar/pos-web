@@ -17,7 +17,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const limit = 10;
 
   // Call backend API to fetch user list
-  const response = await axiosInstance.get(apiEndpoints.order.list, { params: { page: page, limit: limit } })
+  const response = await axiosInstance.get(apiEndpoints.order.lookup, { params: { page: page, limit: limit } })
 
   const orders: OrderListType[] = response?.data?.data || [];
 

@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const limit = 10;
 
   // Call backend API to fetch products list
-  const response = await  axiosInstance.get(apiEndpoints.kot.list, {params: {page, limit}});
+  const response = await  axiosInstance.get(apiEndpoints.kot.lookup, {params: {page, limit}});
 
   const kots: KotListType[] = response?.data?.data || [];
   
@@ -35,3 +35,4 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     <KotComponent kots={kots} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }
+

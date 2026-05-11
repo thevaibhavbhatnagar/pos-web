@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
-import { authToken } from './authToken';
-import apiEndpoints from './endpoints';
+import axios, { AxiosError } from "axios";
+import { authToken } from "./authToken";
+import apiEndpoints from "./endpoints";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
   //   'Content-Type': 'application/json',
   // },
 });
-
 
 const handleUnauthorized = async () => {
   // Client-side
@@ -24,33 +23,52 @@ const handleUnauthorized = async () => {
   redirect("/auth/silent-logout");
 };
 
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token = await authToken();
+    config.headers.Authorization = token ? `Bearer ${token}` : undefined;
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
-axiosInstance.interceptors.request.use(async (config) => {
-  const token = await authToken();
-  config.headers.Authorization = token ? `Bearer ${token}` : undefined;
-  return config;
-}, (error) => Promise.reject(error));
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const status = error.response?.status;
+    const url = error.config?.url ?? "";
 
-axiosInstance.interceptors.response.use((response) => response, async (error) => {
+    //these requests should NOT trigger logout
+    const isAuthRequest =
+      url.includes(apiEndpoints.authentication.login) ||
+      url.includes(apiEndpoints.authentication.loginVerify);
 
-  const status = error.response?.status;
-  const url = error.config?.url ?? "";
+    // logout ONLY for protected APIs
+    if (status === 401 && !isAuthRequest) {
+      await handleUnauthorized();
+    }
 
-  //these requests should NOT trigger logout
-  const isAuthRequest =
-    url.includes(apiEndpoints.authentication.login) || 
-    url.includes(apiEndpoints.authentication.loginVerify) 
+    // 403 -> standardized response
+    if (status === 403) {
+      return Promise.resolve({
+        data: {
+          success: false,
+          statusCode: 403,
+          message: error.response?.data?.message || "Access denied",
+          data: null,
+        },
+      });
+    }
 
-  // logout ONLY for protected APIs
-  if (status === 401 && !isAuthRequest) {
-    await handleUnauthorized();
-  }
+    console.error("Axios error:", error);
+    return Promise.reject(error);
+  },
+);
 
-  console.error('Axios error:', error);
-  return Promise.reject(error);
-});
-
-export function handleAxiosError(error: unknown, defaultMessage: string = "An unexpected error occurred. Please try again."): string {
+export function handleAxiosError(
+  error: unknown,
+  defaultMessage: string = "An unexpected error occurred. Please try again.",
+): string {
   if (error instanceof AxiosError) {
     // Handle AxiosError: Check for response-specific error messages
     return error.response?.data?.message || defaultMessage;

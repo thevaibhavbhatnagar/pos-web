@@ -63,6 +63,7 @@ const apiEndpoints = {
     delete: "/v1/orders",
 
     details: (orderId: string) => `/v1/orders/${orderId}`,
+    lookup: "/v1/orders/lookup",
   },
   kot: {
     create: "/v1/kots",
@@ -71,6 +72,7 @@ const apiEndpoints = {
     delete: "/v1/kots",
 
     details: (kotId: string) => `/v1/kots/${kotId}`,
+    lookup: "/v1/kots/lookup",
   },
   dashboard: {
     stats: "/v1/dashboard",
