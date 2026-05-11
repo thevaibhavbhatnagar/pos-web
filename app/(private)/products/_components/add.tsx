@@ -9,6 +9,9 @@ import { DiamondPlus } from 'lucide-react'
 
 import { ProductFormType } from '@/types/product/form'
 import Select from '@/ui/select'
+import FileDragUpload from '@/ui/file-drag-upload'
+import axiosInstance from '@/utils/axiosInstance'
+import apiEndpoints from '@/utils/endpoints'
 
 type Props = {
     formik: FormikProps<ProductFormType>
@@ -18,8 +21,34 @@ type Props = {
     categories: { label: string; value: string }[]
 }
 
-const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses,categories }) => {
+const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, categories }) => {
 
+    const [uploading, setUploading] = React.useState(false);
+    const [preview, setPreview] = React.useState("");
+
+
+    const uploadImage = async (file: File) => {
+
+        try {
+            setUploading(true);
+
+            // local preview
+            setPreview(URL.createObjectURL(file));
+
+            const formData = new FormData();
+
+            formData.append("file", file);
+
+            const response = await axiosInstance.post(apiEndpoints.product.upload, formData);
+
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            alert("Image upload failed");
+        } finally {
+            setUploading(false);
+        }
+    };
     return (
         <div className='py-3 w-full h-full flex flex-col gap-4 bg-surface md:col-span-1'>
             <div className="flex gap-2 px-3 items-center">
@@ -61,7 +90,6 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses,c
                                 : ""
                         }
                     />
-
                     <Select
                         label="Select Category"
                         name="categoryId"
@@ -86,11 +114,75 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses,c
                         formik={formik}
                     />
 
+                    {/* 
+                    <FileDragUpload
+                        label="Image"
+                        onFileSelect={(file) => {
+                            formik.setFieldValue("image", file);
+                        }}
+                    /> */}
+
+                    {/* Upload */}
+
+                    <FileDragUpload
+                        label="Image"
+                        onFileSelect={async (file) => {
+
+                            const uploaded =
+                                await uploadImage(file);
+
+                            if (!uploaded) return;
+
+                            // cloudinary image url
+                            formik.setFieldValue(
+                                "image",
+                                uploaded.url
+                            );
+
+                            // cloudinary public id
+                            formik.setFieldValue(
+                                "imagePublicId",
+                                uploaded.public_id
+                            );
+
+                            // preview
+                            setPreview(uploaded.url);
+                        }}
+                    />
+
+                    {/* Preview */}
+
+                    {preview && (
+                        <img
+                            src={preview}
+                            alt="preview"
+                            className="
+                                w-32
+                                h-32
+                                rounded-xl
+                                object-cover
+                                border
+                            "
+                        />
+                    )}
+
 
                 </div>
                 <div className="flex gap-4">
-                    <Button type='submit' className='w-24 rounded-lg'>{isEdit ? 'Update' : 'Submit'}</Button>
-                    {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
+                     
+                    <Button
+                        type="submit"
+                        disabled={uploading}
+                        className="w-24 rounded-lg"
+                    >
+                        {uploading
+                            ? "Uploading..."
+                            : isEdit
+                            ? "Update"
+                            : "Submit"}
+                    </Button>
+
+                      {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
                 </div>
             </form>
         </div>

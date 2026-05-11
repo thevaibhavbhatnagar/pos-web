@@ -18,6 +18,7 @@ type Props = {
 interface useProductFormValues {
     id?: string;
     name: string;
+    image?: string;
     price: string;
     isKotRequired: string;
     categoryId?: string;
@@ -31,6 +32,7 @@ const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
     const useProductFormik = useFormik<useProductFormValues>({
         initialValues: {
             name: product?.name ?? "",
+            image: product?.image ?? "",
             price: product?.price ?? "",
             isKotRequired: product?.isKotRequired ?? "true",
             categoryId: product?.categoryId ?? "",
@@ -48,6 +50,7 @@ const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
                 // Build payload
                 const payload = {
                     name: values.name ?? "",
+                    image: values.image ?? "",
                     price: Number(values.price) ?? "",
                     isKotRequired: values.isKotRequired === "true" ? true : false,
                     categoryId: values.categoryId ?? "",

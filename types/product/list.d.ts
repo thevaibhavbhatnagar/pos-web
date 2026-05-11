@@ -2,6 +2,7 @@ export interface ProductListType {
   srNo?: Number;
   id: string;
   name: string;
+  image?: string;
   price: string;
   isKotRequired: boolean;
   categoryId: string;

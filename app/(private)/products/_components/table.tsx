@@ -10,7 +10,10 @@ import { Column, DataTable } from '@/ui/data-table'
 import { ProductListType } from '@/types/product/list';
 import { ProductFormType } from '@/types/product/form';
 import useProductDelete from '@/hooks/use-product-delete';
+import Image from 'next/image';
 
+
+import NoImage from '../../../../public/assets/no-image.webp'; 
 
 type Props = {
     data: ProductListType[];
@@ -63,6 +66,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
             renderCell: (_, rowIndex) => (rowIndex ?? 0) + 1, // rowIndex starts at 0
         },
         { key: "name", label: "Name", renderCell: (value) => value?.name ?? "N/A" },
+        { key: "image", label: "Image", renderCell: (value) => <Image className='p-2' width={50} height={50} src={value?.image ?? NoImage} alt={value?.name} /> },
         { key: "price", label: "Price", renderCell: (value) => value?.price ?? "N/A" },
         { key: "category", label: "Category", renderCell: (value) => value?.category.name ?? "N/A" },
         { key: "isKotRequired", label: "Kot Required", renderCell: (value) => value?.isKotRequired ? "Yes" : "No" },

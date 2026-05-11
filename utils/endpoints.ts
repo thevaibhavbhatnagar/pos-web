@@ -51,6 +51,8 @@ const apiEndpoints = {
     update: "/v1/products",
     delete: "/v1/products",
 
+    upload: "/v1/products/upload",
+
     lookup: "/v1/products/lookup",
 
     getProductsByCategory: (categoryId: string) =>

@@ -8,8 +8,10 @@ import { cn, toast } from '@heroui/react';
 import { useMutation } from '@tanstack/react-query';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
+import NoImage from '../../../../../../public/assets/no-image.webp'; 
 
 type Props = {
     order: OrderDetailsType;
@@ -253,6 +255,14 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                     className="border p-2 rounded"
                                 >
                                     <h3>{product.name}</h3>
+                                       <Image
+                                    width={50}
+                                    height={50}
+                                    src={product.image || NoImage}
+                                    alt={product.name}
+                                    className="w-full h-32 object-cover mb-2"
+                                />
+
 
                                     <div className="flex justify-between items-center mt-2">
                                         <p>₹{product.price}</p>
