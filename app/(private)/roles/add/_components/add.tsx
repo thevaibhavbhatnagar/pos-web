@@ -246,7 +246,7 @@ const Add: React.FC<Props> = ({ formik, permissions }) => {
           </div>
         )}
         <div className="flex gap-4">
-          <Button type="submit" className="w-24" size="sm" endIcon={SendHorizonal}>Submit</Button>
+          <Button type="submit" className="w-24  rounded-lg" >Submit</Button>
         </div>
       </form>
     </div>

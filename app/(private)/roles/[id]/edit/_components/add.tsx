@@ -74,7 +74,7 @@ const Add: React.FC<Props> = ({ formik, roles, permissions }) => {
             name="role"
             placeholder="Select Role"
             options={roles}
-            formik={formik}   
+            formik={formik}
           />
         </div>
 
@@ -311,7 +311,7 @@ const Add: React.FC<Props> = ({ formik, roles, permissions }) => {
         )}
 
         <div className="flex gap-4">
-          <Button type="submit" className="w-24" size="sm" endIcon={SendHorizonal}>Submit</Button>
+          <Button type="submit" className="w-24  rounded-lg" >Submit</Button>
         </div>
       </form>
     </div>
