@@ -69,13 +69,16 @@ export default function SelectField<T extends Record<string, any>>({
       <Autocomplete<Option, "single">
         items={options as unknown as Iterable<Option>}
         value={value || null}
-        onChange={(key) => {
-          const newValue = key ? String(key) : "";
+      onChange={(key) => {
+  const newValue = key ? String(key) : "";
 
-          formik.setFieldValue(name, newValue);
-          formik.setFieldTouched(name, true);
-          onChange?.(newValue);
-        }}
+  formik.setFieldValue(name, newValue, true);
+
+  // validate field again
+  formik.validateField(name);
+
+  onChange?.(newValue);
+}}
         isInvalid={hasError}
         isRequired={isRequired}
         isDisabled={isDisabled}
