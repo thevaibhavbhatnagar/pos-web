@@ -9,7 +9,7 @@ import Modal from "@/ui/modal";
 import { useCurrentUser } from "@/src/permissions";
 import { findActivePath, matchPath } from "@/utils/utils";
 import { ThemeToggle } from "../theme";
-import { MenuItem, useMenu   } from "./menu";
+import { MenuItem, useMenu } from "./menu";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, useSidebar } from "@/app/(private)/_components/sidebar/sidebar";
 import Image from "next/image";
 import Logo from "@/public/assets/logo.jpg"
@@ -257,12 +257,12 @@ export function AppSidebar() {
             <div className="flex gap-2 items-center w-full">
               {/* <ChartPie color="var(--primary)" size={25} /> */}
               {/* <Link href={"/"} className="text-xl font-bold">DashFlow</Link> */}
-              <Image 
-            src={Logo} 
-            alt="Logo" 
-            width={32}
-            height={32}
-            />
+              <Image
+                src={Logo}
+                alt="Logo"
+                width={32}
+                height={32}
+              />
               Aamchi Mumbai
             </div>
             <div className="transition-colors p-1.5 rounded-full">
@@ -274,12 +274,12 @@ export function AppSidebar() {
           </div>
         ) : (
           <div className="flex items-center px-2 py-[0.25rem] relative translate-x-1 hover:bg-surface-secondary rounded-xl transition-colors cursor-pointer">
-             <PanelLeft
+            <PanelLeft
               onClick={toggle}
               size={18}
               className="text-grey cursor-pointer rotate-[180deg]"
             />
-             </div>
+          </div>
         )}
       </SidebarHeader>
 
