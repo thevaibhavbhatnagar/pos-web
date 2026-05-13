@@ -170,7 +170,7 @@ const KotComponent: React.FC<Props> = ({ kot }) => {
         </h2>
 
         <Table
-          data={kot?.order?.items}
+          data={kot?.items}
           page={1}
           totalPages={1}
           rowsPerPage={10}

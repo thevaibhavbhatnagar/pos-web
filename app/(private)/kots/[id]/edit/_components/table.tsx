@@ -1,10 +1,10 @@
 "use client"
 import React from 'react' 
 import { Column, DataTable } from '@/ui/data-table'
-import { OrderItem } from '@/types/kot/details';
+import { KotItem } from '@/types/kot/details';
 
 type Props = {
-    data: OrderItem[];
+    data: KotItem[];
     page: number;
     totalPages: number;
     rowsPerPage: number;
@@ -13,16 +13,16 @@ type Props = {
 const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
 
 
-    const columns: Column<OrderItem>[] = [
+    const columns: Column<KotItem>[] = [
         {
             key: "srNo",
             label: "Sr. No",
             renderCell: (_, rowIndex) => (rowIndex ?? 0) + 1, // rowIndex starts at 0
         },
         {
-            key: "productId",
-            label: "Product Id",
-            renderCell: (value) => value?.product?.name ?? "N/A",
+            key: "kotId",
+            label: "KOT Id",
+            renderCell: (value) => value?.kotId ?? "N/A",
         },
 
         {
@@ -34,14 +34,14 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage }) => {
         {
             key: "price",
             label: "Price",
-            renderCell: (value) => `₹${value?.price ?? 0}`,
+            renderCell: (value) => `₹${value?.product.price ?? 0}`,
         },
 
         {
             key: "total",
             label: "Total",
             renderCell: (value) =>
-                `₹${(value?.quantity ?? 0) * (value?.price ?? 0)}`,
+                `₹${(value?.quantity ?? 0) * (value?.product.price ?? 0)}`,
         },
 
     ];

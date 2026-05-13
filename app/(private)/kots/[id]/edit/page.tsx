@@ -35,6 +35,7 @@ export default async function Page({ params, searchParams }: Props) {
   const response = await axiosInstance.get(`${apiEndpoints.kot.details(id)}`)
 
   const data: KotDetailsType = response?.data?.data;
+  console.log(data)
 
   return (
     <KotComponent kot={data} />
