@@ -51,17 +51,7 @@
 // ];
 
 // export default Menu;
-
-import React, { useMemo } from "react"; 
-import { icons } from "lucide-react"; 
-import { useCurrentUser } from "@/src/permissions";
-
-export type MenuItem = {
-  title: string;
-  url: string;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  children?: MenuItem[];
-};
+ 
 
 // export const useMenu = (): {menu:MenuItem[]; isLoading: boolean} => {
 //   // const { menu } = useMenuContext();
@@ -88,25 +78,58 @@ export type MenuItem = {
 //   };
 // };
 
-export const useMenu = () => {
-  const { data, isLoading } = useCurrentUser();
+import React, { useMemo } from "react";
+import { icons, Circle } from "lucide-react";
+import { useCurrentUser } from "@/src/permissions";
 
-  const menu = useMemo(() => {
-    if (!data?.modules) return [];
+export type MenuItem = {
+  title: string;
+  url: string;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  children?: MenuItem[];
+};
+
+export const useMenu = () => {
+  const { data, isLoading, error } = useCurrentUser();
+
+  const menu = useMemo<MenuItem[]>(() => {
+    if (!data?.modules?.length) return [];
 
     const buildMenu = (items: any[]): MenuItem[] => {
       return items
-        .sort((a, b) => a.order - b.order)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         .map((item) => ({
           title: item.name,
-          url: item.url,
-          icon: item.icon ? (icons as any)[item.icon] : undefined,
-          children: item.children ? buildMenu(item.children) : [],
+          url: item.url || "#",
+          icon:
+            item.icon &&
+              (icons as Record<string, any>)[item.icon]
+              ? (icons as Record<string, any>)[item.icon]
+              : Circle,
+          children: item.children?.length
+            ? buildMenu(item.children)
+            : [],
         }));
     };
 
-    return buildMenu(data.modules ?? []);
-  }, [data]);
+    return buildMenu(data.modules);
+  }, [data?.modules]);
 
-  return { menu, isLoading };
+  // Message handling
+  let message = "";
+
+  if (isLoading) {
+    message = "Loading menu...";
+  } else if (error) {
+    message = "Failed to load menu";
+  } else if (!menu.length) {
+    message = "No menu found";
+  }
+
+  return {
+    menu,
+    isLoading,
+    error,
+    message,
+  };
 };
