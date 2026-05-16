@@ -35,76 +35,45 @@ const useLogin = () => {
         const response = await signIn("credentials", {
           email: values.email,
           password: values.password,
+
           redirect: false,
+
+          callbackUrl: "/dashboard",
         });
 
         console.log("NEXTAUTH RESPONSE:", response);
 
-        // Invalid credentials
-        if (response?.error === "CredentialsSignin") {
-          const msg = "Invalid email or password";
-
-          setErrorMessage(msg);
-
-          toast.danger(msg);
-
-          return;
-        }
-
-        // Server unreachable
-        if (response?.error === "SERVER_UNREACHABLE") {
-          const msg =
-            "Server is temporarily unreachable. Please try again later.";
-
-          setErrorMessage(msg);
-
-          toast.danger(msg);
-
-          return;
-        }
-
-        // Access denied
-        if (response?.error === "ACCESS_DENIED") {
-          const msg = "Access denied. You do not have permission to login.";
-
-          setErrorMessage(msg);
-
-          toast.danger(msg);
-
-          return;
-        }
-
-        // Account not verified
-        if (response?.error === "ACCOUNT_NOT_VERIFIED") {
-          const msg = "Please verify your account first.";
-
-          setErrorMessage(msg);
-
-          toast.danger(msg);
-
-          setTimeout(() => {
-            window.location.href = `/auth/verify?email=${encodeURIComponent(
-              values.email,
-            )}`;
-          }, 2000);
-
-          return;
-        }
-
-        // Server error
-        if (response?.error === "SERVER_ERROR") {
-          const msg = "Internal server error. Please try again later.";
-
-          setErrorMessage(msg);
-
-          toast.danger(msg);
-
-          return;
-        }
-
-        // Unknown error
+        // LOGIN FAILED
         if (response?.error) {
-          const msg = "Something went wrong during login.";
+          let msg = "Something went wrong during login.";
+
+          switch (response.error) {
+            case "CredentialsSignin":
+              msg = "Invalid email or password";
+              break;
+
+            case "SERVER_UNREACHABLE":
+              msg =
+                "Server is temporarily unreachable. Please check your internet connection.";
+              break;
+
+            case "ACCESS_DENIED":
+              msg =
+                "Access denied. You do not have permission to login.";
+              break;
+
+            case "ACCOUNT_NOT_VERIFIED":
+              msg = "Please verify your account first.";
+              break;
+
+            case "SERVER_ERROR":
+              msg =
+                "Internal server error. Please try again later.";
+              break;
+
+            default:
+              msg = "Something went wrong during login.";
+          }
 
           setErrorMessage(msg);
 
@@ -113,16 +82,17 @@ const useLogin = () => {
           return;
         }
 
-        // SUCCESS
+        // LOGIN SUCCESS
         toast.success("Login successful");
 
-        // IMPORTANT:
-        // Full reload prevents production session race issues
-        window.location.href = "/dashboard";
+        // SAFE PRODUCTION REDIRECT
+        if (response?.url) {
+          window.location.href = response.url;
+        }
       } catch (error) {
         console.error("LOGIN ERROR:", error);
 
-        const msg = "Unexpected login error";
+        const msg = "Unexpected login error.";
 
         setErrorMessage(msg);
 

@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: "/auth/login",
+    error: "/auth/login",
   },
 
   providers: [
@@ -107,27 +108,27 @@ export const authOptions: NextAuthOptions = {
         } catch (error: any) {
           console.error("NEXTAUTH LOGIN ERROR:", error);
 
-          // Invalid credentials
+          // INVALID CREDENTIALS
           if (error?.response?.status === 401) {
             return null;
           }
 
-          // Network/server issue
+          // NETWORK ERROR
           if (isNetworkError(error)) {
             throw new Error("SERVER_UNREACHABLE");
           }
 
-          // Forbidden
+          // ACCESS DENIED
           if (error?.response?.status === 403) {
             throw new Error("ACCESS_DENIED");
           }
 
-          // Account not verified
+          // ACCOUNT NOT VERIFIED
           if (error?.response?.status === 409) {
             throw new Error("ACCOUNT_NOT_VERIFIED");
           }
 
-          // Internal server error
+          // INTERNAL SERVER ERROR
           if (error?.response?.status >= 500) {
             throw new Error("SERVER_ERROR");
           }
@@ -162,6 +163,18 @@ export const authOptions: NextAuthOptions = {
       session.user = token.user as SessionUser;
 
       return session;
+    },
+
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+
+      return `${baseUrl}/dashboard`;
     },
   },
 };
