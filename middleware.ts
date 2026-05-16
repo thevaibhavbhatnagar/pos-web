@@ -32,11 +32,11 @@ export async function middleware(request: NextRequest) {
       route === "/" ? pathname === "/" : pathname.startsWith(route),
     );
 
-    // Logged in user visiting auth pages
+    // Logged in user visiting home or auth pages
     if (
       isAuthenticated &&
-      pathname.startsWith("/auth") &&
-      pathname !== "/auth/silent-logout"
+      (pathname === "/" ||
+        (pathname.startsWith("/auth") && pathname !== "/auth/silent-logout"))
     ) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
