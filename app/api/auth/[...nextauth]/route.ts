@@ -2,8 +2,12 @@
 
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { AxiosError } from "axios";
 
-import axiosInstance, { isNetworkError } from "@/utils/axiosInstance";
+import axiosInstance, {
+  isNetworkError,
+  isServerUnavailableStatus,
+} from "@/utils/axiosInstance";
 import apiEndpoints from "@/utils/endpoints";
 
 type AppUser = {
@@ -23,6 +27,32 @@ type SessionUser = {
   branchId?: string | null;
   branchName?: string | null;
 };
+
+type LoginResponse = {
+  success?: boolean;
+  statusCode?: number;
+  accessToken?: unknown;
+  data?: unknown;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isValidLoginResponse(data: LoginResponse): data is LoginResponse & {
+  accessToken: string;
+  data: AppUser;
+} {
+  return (
+    data.success !== false &&
+    (data.statusCode === undefined || data.statusCode < 400) &&
+    typeof data.accessToken === "string" &&
+    data.accessToken.length > 0 &&
+    isRecord(data.data) &&
+    typeof data.data.id === "string" &&
+    typeof data.data.role === "string"
+  );
+}
 
 declare module "next-auth" {
   interface User extends AppUser {
@@ -84,10 +114,10 @@ export const authOptions: NextAuthOptions = {
 
           console.log("LOGIN RESPONSE:", response.data);
 
-          const data = response.data;
+          const data = response.data as LoginResponse;
 
-          if (!data?.accessToken || !data?.data) {
-            console.log("NO TOKEN FOUND");
+          if (!isValidLoginResponse(data)) {
+            console.log("INVALID LOGIN RESPONSE");
             throw new Error("SERVER_ERROR");
           }
 
@@ -97,15 +127,21 @@ export const authOptions: NextAuthOptions = {
             ...data.data,
             accessToken: data.accessToken,
           };
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.log("AUTHORIZE ERROR:", error);
 
-          if (isNetworkError(error)) {
+          const status =
+            error instanceof AxiosError ? error.response?.status : undefined;
+
+          if (
+            isNetworkError(error) ||
+            isServerUnavailableStatus(status)
+          ) {
             console.log("NETWORK ERROR DETECTED");
             throw new Error("SERVER_UNREACHABLE");
           }
 
-          if (error?.response?.status === 401) {
+          if (status === 401) {
             console.log("INVALID CREDENTIALS");
             return null;
           }

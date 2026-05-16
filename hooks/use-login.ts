@@ -53,25 +53,27 @@ const useLogin = () => {
         if (!response || response.error) {
           let msg = "Something went wrong during login.";
 
-          switch (response?.error) {
-            case "CredentialsSignin":
+          const loginError = response?.error ?? "";
+
+          switch (true) {
+            case loginError.includes("CredentialsSignin"):
               msg = "Invalid email or password";
               break;
 
-            case "SERVER_UNREACHABLE":
+            case loginError.includes("SERVER_UNREACHABLE"):
               msg =
                 "Server is temporarily unavailable. Please try again later.";
               break;
 
-            case "ACCESS_DENIED":
+            case loginError.includes("ACCESS_DENIED"):
               msg = "Access denied. You do not have permission to login.";
               break;
 
-            case "ACCOUNT_NOT_VERIFIED":
+            case loginError.includes("ACCOUNT_NOT_VERIFIED"):
               msg = "Please verify your account first.";
               break;
 
-            case "SERVER_ERROR":
+            case loginError.includes("SERVER_ERROR"):
               msg = "Internal server error. Please try again later.";
               break;
 

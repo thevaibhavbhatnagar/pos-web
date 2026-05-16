@@ -25,6 +25,17 @@ const handleUnauthorized = async () => {
 
 axiosInstance.interceptors.request.use(
   async (config) => {
+    const url = config.url ?? "";
+    const isAuthRequest =
+      url.includes(apiEndpoints.authentication.login) ||
+      url.includes(apiEndpoints.authentication.loginVerify) ||
+      url.includes(apiEndpoints.authentication.resendLoginVerification);
+
+    if (isAuthRequest) {
+      delete config.headers.Authorization;
+      return config;
+    }
+
     const token = await authToken();
     config.headers.Authorization = token ? `Bearer ${token}` : undefined;
     return config;
@@ -73,7 +84,7 @@ axiosInstance.interceptors.response.use(
 
 export function isNetworkError(error: unknown): boolean {
   if (error instanceof AxiosError) {
-    return !error.response;
+    return !error.response || isServerUnavailableStatus(error.response.status);
   }
   if (error instanceof Error) {
     return error.message.toLowerCase().includes('network error') || 
@@ -81,6 +92,10 @@ export function isNetworkError(error: unknown): boolean {
            error.message.toLowerCase().includes('failed to fetch');
   }
   return false;
+}
+
+export function isServerUnavailableStatus(status?: number): boolean {
+  return status === 502 || status === 503 || status === 504;
 }
 
 export function handleAxiosError(
