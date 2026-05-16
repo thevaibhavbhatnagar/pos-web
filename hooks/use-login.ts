@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useFormik } from "formik";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 import { toast } from "@heroui/react";
 
@@ -32,6 +32,12 @@ const useLogin = () => {
 
         setErrorMessage(null);
 
+        // IMPORTANT:
+        // clear old session before new login attempt
+        await signOut({
+          redirect: false,
+        });
+
         const response = await signIn("credentials", {
           email: values.email,
           password: values.password,
@@ -44,22 +50,21 @@ const useLogin = () => {
         console.log("NEXTAUTH RESPONSE:", response);
 
         // LOGIN FAILED
-        if (response?.error) {
+        if (!response || response.error) {
           let msg = "Something went wrong during login.";
 
-          switch (response.error) {
+          switch (response?.error) {
             case "CredentialsSignin":
               msg = "Invalid email or password";
               break;
 
             case "SERVER_UNREACHABLE":
               msg =
-                "Server is temporarily unreachable. Please check your internet connection.";
+                "Server is temporarily unavailable. Please try again later.";
               break;
 
             case "ACCESS_DENIED":
-              msg =
-                "Access denied. You do not have permission to login.";
+              msg = "Access denied. You do not have permission to login.";
               break;
 
             case "ACCOUNT_NOT_VERIFIED":
@@ -67,13 +72,26 @@ const useLogin = () => {
               break;
 
             case "SERVER_ERROR":
-              msg =
-                "Internal server error. Please try again later.";
+              msg = "Internal server error. Please try again later.";
               break;
 
             default:
-              msg = "Something went wrong during login.";
+              msg = "Unable to login. Please try again.";
           }
+
+          console.error("LOGIN FAILED:", response);
+
+          setErrorMessage(msg);
+
+          toast.danger(msg);
+
+          return;
+        }
+
+        // VERY IMPORTANT:
+        // make sure login actually succeeded
+        if (!response.ok) {
+          const msg = "Login failed";
 
           setErrorMessage(msg);
 
@@ -85,14 +103,14 @@ const useLogin = () => {
         // LOGIN SUCCESS
         toast.success("Login successful");
 
-        // SAFE PRODUCTION REDIRECT
-        if (response?.url) {
+        // SAFE REDIRECT
+        if (response.url) {
           window.location.href = response.url;
         }
       } catch (error) {
         console.error("LOGIN ERROR:", error);
 
-        const msg = "Unexpected login error.";
+        const msg = "Network error. Please check your internet connection.";
 
         setErrorMessage(msg);
 

@@ -12,7 +12,7 @@ const PUBLIC_ROUTES = [
   "/unauthorized",
 ];
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   try {
     const pathname = request.nextUrl.pathname;
 

@@ -71,69 +71,46 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
+        console.log("AUTHORIZE STARTED");
+
         try {
-          const email = credentials?.email;
-          const password = credentials?.password;
-
-          if (!email || !password) {
-            return null;
-          }
-
           const response = await axiosInstance.post(
             apiEndpoints.authentication.login,
             {
-              email,
-              password,
+              email: credentials?.email,
+              password: credentials?.password,
             },
           );
 
+          console.log("LOGIN RESPONSE:", response.data);
+
           const data = response.data;
 
-          const accessToken = data?.accessToken;
-          const user = data?.data;
-
-          if (!accessToken || !user) {
-            return null;
-          }
-
-          return {
-            id: user.id,
-            name: user.name ?? "",
-            email: user.email ?? "",
-            role: user.role,
-            branchId: user.branchId ?? null,
-            branchName: user.branchName ?? null,
-            accessToken,
-          };
-        } catch (error: any) {
-          console.error("NEXTAUTH LOGIN ERROR:", error);
-
-          // INVALID CREDENTIALS
-          if (error?.response?.status === 401) {
-            return null;
-          }
-
-          // NETWORK ERROR
-          if (isNetworkError(error)) {
-            throw new Error("SERVER_UNREACHABLE");
-          }
-
-          // ACCESS DENIED
-          if (error?.response?.status === 403) {
-            throw new Error("ACCESS_DENIED");
-          }
-
-          // ACCOUNT NOT VERIFIED
-          if (error?.response?.status === 409) {
-            throw new Error("ACCOUNT_NOT_VERIFIED");
-          }
-
-          // INTERNAL SERVER ERROR
-          if (error?.response?.status >= 500) {
+          if (!data?.accessToken || !data?.data) {
+            console.log("NO TOKEN FOUND");
             throw new Error("SERVER_ERROR");
           }
 
-          throw new Error("SOMETHING_WENT_WRONG");
+          console.log("LOGIN SUCCESS");
+
+          return {
+            ...data.data,
+            accessToken: data.accessToken,
+          };
+        } catch (error: any) {
+          console.log("AUTHORIZE ERROR:", error);
+
+          if (isNetworkError(error)) {
+            console.log("NETWORK ERROR DETECTED");
+            throw new Error("SERVER_UNREACHABLE");
+          }
+
+          if (error?.response?.status === 401) {
+            console.log("INVALID CREDENTIALS");
+            return null;
+          }
+
+          throw new Error("SERVER_ERROR");
         }
       },
     }),
