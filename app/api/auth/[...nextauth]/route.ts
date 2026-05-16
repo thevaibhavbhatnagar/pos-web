@@ -83,7 +83,14 @@ export const authOptions: NextAuthOptions = {
             accessToken,
           };
         } catch (error: any) {
-          console.error("Authentication error:", error);
+          console.error("--- AUTHENTICATION ERROR START ---");
+          console.error("Path:", apiEndpoints.authentication.login);
+          console.error("Status:", error?.response?.status);
+          console.error("Message:", error?.message);
+          if (error?.response?.data) {
+            console.error("Response Data:", JSON.stringify(error.response.data));
+          }
+          console.error("--- AUTHENTICATION ERROR END ---");
 
           // Backend unreachable
           if (isNetworkError(error)) {

@@ -36,49 +36,48 @@ const useLogin = () => {
           redirect: false,
         });
 
-        if (response?.error === "CredentialsSignin") {
-          setErrorMessage("Invalid email or password");
-          toast.danger("Invalid email or password");
+        if (response?.error) {
+          if (response.error === "CredentialsSignin") {
+            const msg = "Invalid email or password";
+            setErrorMessage(msg);
+            toast.danger(msg);
+          } else if (response.error === "SERVER_UNREACHABLE") {
+            const msg = "Server is temporarily unreachable. Please check your connection.";
+            setErrorMessage(msg);
+            toast.danger(msg);
+          } else if (response.error === "ACCESS_DENIED") {
+            const msg = "Access denied. You do not have permission to log in.";
+            setErrorMessage(msg);
+            toast.danger(msg);
+          } else if (response.error === "ACCOUNT_NOT_VERIFIED") {
+            setErrorMessage("Account not verified. Redirecting...");
+            toast.danger("Please verify your account.");
+            
+            // Redirect to verification page after a short delay
+            setTimeout(() => {
+              router.push(`/auth/verify?email=${encodeURIComponent(values.email)}`);
+            }, 3000);
+          } else if (response.error === "SERVER_ERROR") {
+            const msg = "Internal server error. Please try again later.";
+            setErrorMessage(msg);
+            toast.danger(msg);
+          } else {
+            const msg = response.error || "An unexpected error occurred during login";
+            setErrorMessage(msg);
+            toast.danger(msg);
+          }
           return;
         }
 
-        if (response?.error === "SERVER_UNREACHABLE") {
-          setErrorMessage("Server is temporarily unavailable");
-          toast.danger("Server is temporarily unavailable");
-          return;
+        if (response?.ok) {
+          toast.success("Login successful");
+          router.push("/dashboard");
         }
-
-        if (response?.error === "SERVER_ERROR") {
-          setErrorMessage("Something went wrong");
-          toast.danger("Something went wrong");
-          return;
-        }
-        toast.success("Login successful");
-
-        router.push("/dashboard");
       } catch (error: unknown) {
-        // Handle and extract error message
+        // This catch block usually only handles unexpected runtime errors during the onSubmit call
         const message = handleAxiosError(error);
-        // Set error message in state
         setErrorMessage(message);
         toast.danger(message);
-
-        if (isConflictWithContext(error)) {
-          // Briefly delay to ensure the toast appears cleanly before any navigation
-          setTimeout(() => {
-            setErrorMessage("Redirecting to the verification page...");
-            toast.danger("Redirecting to the verification page...");
-          }, 500);
-
-          // After a short pause, redirect the user to the verification page,
-          setTimeout(
-            () =>
-              router.push(
-                `/auth/verify?email=${encodeURIComponent(values.email)}`,
-              ),
-            5000,
-          );
-        }
       }
     },
   });
