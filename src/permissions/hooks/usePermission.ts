@@ -1,19 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-import { useCurrentUser } from "./useCurrentUser";
-import { hasPermission } from "../utils/hasPermission";
+import { usePermissionStore } from "../store/use-permission-store";
 
+/**
+ * Hook to check if the current user has a specific permission.
+ * Now uses Zustand for synchronous access and better performance.
+ */
 export const usePermission = (permissionKey: string) => {
-  const { data, isLoading } = useCurrentUser();
-
-  const allowed = useMemo(() => {
-    if (!data?.modules) return false;
-    return hasPermission(data.modules, permissionKey);
-  }, [data, permissionKey]);
+  const allowed = usePermissionStore((state) => state.can(permissionKey));
+  const isLoaded = usePermissionStore((state) => state.isLoaded);
 
   return {
     allowed,
-    isLoading,
+    isLoading: !isLoaded,
   };
 };

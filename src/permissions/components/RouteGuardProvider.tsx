@@ -2,9 +2,12 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useCurrentUser } from "../hooks/useCurrentUser";
-import { hasRouteAccess } from "../utils/hasRouteAccess";
+import { usePermissionStore } from "../store/use-permission-store";
 
+/**
+ * RouteGuardProvider protects routes based on user permissions.
+ * It uses the optimized Zustand store for instant route access checks.
+ */
 export default function RouteGuardProvider({
   children,
 }: {
@@ -12,17 +15,19 @@ export default function RouteGuardProvider({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { data, isLoading } = useCurrentUser();
+  const isLoaded = usePermissionStore((state) => state.isLoaded);
+  const hasAccess = usePermissionStore((state) => state.hasAccess);
 
   useEffect(() => {
-    if (isLoading || !data) return;
+    // Only check once permissions are loaded in the store
+    if (!isLoaded) return;
 
-    const allowed = hasRouteAccess(data.modules, pathname);
+    const allowed = hasAccess(pathname);
 
     if (!allowed) {
       router.replace("/unauthorized");
     }
-  }, [pathname, data, isLoading]);
+  }, [pathname, isLoaded, hasAccess, router]);
 
   return <>{children}</>;
 }

@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import { RouteGuardProvider } from "@/src/permissions";
+import { RouteGuardProvider, useSyncPermissions } from "@/src/permissions";
 import { ThemeProvider } from "next-themes";
 
 type Props = {
@@ -8,6 +8,8 @@ type Props = {
 };
 
 const Provider = ({ children }: Props) => {
+  useSyncPermissions();
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <RouteGuardProvider>

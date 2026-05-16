@@ -80,7 +80,7 @@
 
 import React, { useMemo } from "react";
 import { icons, Circle } from "lucide-react";
-import { useCurrentUser } from "@/src/permissions";
+import { usePermissionStore } from "@/src/permissions";
 
 export type MenuItem = {
   title: string;
@@ -90,10 +90,11 @@ export type MenuItem = {
 };
 
 export const useMenu = () => {
-  const { data, isLoading, error } = useCurrentUser();
+  const modules = usePermissionStore((state) => state.modules);
+  const isLoaded = usePermissionStore((state) => state.isLoaded);
 
   const menu = useMemo<MenuItem[]>(() => {
-    if (!data?.modules?.length) return [];
+    if (!modules?.length) return [];
 
     const buildMenu = (items: any[]): MenuItem[] => {
       return items
@@ -112,24 +113,21 @@ export const useMenu = () => {
         }));
     };
 
-    return buildMenu(data.modules);
-  }, [data?.modules]);
+    return buildMenu(modules);
+  }, [modules]);
 
   // Message handling
   let message = "";
 
-  if (isLoading) {
+  if (!isLoaded) {
     message = "Loading menu...";
-  } else if (error) {
-    message = "Failed to load menu";
   } else if (!menu.length) {
     message = "No menu found";
   }
 
   return {
     menu,
-    isLoading,
-    error,
+    isLoading: !isLoaded,
     message,
   };
 };

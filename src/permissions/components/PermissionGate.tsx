@@ -1,8 +1,10 @@
 "use client";
 
-import { hasPermission } from "../utils/hasPermission";
-import { useCurrentUser } from "../hooks/useCurrentUser";
+import { usePermissionStore } from "../store/use-permission-store";
 
+/**
+ * Component that only renders its children if the user has the required permission.
+ */
 export default function PermissionGate({
   permission,
   children,
@@ -10,13 +12,10 @@ export default function PermissionGate({
   permission: string;
   children: React.ReactNode;
 }) {
-  const { data } = useCurrentUser();
+  const allowed = usePermissionStore((state) => state.can(permission));
+  const isLoaded = usePermissionStore((state) => state.isLoaded);
 
-  if (!data) return null;
-
-  const allowed = hasPermission(data.modules, permission);
-
-  if (!allowed) return null;
+  if (!isLoaded || !allowed) return null;
 
   return <>{children}</>;
 }
