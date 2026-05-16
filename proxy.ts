@@ -1,43 +1,69 @@
+// middleware.ts
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
 import { getToken } from "next-auth/jwt";
 
-const PUBLIC_ROUTES = ["/", "/auth/login", "/auth/silent-logout", "/unauthorized"];
+const PUBLIC_ROUTES = [
+  "/",
+  "/auth/login",
+  "/auth/silent-logout",
+  "/unauthorized",
+];
 
 export async function proxy(request: NextRequest) {
-
+  try {
     const pathname = request.nextUrl.pathname;
 
-    // NextAuth session token (NOT your accessToken cookie)
-    const sessionToken = await getToken({
-        req: request,
-        secret: process.env.NEXTAUTH_SECRET,
+    // Ignore NextAuth internal routes
+    if (pathname.startsWith("/api/auth")) {
+      return NextResponse.next();
+    }
+
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
     });
 
-    const isAuthenticated = !!sessionToken;
+    const isAuthenticated = !!token;
 
-    const isPublicRoute = PUBLIC_ROUTES.some((path) =>
-        path === "/" ? pathname === "/" : pathname.startsWith(path)
+    const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+      route === "/" ? pathname === "/" : pathname.startsWith(route),
     );
 
-    // If logged in and tries public page → dashboard
+    // Logged in user visiting auth pages
     if (isAuthenticated && pathname.startsWith("/auth")) {
-        return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
-    // If not logged in and tries private page → login
+    // Unauthenticated user visiting protected page
     if (!isAuthenticated && !isPublicRoute) {
-        return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-    // 🔑 Skip permission check for public pages
-    if (isPublicRoute) {
-        return NextResponse.next();
+      const loginUrl = new URL("/auth/login", request.url);
+
+      // Optional callback URL support
+      loginUrl.searchParams.set("callbackUrl", pathname);
+
+      return NextResponse.redirect(loginUrl);
     }
 
     return NextResponse.next();
+  } catch (error) {
+    console.error("MIDDLEWARE ERROR:", error);
+
+    return NextResponse.next();
+  }
 }
 
-// Apply middleware to all routes except specific public routes like login and forgot password
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|auth/silent-logout).*)"],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - api routes
+     * - next static files
+     * - images
+     * - favicon
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
 };
