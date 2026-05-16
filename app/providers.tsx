@@ -28,6 +28,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             staleTime: 60 * 1000, // 1 min
             gcTime: 10 * 60 * 1000, // 10 min (TanStack v5)
             refetchOnWindowFocus: false,
+            // Automatically trigger error.tsx if a query fails due to a Network Error
+            throwOnError: (error: any) => {
+               return !error.response || error.message?.includes('Network Error');
+            },
           },
           mutations: {
             retry: 0,
