@@ -42,7 +42,8 @@ const useLogin = () => {
             setErrorMessage(msg);
             toast.danger(msg);
           } else if (response.error === "SERVER_UNREACHABLE") {
-            const msg = "Server is temporarily unreachable. Please check your connection.";
+            const msg =
+              "Server is temporarily unreachable. Please check your connection.";
             setErrorMessage(msg);
             toast.danger(msg);
           } else if (response.error === "ACCESS_DENIED") {
@@ -52,24 +53,27 @@ const useLogin = () => {
           } else if (response.error === "ACCOUNT_NOT_VERIFIED") {
             setErrorMessage("Account not verified. Redirecting...");
             toast.danger("Please verify your account.");
-            
+
             // Redirect to verification page after a short delay
             setTimeout(() => {
-              router.push(`/auth/verify?email=${encodeURIComponent(values.email)}`);
+              router.push(
+                `/auth/verify?email=${encodeURIComponent(values.email)}`,
+              );
             }, 3000);
           } else if (response.error === "SERVER_ERROR") {
             const msg = "Internal server error. Please try again later.";
             setErrorMessage(msg);
             toast.danger(msg);
           } else {
-            const msg = response.error || "An unexpected error occurred during login";
+            const msg =
+              response.error || "An unexpected error occurred during login";
             setErrorMessage(msg);
             toast.danger(msg);
           }
           return;
         }
 
-        if (response?.ok) {
+        if (!response?.error) {
           toast.success("Login successful");
           router.push("/dashboard");
         }
