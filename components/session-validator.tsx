@@ -13,8 +13,7 @@ const SessionValidator = () => {
   useEffect(() => {
     const validateSession = async () => {
       try {
-        // Calls current Next.js app API route
-        const response = await axios.get(`${window.location.origin}/api/session/validate`);
+        const response = await axios.get("/api/session/validate");
 
         if (response.status === 200) {
           return;

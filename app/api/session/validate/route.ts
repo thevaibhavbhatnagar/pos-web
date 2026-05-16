@@ -1,11 +1,9 @@
 import { AxiosError } from "axios";
-import axios from "axios";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import axiosInstance, { isServerUnavailableStatus } from "@/utils/axiosInstance";
 import apiEndpoints from "@/utils/endpoints";
-import { isServerUnavailableStatus } from "@/utils/axiosInstance";
-import axiosInstance from "@/utils/axiosInstance";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -18,7 +16,7 @@ export async function GET() {
   }
 
   try {
-    await axiosInstance.get(apiEndpoints.authentication.me);
+    await axiosInstance.get(apiEndpoints.system.session);
 
     return Response.json({ ok: true });
   } catch (error: unknown) {

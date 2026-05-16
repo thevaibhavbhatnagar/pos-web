@@ -79,5 +79,9 @@ const apiEndpoints = {
   dashboard: {
     stats: "/v1/dashboard",
   },
+  system: {
+    health: "/v1/health",
+    session: "/v1/session",
+  },
 };
 export default apiEndpoints;

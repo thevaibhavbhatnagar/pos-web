@@ -53,9 +53,10 @@ axiosInstance.interceptors.response.use(
     const isAuthRequest =
       url.includes(apiEndpoints.authentication.login) ||
       url.includes(apiEndpoints.authentication.loginVerify);
+    const isSessionValidationRequest = url.includes(apiEndpoints.system.session);
 
     // logout ONLY for protected APIs
-    if (status === 401 && !isAuthRequest) {
+    if (status === 401 && !isAuthRequest && !isSessionValidationRequest) {
       await handleUnauthorized();
     }
 
