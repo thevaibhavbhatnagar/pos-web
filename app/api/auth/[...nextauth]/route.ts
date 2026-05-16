@@ -88,7 +88,10 @@ export const authOptions: NextAuthOptions = {
           console.error("Status:", error?.response?.status);
           console.error("Message:", error?.message);
           if (error?.response?.data) {
-            console.error("Response Data:", JSON.stringify(error.response.data));
+            console.error(
+              "Response Data:",
+              JSON.stringify(error.response.data),
+            );
           }
           console.error("--- AUTHENTICATION ERROR END ---");
 
@@ -99,7 +102,7 @@ export const authOptions: NextAuthOptions = {
 
           // Invalid credentials
           if (error?.response?.status === 401) {
-            return null;
+            throw new Error("INVALID_CREDENTIALS");
           }
 
           // Forbidden
