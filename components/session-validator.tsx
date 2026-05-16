@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import { signOut } from "next-auth/react";
+import axios from "axios";
 
 import axiosInstance from "@/utils/axiosInstance";
-import apiEndpoints from "@/utils/endpoints";
 
 const SessionValidator = () => {
   useEffect(() => {
     const validateSession = async () => {
       try {
         await axiosInstance.get(
-          apiEndpoints.authentication.me
+          `${window.location.origin}/api/session/validate`,
         );
       } catch (error) {
         console.error("SESSION INVALID:", error);
@@ -20,8 +20,13 @@ const SessionValidator = () => {
           redirect: false,
         });
 
-        window.location.href =
-          "/auth/login?error=server_unreachable";
+        const message =
+          axios.isAxiosError(error) &&
+          error.response?.status === 503
+            ? "server_unreachable"
+            : "session_invalid";
+
+        window.location.href = `/auth/login?error=${message}`;
       }
     };
 
