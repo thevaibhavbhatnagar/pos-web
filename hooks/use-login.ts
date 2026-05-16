@@ -36,9 +36,21 @@ const useLogin = () => {
           redirect: false,
         });
 
-        if (response?.error) {
-          setErrorMessage("Invalid credentials");
-          toast.danger("Invalid credentials");
+        if (response?.error === "CredentialsSignin") {
+          setErrorMessage("Invalid email or password");
+          toast.danger("Invalid email or password");
+          return;
+        }
+
+        if (response?.error === "SERVER_UNREACHABLE") {
+          setErrorMessage("Server is temporarily unavailable");
+          toast.danger("Server is temporarily unavailable");
+          return;
+        }
+
+        if (response?.error === "SERVER_ERROR") {
+          setErrorMessage("Something went wrong");
+          toast.danger("Something went wrong");
           return;
         }
         toast.success("Login successful");

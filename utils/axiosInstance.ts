@@ -71,20 +71,30 @@ axiosInstance.interceptors.response.use(
   },
 );
 
+export function isNetworkError(error: unknown): boolean {
+  if (error instanceof AxiosError) {
+    return !error.response;
+  }
+  if (error instanceof Error) {
+    return error.message.toLowerCase().includes('network error') || 
+           error.message.toLowerCase().includes('unreachable') ||
+           error.message.toLowerCase().includes('failed to fetch');
+  }
+  return false;
+}
+
 export function handleAxiosError(
   error: unknown,
   defaultMessage: string = "An unexpected error occurred. Please try again.",
 ): string {
+  if (isNetworkError(error)) {
+    return "Unable to connect to the server. Please check your internet connection or if the backend is running.";
+  }
+
   if (error instanceof AxiosError) {
-    // Check for network errors (no response)
-    if (!error.response) {
-      return "Unable to connect to the server. Please check your internet connection or if the backend is running.";
-    }
-    // Handle AxiosError: Check for response-specific error messages
     return error.response?.data?.message || defaultMessage;
   }
 
-  // Handle other errors
   return defaultMessage;
 }
 export function isConflictWithContext(error: unknown): boolean {

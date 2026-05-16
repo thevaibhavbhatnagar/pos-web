@@ -4,12 +4,8 @@ import React from "react";
 import LoginForm from "@/app/(public)/auth/login/_components/login-form";
 import AuthCard from "@/app/(public)/auth/_components";
 
-type Props = {
-    branches: { label: string; value: string }[];
-}
-
 // Main Login component
-const Login: React.FC<Props> = () => {
+const Login: React.FC = () => {
 
     return (
         <AuthCard>

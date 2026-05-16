@@ -1,7 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance, { isNetworkError } from "@/utils/axiosInstance";
 import apiEndpoints from "@/utils/endpoints";
 
 type AppUser = {
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
         try {
           const response = await axiosInstance.post(
             apiEndpoints.authentication.login,
-            { email, password }
+            { email, password },
           );
 
           const data: {
@@ -82,9 +82,35 @@ export const authOptions: NextAuthOptions = {
             branchName: user.branchName ?? null,
             accessToken,
           };
-        } catch (error) {
+        } catch (error: any) {
           console.error("Authentication error:", error);
-          return null;
+
+          // Backend unreachable
+          if (isNetworkError(error)) {
+            throw new Error("SERVER_UNREACHABLE");
+          }
+
+          // Invalid credentials
+          if (error?.response?.status === 401) {
+            return null;
+          }
+
+          // Forbidden
+          if (error?.response?.status === 403) {
+            throw new Error("ACCESS_DENIED");
+          }
+
+          // Conflict
+          if (error?.response?.status === 409) {
+            throw new Error("ACCOUNT_NOT_VERIFIED");
+          }
+
+          // Internal server error
+          if (error?.response?.status >= 500) {
+            throw new Error("SERVER_ERROR");
+          }
+
+          throw new Error("SOMETHING_WENT_WRONG");
         }
       },
     }),
