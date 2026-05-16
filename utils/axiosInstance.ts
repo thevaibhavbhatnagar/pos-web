@@ -60,6 +60,12 @@ axiosInstance.interceptors.response.use(
       });
     }
 
+    if (!error.response) {
+      const networkError = new Error('Network Error: Backend server is unreachable (NXDOMAIN/Connection Refused)');
+      console.error(networkError);
+      return Promise.reject(networkError);
+    }
+
     console.error("Axios error:", error);
     return Promise.reject(error);
   },
@@ -70,6 +76,10 @@ export function handleAxiosError(
   defaultMessage: string = "An unexpected error occurred. Please try again.",
 ): string {
   if (error instanceof AxiosError) {
+    // Check for network errors (no response)
+    if (!error.response) {
+      return "Unable to connect to the server. Please check your internet connection or if the backend is running.";
+    }
     // Handle AxiosError: Check for response-specific error messages
     return error.response?.data?.message || defaultMessage;
   }

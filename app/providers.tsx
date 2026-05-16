@@ -1,9 +1,10 @@
 "use client";
 
-import { ToastProvider } from "@heroui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastProvider, toast } from "@heroui/react";
+import { QueryCache, MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
+import { handleAxiosError } from "@/utils/axiosInstance";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
 
@@ -11,6 +12,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error) => {
+            toast.danger(`Connection Error: ${handleAxiosError(error)}`);
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: (error) => {
+            toast.danger(`Action Failed: ${handleAxiosError(error)}`);
+          },
+        }),
         defaultOptions: {
           queries: {
             retry: 1,
