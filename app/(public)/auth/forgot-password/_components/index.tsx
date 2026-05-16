@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import ForgotPasswordRequestForm from "@/app/(public)/auth/forgot-password/_components/forgot-password-request-form"; // Step 1: User enters email or phone
 import ForgotPasswordVerificationForm from "@/app/(public)/auth/forgot-password/_components/forgot-password-verification-form"; // Step 2: Verify OTP
 import ResetPasswordForm from "@/app/(public)/auth/forgot-password/_components/reset-password-form"; // Step 3: Reset password
-import AuthCard from "../../_components";
+import AuthCard from "@/app/(public)/auth/_components";
 
 // Main Forgot Password component
 const ForgotPassword: React.FC = () => {

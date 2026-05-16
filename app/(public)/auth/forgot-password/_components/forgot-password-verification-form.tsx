@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import useForgotPasswordVerification from "@/hooks/use-forgot-password-verification";
 import ProgressBar from "@/ui/progress-bar";

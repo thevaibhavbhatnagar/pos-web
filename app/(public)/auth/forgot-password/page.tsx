@@ -10,11 +10,14 @@ export const metadata: Metadata = {
     description: 'Reset your password easily with our secure process.', // Meta description for search engines.
 };
 
+// Force dynamic rendering (disables Next.js static optimization)
+export const dynamic = "force-dynamic";
+
 /**
  * Forgot Password Page Component.  
  * Renders the ForgotPassword component within a full-screen layout.
  */
-export default function Page() {
+export default async function Page() {
     return (
         <div className="flex text-white h-screen items-center">
            <ForgotPassword />

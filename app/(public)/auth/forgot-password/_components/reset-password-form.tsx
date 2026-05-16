@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import useResetPassword from '@/hooks/use-reset-password';
 import PasswordInput from '@/ui/password-input';
