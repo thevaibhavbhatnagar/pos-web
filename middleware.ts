@@ -33,7 +33,11 @@ export async function middleware(request: NextRequest) {
     );
 
     // Logged in user visiting auth pages
-    if (isAuthenticated && pathname.startsWith("/auth")) {
+    if (
+      isAuthenticated &&
+      pathname.startsWith("/auth") &&
+      pathname !== "/auth/silent-logout"
+    ) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
