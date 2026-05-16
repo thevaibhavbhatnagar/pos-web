@@ -50,12 +50,13 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
         const email = credentials?.email;
         const password = credentials?.password;
 
-        if (!email || !password) return null;
+        if (!email || !password) {
+          throw new Error("MISSING_CREDENTIALS");
+        }
 
         try {
           const response = await axiosInstance.post(
@@ -63,15 +64,14 @@ export const authOptions: NextAuthOptions = {
             { email, password },
           );
 
-          const data: {
-            accessToken?: string;
-            data?: AppUser;
-          } = response.data;
+          const data = response.data;
 
           const accessToken = data?.accessToken;
           const user = data?.data;
 
-          if (!accessToken || !user) return null;
+          if (!accessToken || !user) {
+            throw new Error("INVALID_SERVER_RESPONSE");
+          }
 
           return {
             id: user.id,
@@ -83,44 +83,27 @@ export const authOptions: NextAuthOptions = {
             accessToken,
           };
         } catch (error: any) {
-          console.error("--- AUTHENTICATION ERROR START ---");
-          console.error("Path:", apiEndpoints.authentication.login);
-          console.error("Status:", error?.response?.status);
-          console.error("Message:", error?.message);
-          if (error?.response?.data) {
-            console.error(
-              "Response Data:",
-              JSON.stringify(error.response.data),
-            );
-          }
-          console.error("--- AUTHENTICATION ERROR END ---");
-
-          // Backend unreachable
           if (isNetworkError(error)) {
             throw new Error("SERVER_UNREACHABLE");
           }
 
-          // Invalid credentials
-          if (error?.response?.status === 401) {
-            throw new Error("INVALID_CREDENTIALS");
-          }
+          switch (error?.response?.status) {
+            case 401:
+              throw new Error("INVALID_CREDENTIALS");
 
-          // Forbidden
-          if (error?.response?.status === 403) {
-            throw new Error("ACCESS_DENIED");
-          }
+            case 403:
+              throw new Error("ACCESS_DENIED");
 
-          // Conflict
-          if (error?.response?.status === 409) {
-            throw new Error("ACCOUNT_NOT_VERIFIED");
-          }
+            case 409:
+              throw new Error("ACCOUNT_NOT_VERIFIED");
 
-          // Internal server error
-          if (error?.response?.status >= 500) {
-            throw new Error("SERVER_ERROR");
-          }
+            default:
+              if (error?.response?.status >= 500) {
+                throw new Error("SERVER_ERROR");
+              }
 
-          throw new Error("SOMETHING_WENT_WRONG");
+              throw new Error("SOMETHING_WENT_WRONG");
+          }
         }
       },
     }),
