@@ -360,7 +360,11 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             <p className="font-bold text-lg">₹{total}</p>
                         </div>
 
-                        <Button size="lg" className="mt-2 w-full rounded-xl text-md font-semibold" onClick={() =>
+                        <Button size="lg" className="mt-2 w-full rounded-xl text-md font-semibold" onClick={() => {
+                            if (items.length === 0) {
+                                toast.warning("Please add at least one item");
+                                return;
+                            }
                             updateOrder.mutate({
                                 branchId: branchId || '',
                                 userId: userId || '',
@@ -375,7 +379,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                     price: item.price,
                                 })),
                             })
-                        }>
+                        }}>
                             {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
                         </Button>
                     </div>

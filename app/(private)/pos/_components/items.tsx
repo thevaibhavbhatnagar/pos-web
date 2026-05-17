@@ -299,22 +299,31 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                     <p className="font-bold text-lg">₹{total}</p>
                 </div>
 
-                <Button size="lg" className="mt-2 w-full rounded-xl text-md font-semibold" onClick={() =>
-                    createOrder.mutate({
-                        branchId: branchId || '',
-                        userId: userId || '',
+                <Button
+                    size="lg"
+                    className="mt-2 w-full rounded-xl text-md font-semibold"
+                    onClick={() => {
+                        if (items.length === 0) {
+                            toast.warning("Please add at least one item");
+                            return;
+                        }
 
-                        discountAmount: 0,
-                        taxAmount: 0,
-                        paymentMethod: "CASH",
+                        createOrder.mutate({
+                            branchId: branchId || '',
+                            userId: userId || '',
 
-                        items: items.map((item) => ({
-                            productId: item.id,
-                            quantity: item.quantity,
-                            price: item.price,
-                        })),
-                    })
-                }>
+                            discountAmount: 0,
+                            taxAmount: 0,
+                            paymentMethod: "CASH",
+
+                            items: items.map((item) => ({
+                                productId: item.id,
+                                quantity: item.quantity,
+                                price: item.price,
+                            })),
+                        });
+                    }}
+                >
                     KOT & Print
                 </Button>
             </div>
