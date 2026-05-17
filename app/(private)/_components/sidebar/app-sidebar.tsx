@@ -337,7 +337,7 @@ export function AppSidebar() {
                 </Header>
 
                 {/* Profile */}
-                <Dropdown.Item
+                {/* <Dropdown.Item
                   id="profile"
                   textValue="Profile"
                   className="min-h-9 px-5 py-1 rounded-xl"
@@ -349,7 +349,7 @@ export function AppSidebar() {
 
                     <Label className="text-sm font-medium">Profile</Label>
                   </div>
-                </Dropdown.Item>
+                </Dropdown.Item> */}
 
 
                 {/* Theme */}

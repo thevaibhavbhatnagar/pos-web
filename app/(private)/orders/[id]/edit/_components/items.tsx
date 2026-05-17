@@ -218,11 +218,11 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
 
 
             </div>
-            <div className="grid grid-cols-4 gap-4 w-full h-full">
-                <ul className="col-span-1 flex flex-col gap-4 border bg-surface p-4 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-4  gap-4 w-full h-full">
+                <ul className="col-span-1 flex flex-col gap-3 border bg-surface p-4 w-full rounded-2xl">
                     <li
-                        onClick={() => { router.push('/pos'); setCategory('ALL'); }}
-                        className={`border p-1.5 rounded cursor-pointer text-sm${category.toString() === 'ALL' ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ' : ''}`}
+                        onClick={() => { router.push(`/orders/${id}/edit`); setCategory('ALL'); }}
+                        className={`border p-3 rounded-xl cursor-pointer text-sm transition-all duration-300 ${category.toString() === 'ALL' ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)] transform -translate-y-0.5 active:scale-[0.98]' : 'hover:bg-default-100'}`}
                     >
                         <h3>All Categories</h3>
                     </li>
@@ -231,44 +231,46 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                         <li
                             key={cat.value}
                             onClick={() => {
-                                router.push(`/pos?category_id=${cat.value}`),
-                                    setCategory(cat.value);
-                            }
-                            }
-                            className={`border p-1.5 rounded cursor-pointer text-sm${cat.value === category ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ' : ''}`}
+                                router.push(`/orders/${id}/edit?category_id=${cat.value}`);
+                                setCategory(cat.value);
+                            }}
+                            className={`border p-3 rounded-xl cursor-pointer text-sm transition-all duration-300 ${cat.value === category ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)] transform -translate-y-0.5 active:scale-[0.98]' : 'hover:bg-default-100'}`}
                         >
                             <h3>{cat.label}</h3>
                         </li>
                     ))}
                 </ul>
 
-                <div className="w-full col-span-2 bg-surface p-4">
+                <div className="w-full col-span-2 bg-surface p-4 border rounded-2xl shadow-sm">
                     <h2 className="text-lg font-semibold mb-4">
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-3 gap-4 w-full">
+                    <div className="grid grid-cols-4 gap-3 w-full">
                         {products.length > 0 ? (
                             products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="border shadow bg-surface p-2 rounded-lg"
+                                    className="border p-2.5 rounded-2xl flex flex-col justify-between hover:shadow-md transition-shadow bg-white"
                                 >
-
-                                    <Image
-                                        width={50}
-                                        height={50}
-                                        src={product.image || NoImage}
-                                        alt={product.name}
-                                        className="w-full h-32 object-cover mb-2"
-                                    />
-
-                                    <h3>{product.name}</h3>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <p>₹{product.price}</p>
+                                    <div>
+                                        <div className="w-full h-24 relative mb-2 rounded-xl overflow-hidden bg-default-100 flex items-center justify-center">
+                                            <Image
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                                src={product.image || NoImage}
+                                                alt={product.name}
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                        <h3 className="font-medium text-sm line-clamp-2 leading-tight">{product.name}</h3>
+                                    </div>
+                                    <div className="flex justify-between items-center mt-3">
+                                        <p className="font-semibold text-sm">₹{product.price}</p>
 
                                         <Button
-                                            className="mt-2 w-20"
+                                            size="sm"
+                                            className="w-14 rounded-xl text-xs h-7"
                                             onClick={() => addToCart(product)}
                                         >
                                             Add
@@ -277,15 +279,15 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                 </div>
                             ))
                         ) : (
-                            <div>
-                                <p>No Products Found</p>
+                            <div className="col-span-4 py-8 text-center">
+                                <p className="text-sm text-default-500">No Products Found</p>
                             </div>
                         )}
                     </div>
                 </div>
 
                 <div className="w-full col-span-1 flex flex-col gap-4">
-                    <div className="flex flex-col gap-4 bg-surface p-4">
+                    <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm">
                         <div className="flex justify-between items-center">
                             <h2 className="text-lg font-semibold">
                                 Cart
@@ -299,66 +301,66 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             </Button>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-4 w-full">
+                        <div className="grid grid-cols-1 gap-3 w-full">
                             {items.length > 0 ? (
                                 items.map((item) => (
                                     <div
                                         key={item.id}
-                                        className="border p-2 rounded"
+                                        className="border p-3 rounded-2xl bg-white shadow-sm"
                                     >
-                                        <div className="flex justify-between items-center mt-2">
-                                            <h3>{item.name}</h3>
+                                        <div className="flex justify-between items-center">
+                                            <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
 
                                             <Button
-                                                className="rounded-full w-8 h-8"
+                                                className="rounded-full w-8 h-8 shrink-0 bg-danger-50 text-danger hover:bg-danger-100"
                                                 onClick={() =>
                                                     removeFromCart(item.id)
                                                 }
                                             >
-                                                <Trash2 />
+                                                <Trash2 className="w-4 h-4" />
                                             </Button>
                                         </div>
 
-                                        <div className="flex justify-between items-center mt-2">
-                                            <p>₹{item.price}</p>
+                                        <div className="flex justify-between items-center mt-3">
+                                            <p className="font-semibold text-sm">₹{item.price}</p>
 
                                             <div className="flex items-center gap-2">
                                                 <Button
-                                                    className="rounded-full w-8 h-8"
+                                                    className="rounded-full w-8 h-8 bg-default-100 text-default-600 hover:bg-default-200"
                                                     onClick={() =>
                                                         decreaseQuantity(item.id)
                                                     }
                                                 >
-                                                    <Minus />
+                                                    <Minus className="w-4 h-4" />
                                                 </Button>
 
-                                                <span>{item.quantity}</span>
+                                                <span className="w-4 text-center text-sm font-medium">{item.quantity}</span>
 
                                                 <Button
-                                                    className="rounded-full w-8 h-8"
+                                                    className="rounded-full w-8 h-8 bg-default-100 text-default-600 hover:bg-default-200"
                                                     onClick={() =>
                                                         increaseQuantity(item.id)
                                                     }
                                                 >
-                                                    <Plus />
+                                                    <Plus className="w-4 h-4" />
                                                 </Button>
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div>
-                                    <p>No items in cart</p>
+                                <div className="py-8 text-center border border-dashed rounded-2xl">
+                                    <p className="text-sm text-default-500">No items in cart</p>
                                 </div>
                             )}
                         </div>
 
-                        <div className="flex justify-between items-center border-t mt-2 pt-2">
-                            <p className="font-medium">Total:</p>
-                            <p className="font-medium">₹{total}</p>
+                        <div className="flex justify-between items-center border-t mt-2 pt-4">
+                            <p className="font-semibold text-lg">Total:</p>
+                            <p className="font-bold text-lg">₹{total}</p>
                         </div>
 
-                        <Button className="mt-2 w-full" onClick={() =>
+                        <Button size="lg" className="mt-2 w-full rounded-xl text-md font-semibold" onClick={() =>
                             updateOrder.mutate({
                                 branchId: branchId || '',
                                 userId: userId || '',
@@ -377,7 +379,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
                         </Button>
                     </div>
-                    <div className="flex flex-col gap-4 bg-surface p-4">
+                    <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm mb-4">
                         <h2 className="flex items-center gap-2">
                             <p className='text-lg font-semibold'> Previous KOTs </p>
                             <span className="text-sm font-light text-gray-400">(Same Order)</span>
@@ -418,7 +420,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             )}
                         </div>
 
-                        <Button className="mt-2 w-full" onClick={()=>router.push("/kots")} >
+                        <Button className="mt-2 w-full" onClick={() => router.push("/kots")} >
                             View All KOTs
                         </Button>
 
@@ -427,63 +429,38 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
 
                 {/* {JSON.stringify(items)} */}
             </div>
-        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-  <div className="flex items-center justify-between border-b border-dashed pb-3">
-    <div>
-      <h3 className="text-lg font-semibold text-gray-800">
-        Order Summary
-      </h3>
-      <p className="text-sm text-gray-500">
-        Updated billing overview
-      </p>
-    </div>
+            <div className="sticky bottom-4 z-40 mt-auto rounded-2xl border border-gray-200 bg-white/90 p-3 shadow-2xl backdrop-blur-md">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                            <h3 className="text-base font-semibold text-gray-800">Order Summary</h3>
+                            <span className="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-medium text-green-700">Updated</span>
+                        </div>
+                        <p className="text-xs text-gray-500">Billing overview</p>
+                    </div>
 
-    <div className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
-      Updated
-    </div>
-  </div>
+                    <div className="flex items-center gap-4 md:gap-6">
+                        <div className="flex flex-col items-end">
+                            <p className="text-xs font-medium text-gray-500">Previous</p>
+                            <p className="text-sm font-semibold text-gray-800">₹{Number(order?.totalAmount || 0).toFixed(2)}</p>
+                        </div>
 
-  <div className="mt-4 space-y-4">
-    <div className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3">
-      <p className="text-sm font-medium text-gray-600">
-        Previous Total
-      </p>
+                        <div className="text-gray-300 font-light">+</div>
 
-      <p className="text-base font-semibold text-gray-800">
-        ₹{Number(order?.totalAmount || 0).toFixed(2)}
-      </p>
-    </div>
+                        <div className="flex flex-col items-end">
+                            <p className="text-xs font-medium text-blue-500">New Items</p>
+                            <p className="text-sm font-semibold text-blue-700">₹{total.toFixed(2)}</p>
+                        </div>
 
-    <div className="flex items-center justify-between rounded-xl bg-blue-50 px-4 py-3">
-      <p className="text-sm font-medium text-blue-700">
-        New Items Total
-      </p>
+                        <div className="text-gray-300 font-light">=</div>
 
-      <p className="text-base font-semibold text-blue-800">
-        ₹{total.toFixed(2)}
-      </p>
-    </div>
-
-    <div className="border-t pt-4">
-      <div className="flex items-center justify-between rounded-xl bg-green-50 px-4 py-4">
-        <div>
-          <p className="text-sm text-green-700">
-            Final Total Amount
-          </p>
-
-          <p className="text-xs text-green-600">
-            Including newly added items
-          </p>
-        </div>
-
-        <p className="text-2xl font-bold text-green-700">
-          ₹
-          {(Number(order?.totalAmount || 0) + total).toFixed(2)}
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+                        <div className="flex flex-col items-end rounded-xl bg-green-50 px-4 py-2 border border-green-100">
+                            <p className="text-xs font-semibold text-green-700">Final Total</p>
+                            <p className="text-lg font-bold text-green-700">₹{(Number(order?.totalAmount || 0) + total).toFixed(2)}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

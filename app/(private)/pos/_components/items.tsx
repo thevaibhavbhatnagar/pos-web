@@ -159,10 +159,10 @@ const Items: React.FC<Props> = ({ categories, products }) => {
 
     return (
         <div className="grid grid-cols-4 gap-4 w-full h-full">
-            <ul className="col-span-1 flex flex-col gap-4 border bg-surface p-4 w-full">
+            <ul className="col-span-1 flex flex-col gap-3 border bg-surface p-4 w-full rounded-2xl">
                 <li
                     onClick={() => { router.push('/pos'); setCategory('ALL'); }}
-                    className={`border p-1.5 rounded cursor-pointer text-sm${category.toString() === 'ALL' ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ' : ''}`}
+                    className={`border p-3 rounded-xl cursor-pointer text-sm transition-all duration-300 ${category.toString() === 'ALL' ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)] transform -translate-y-0.5 active:scale-[0.98]' : 'hover:bg-default-100'}`}
                 >
                     <h3>All Categories</h3>
                 </li>
@@ -171,43 +171,46 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                     <li
                         key={cat.value}
                         onClick={() => {
-                            router.push(`/pos?category_id=${cat.value}`),
-                                setCategory(cat.value);
-                        }
-                        }
-                        className={`border p-1.5 rounded cursor-pointer text-sm${cat.value === category ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ' : ''}`}
+                            router.push(`/pos?category_id=${cat.value}`);
+                            setCategory(cat.value);
+                        }}
+                        className={`border p-3 rounded-xl cursor-pointer text-sm transition-all duration-300 ${cat.value === category ? 'font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)] transform -translate-y-0.5 active:scale-[0.98]' : 'hover:bg-default-100'}`}
                     >
                         <h3>{cat.label}</h3>
                     </li>
                 ))}
             </ul>
 
-            <div className="w-full col-span-2 bg-surface p-4">
+            <div className="w-full col-span-2 bg-surface p-4 border rounded-2xl shadow-sm">
                 <h2 className="text-lg font-semibold mb-4">
                     Products
                 </h2>
 
-                <div className="grid grid-cols-3 gap-4 w-full">
+                <div className="grid grid-cols-4 gap-3 w-full">
                     {products.length > 0 ? (
                         products.map((product) => (
                             <div
                                 key={product.id}
-                                className="border p-2 rounded"
+                                className="border p-2.5 rounded-2xl flex flex-col justify-between hover:shadow-md transition-shadow bg-white"
                             >
-
-                                <Image
-                                    width={50}
-                                    height={50}
-                                    src={product.image || NoImage}
-                                    alt={product.name}
-                                    className="w-full h-32 object-cover mb-2"
-                                />
-                                <h3>{product.name}</h3>
-                                <div className="flex justify-between items-center mt-2">
-                                    <p>₹{product.price}</p>
+                                <div>
+                                    <div className="w-full h-24 relative mb-2 rounded-xl overflow-hidden bg-default-100 flex items-center justify-center">
+                                        <Image
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                            src={product.image || NoImage}
+                                            alt={product.name}
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                    <h3 className="font-medium text-sm line-clamp-2 leading-tight">{product.name}</h3>
+                                </div>
+                                <div className="flex justify-between items-center mt-3">
+                                    <p className="font-semibold text-sm">₹{product.price}</p>
 
                                     <Button
-                                        className="mt-2 w-20"
+                                        size="sm"
+                                        className="w-14 rounded-xl text-xs h-7"
                                         onClick={() => addToCart(product)}
                                     >
                                         Add
@@ -216,14 +219,14 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                             </div>
                         ))
                     ) : (
-                        <div>
-                            <p>No Products Found</p>
+                        <div className="col-span-4 py-8 text-center">
+                            <p className="text-sm text-default-500">No Products Found</p>
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className="w-full col-span-1 bg-surface p-4 flex flex-col gap-4">
+            <div className="w-full col-span-1 bg-surface p-4 flex flex-col gap-4 border rounded-2xl shadow-sm">
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-semibold">
                         Cart
@@ -237,66 +240,66 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                     </Button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 w-full">
+                <div className="grid grid-cols-1 gap-3 w-full">
                     {items.length > 0 ? (
                         items.map((item) => (
                             <div
                                 key={item.id}
-                                className="border p-2 rounded"
+                                className="border p-3 rounded-2xl bg-white shadow-sm"
                             >
-                                <div className="flex justify-between items-center mt-2">
-                                    <h3>{item.name}</h3>
+                                <div className="flex justify-between items-center">
+                                    <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
 
                                     <Button
-                                        className="rounded-full w-8 h-8"
+                                        className="rounded-full w-8 h-8 shrink-0 bg-danger-50 text-danger hover:bg-danger-100"
                                         onClick={() =>
                                             removeFromCart(item.id)
                                         }
                                     >
-                                        <Trash2 />
+                                        <Trash2 className="w-4 h-4" />
                                     </Button>
                                 </div>
 
-                                <div className="flex justify-between items-center mt-2">
-                                    <p>₹{item.price}</p>
+                                <div className="flex justify-between items-center mt-3">
+                                    <p className="font-semibold text-sm">₹{item.price}</p>
 
                                     <div className="flex items-center gap-2">
                                         <Button
-                                            className="rounded-full w-8 h-8"
+                                            className="rounded-full w-8 h-8 bg-default-100 text-default-600 hover:bg-default-200"
                                             onClick={() =>
                                                 decreaseQuantity(item.id)
                                             }
                                         >
-                                            <Minus />
+                                            <Minus className="w-4 h-4" />
                                         </Button>
 
-                                        <span>{item.quantity}</span>
+                                        <span className="w-4 text-center text-sm font-medium">{item.quantity}</span>
 
                                         <Button
-                                            className="rounded-full w-8 h-8"
+                                            className="rounded-full w-8 h-8 bg-default-100 text-default-600 hover:bg-default-200"
                                             onClick={() =>
                                                 increaseQuantity(item.id)
                                             }
                                         >
-                                            <Plus />
+                                            <Plus className="w-4 h-4" />
                                         </Button>
                                     </div>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <div>
-                            <p>No items in cart</p>
+                        <div className="py-8 text-center border border-dashed rounded-2xl">
+                            <p className="text-sm text-default-500">No items in cart</p>
                         </div>
                     )}
                 </div>
 
-                <div className="flex justify-between items-center border-t mt-2 pt-2">
-                    <p className="font-medium">Total:</p>
-                    <p className="font-medium">₹{total}</p>
+                <div className="flex justify-between items-center border-t mt-2 pt-4">
+                    <p className="font-semibold text-lg">Total:</p>
+                    <p className="font-bold text-lg">₹{total}</p>
                 </div>
 
-                <Button className="mt-2 w-full" onClick={() =>
+                <Button size="lg" className="mt-2 w-full rounded-xl text-md font-semibold" onClick={() =>
                     createOrder.mutate({
                         branchId: branchId || '',
                         userId: userId || '',
