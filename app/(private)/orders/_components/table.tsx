@@ -28,6 +28,10 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
     // Hook from Hero UI to manage modal open/close state
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+    const openPaymentModal = () => setIsPaymentModalOpen(true);
+    const onPaymentModalChange = () =>  setIsPaymentModalOpen(false);
 
     const onOpen = () => setIsOpen(true);
     const onOpenChange = () => setIsOpen(false);
@@ -131,9 +135,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                     {value.status === "COMPLETED" &&
                         value.paymentStatus === "PENDING" && (
                             <button
-                                onClick={() =>
-                                    router.push(`/orders/${value.id}/pay`)
-                                }
+                                onClick={openPaymentModal}
                                 className="rounded-md px-2 py-1 text-sm text-primary hover:bg-primary/10 transition"
                             >
                                 Pay Now
@@ -198,6 +200,46 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                     </div>
                 </div>
                 <p className="text-sm text-default-600"> Are you sure you want to delete this order? <span className='font-semibold underline'>{order?.id}</span> </p>
+            </Modal>
+            {/* Payment Modal */}
+            <Modal
+                title="Payment Confirmation"
+                isOpen={isPaymentModalOpen}
+                onOpenChange={onPaymentModalChange}
+                footerActions={[
+                    {
+                        label: "Cancel",
+                        variant: "danger-soft",
+                        onPress: () => onPaymentModalChange(),
+                    },
+                    {
+                        label: "Confirm Payment",
+                        onPress: () => {
+                            console.log("Payment Confirmed");
+                            onPaymentModalChange();
+                        },
+                    },
+                ]}
+            >
+                <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center rounded-full bg-primary/10 p-3">
+                        <TriangleAlert className="text-primary" size={28} />
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-2 text-center">
+                    <p className="text-sm text-default-600">
+                        Are you sure you want to confirm payment for order
+                        <span className="font-semibold underline ml-1">
+                            {order?.billNo}
+                        </span>
+                        ?
+                    </p>
+
+                    <p className="text-xs text-default-400">
+                        This action will mark the payment as paid.
+                    </p>
+                </div>
             </Modal>
         </div>
     )
