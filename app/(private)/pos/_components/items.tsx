@@ -158,7 +158,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
     });
 
     return (
-        <div className="grid grid-cols-4 gap-4 w-full h-full">
+        <div className="grid sm:grid-cols-4 gap-4 w-full h-full">
             <ul className="col-span-1 flex flex-col gap-3 border bg-surface p-4 w-full rounded-2xl">
                 <li
                     onClick={() => { router.push('/pos'); setCategory('ALL'); }}
@@ -181,7 +181,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                 ))}
             </ul>
 
-            <div className="w-full col-span-2 bg-surface p-4 border rounded-2xl shadow-sm">
+            <div className="w-full sm:col-span-2 bg-surface p-4 border rounded-2xl shadow-sm">
                 <h2 className="text-lg font-semibold mb-4">
                     Products
                 </h2>
