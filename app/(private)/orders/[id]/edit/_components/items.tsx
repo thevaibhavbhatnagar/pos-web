@@ -246,7 +246,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                         Products
                     </h2>
 
-                    <div className="grid grid-cols-4 gap-3 w-full">
+                    <div className="grid md:grid-cols-4 gap-3 w-full">
                         {products.length > 0 ? (
                             products.map((product) => (
                                 <div
