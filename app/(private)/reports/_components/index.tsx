@@ -28,8 +28,7 @@ interface Props {
 const periods = [
   { label: "Daily", value: "daily" },
   { label: "Weekly", value: "weekly" },
-  { label: "Monthly", value: "monthly" },
-  { label: "Yearly", value: "yearly" },
+  { label: "Monthly", value: "monthly" }
 ];
 
 export default function ReportsComponent({  
