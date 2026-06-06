@@ -61,7 +61,6 @@ const useUserForm = ({ user, onResetToAdd, onSuccess }: Props) => {
                     name: values.name ?? "",
                     email: values.email ?? "",
                     branchId:values.branchId ?? "",
-                    password:values.password ?? "",
                     // mobileNumber: values.mobileNumber ?? "",
                 };
 

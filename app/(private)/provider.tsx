@@ -11,7 +11,7 @@ const Provider = ({ children }: Props) => {
   useSyncPermissions();
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <RouteGuardProvider>
         {children}
       </RouteGuardProvider>

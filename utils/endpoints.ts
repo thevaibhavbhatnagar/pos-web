@@ -79,6 +79,9 @@ const apiEndpoints = {
   dashboard: {
     stats: "/v1/dashboard",
   },
+  reports: {
+    productSales: (branchId: string) => `/v1/reports/products/${branchId}`,
+  },
   system: {
     health: "/v1/health",
     session: "/v1/session",

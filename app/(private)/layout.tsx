@@ -1,6 +1,4 @@
-import React from 'react'
-
-import NavBar from "@/ui/nav-bar";
+import React from 'react' 
 
 import Provider from '@/app/(private)/provider';
 
