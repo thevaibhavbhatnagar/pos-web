@@ -2,6 +2,7 @@ export interface OrderItemFormValues {
   productId: string;
   quantity: number;
   price?: number;
+  addonIds?: string[];
 }
 
 

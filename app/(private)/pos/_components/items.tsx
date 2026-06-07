@@ -1,9 +1,10 @@
 import { OrderFormValues } from '@/types/order/create';
 import { ProductListType } from '@/types/product/list';
 import Button from '@/ui/button';
+import Modal from '@/ui/modal';
 import axiosInstance from '@/utils/axiosInstance';
 import apiEndpoints from '@/utils/endpoints';
-import { toast } from '@heroui/react';
+import { Checkbox, toast } from '@heroui/react';
 import { useMutation } from '@tanstack/react-query';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
@@ -18,29 +19,58 @@ type Props = {
 };
 
 type CartItem = {
-    id: string;
+    id: string; // Composite unique key: productId + '-' + addonIds.sort().join(',')
+    productId: string;
     name: string;
-    price: number;
+    price: number; // base price + selected addon prices
+    basePrice: number;
     category_id: string;
     quantity: number;
+    addonIds?: string[];
+    selectedAddons?: { id: string; name: string; price: number }[];
 };
 
 const Items: React.FC<Props> = ({ categories, products }) => {
     const router = useRouter();
 
     const [items, setItems] = useState<CartItem[]>([]);
-
     const [category, setCategory] = useState<string>('ALL');
 
+    // States for addons selection modal
+    const [isAddonModalOpen, setIsAddonModalOpen] = useState(false);
+    const [activeProduct, setActiveProduct] = useState<ProductListType | null>(null);
+    const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
+
     const addToCart = (product: ProductListType) => {
+        if (product.productAddons && product.productAddons.length > 0) {
+            setActiveProduct(product);
+            setSelectedAddonIds([]);
+            setIsAddonModalOpen(true);
+        } else {
+            handleAddToCartConfirm(product, []);
+        }
+    };
+
+    const handleAddToCartConfirm = (product: ProductListType, addonIds: string[]) => {
+        const sortedAddonIds = [...addonIds].sort();
+        const addonKey = sortedAddonIds.join(',');
+        const cartItemId = addonKey ? `${product.id}-${addonKey}` : product.id;
+
+        const normalizedAddons = product.productAddons
+            ? product.productAddons.map((pa: any) => pa.addon || pa)
+            : [];
+
+        const selectedAddonsInfo = normalizedAddons.filter((a) => sortedAddonIds.includes(a.id));
+
+        const addonsPrice = selectedAddonsInfo.reduce((sum, a) => sum + Number(a.price), 0);
+        const finalPrice = Number(product.price) + addonsPrice;
+
         setItems((prev) => {
-            const existingItem = prev.find(
-                (i) => i.id === product.id
-            );
+            const existingItem = prev.find((i) => i.id === cartItemId);
 
             if (existingItem) {
                 return prev.map((i) =>
-                    i.id === product.id
+                    i.id === cartItemId
                         ? {
                             ...i,
                             quantity: i.quantity + 1,
@@ -52,11 +82,19 @@ const Items: React.FC<Props> = ({ categories, products }) => {
             return [
                 ...prev,
                 {
-                    id: product.id,
+                    id: cartItemId,
+                    productId: product.id,
                     name: product.name,
-                    price: Number(product.price),
+                    price: finalPrice,
+                    basePrice: Number(product.price),
                     category_id: product.categoryId,
                     quantity: 1,
+                    addonIds: sortedAddonIds,
+                    selectedAddons: selectedAddonsInfo.map((a) => ({
+                        id: a.id,
+                        name: a.name,
+                        price: Number(a.price),
+                    })),
                 },
             ];
         });
@@ -128,7 +166,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                 items: order.items.map((item) => ({
                     productId: item.productId,
                     quantity: item.quantity,
-                    price: item.price,
+                    addonIds: item.addonIds,
                 })),
             };
 
@@ -248,7 +286,21 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                                 className="border p-3 rounded-2xl bg-white shadow-sm"
                             >
                                 <div className="flex justify-between items-center">
-                                    <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
+                                    <div>
+                                        <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
+                                        {item.selectedAddons && item.selectedAddons.length > 0 && (
+                                            <div className="flex flex-wrap gap-1 mt-1.5">
+                                                {item.selectedAddons.map((addon) => (
+                                                    <span
+                                                        key={addon.id}
+                                                        className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20"
+                                                    >
+                                                        +{addon.name} (₹{addon.price})
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <Button
                                         className="rounded-full w-8 h-8 shrink-0 bg-danger-50 text-danger hover:bg-danger-100"
@@ -317,9 +369,10 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                             paymentMethod: "CASH",
 
                             items: items.map((item) => ({
-                                productId: item.id,
+                                productId: item.productId,
                                 quantity: item.quantity,
-                                price: item.price,
+                                price: item.basePrice,
+                                addonIds: item.addonIds || [],
                             })),
                         });
                     }}
@@ -329,6 +382,98 @@ const Items: React.FC<Props> = ({ categories, products }) => {
             </div>
 
             {/* {JSON.stringify(items)} */}
+
+            <Modal
+                title={`Addons for ${activeProduct?.name ?? ''}`}
+                isOpen={isAddonModalOpen}
+                onOpenChange={setIsAddonModalOpen}
+                footerActions={[
+                    {
+                        label: 'Cancel',
+                        variant: 'danger-soft',
+                        onPress: () => {
+                            setIsAddonModalOpen(false);
+                            setActiveProduct(null);
+                            setSelectedAddonIds([]);
+                        },
+                    },
+                    {
+                        label: 'Add to Cart',
+                        onPress: () => {
+                            if (activeProduct) {
+                                handleAddToCartConfirm(activeProduct, selectedAddonIds);
+                            }
+                            setIsAddonModalOpen(false);
+                            setActiveProduct(null);
+                            setSelectedAddonIds([]);
+                        },
+                    },
+                ]}
+            >
+                <div className="flex flex-col gap-4 py-2">
+                    <p className="text-sm text-default-500">
+                        Select optional addons for this product.
+                    </p>
+                    <div className="flex flex-col gap-2.5 max-h-[300px] overflow-y-auto pr-1">
+                        {(() => {
+                            const normalizedAddons = activeProduct?.productAddons
+                                ? activeProduct.productAddons.map((pa: any) => pa.addon || pa)
+                                : [];
+
+                            return normalizedAddons.map((addon) => {
+                                const isSelected = selectedAddonIds.includes(addon.id);
+                                return (
+                                    <div
+                                        key={addon.id}
+                                        onClick={() => {
+                                            setSelectedAddonIds((prev) =>
+                                                prev.includes(addon.id)
+                                                    ? prev.filter((id) => id !== addon.id)
+                                                    : [...prev, addon.id]
+                                            );
+                                        }}
+                                        className={`flex justify-between items-center p-3 rounded-xl border cursor-pointer transition-all duration-200 select-none ${isSelected
+                                            ? 'border-primary bg-primary/5 shadow-sm'
+                                            : 'border-default-200 hover:bg-default-50'
+                                            }`}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="pointer-events-none">
+                                                <Checkbox isSelected={isSelected}>
+                                                    <Checkbox.Control>
+                                                        <Checkbox.Indicator />
+                                                    </Checkbox.Control>
+                                                </Checkbox>
+                                            </div>
+                                            <span className="font-medium text-sm text-default-800">
+                                                {addon.name}
+                                            </span>
+                                        </div>
+                                        <span className="text-sm font-semibold text-primary">
+                                            + ₹{addon.price}
+                                        </span>
+                                    </div>
+                                );
+                            });
+                        })()}
+                    </div>
+
+                    <div className="border-t pt-3 mt-2 flex justify-between items-center">
+                        <span className="text-sm font-medium text-default-600">Total Price:</span>
+                        <span className="text-lg font-bold text-default-900">
+                            ₹
+                            {(
+                                Number(activeProduct?.price || 0) +
+                                (activeProduct?.productAddons
+                                    ? activeProduct.productAddons.map((pa: any) => pa.addon || pa)
+                                    : [])
+                                    .filter((a) => selectedAddonIds.includes(a.id))
+                                    .reduce((sum, a) => sum + Number(a.price), 0)
+                            ).toFixed(2)}
+                        </span>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };
