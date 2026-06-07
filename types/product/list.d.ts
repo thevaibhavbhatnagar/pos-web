@@ -10,11 +10,9 @@ export interface ProductListType {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-  productAddons?: {
-    addon: {
+  productAddons?: {    
       id: string;
       name: string;
-      price: number;
-    };
+      price: number;    
   }[];
 }

@@ -13,7 +13,7 @@ import useProductDelete from '@/hooks/use-product-delete';
 import Image from 'next/image';
 
 
-import NoImage from '../../../../public/assets/no-image.webp'; 
+import NoImage from '../../../../public/assets/no-image.webp';
 
 type Props = {
     data: ProductListType[];
@@ -25,7 +25,7 @@ type Props = {
     totalItems?: number;
 }
 
-const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, rowsPerPage,totalItems }) => {
+const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, rowsPerPage, totalItems }) => {
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -42,14 +42,14 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
     // Function to handle editing: calls parent prop function with selected commission type
     const handleEdit = (data: ProductListType) => {
         const payload = {
-            id: data.id, 
-            name: data.name, 
+            id: data.id,
+            name: data.name,
             image: data.image,
             price: data.price,
             isKotRequired: data.isKotRequired.toString(),
             categoryId: data.categoryId,
             isActive: data.isActive.toString(),
-            addonIds: data.productAddons ? data.productAddons.map((pa) => pa.addon.id) : [],
+            addonIds: data.productAddons ? data.productAddons.map((pa: any) => pa.id).filter(Boolean) : [],
         }
         onEdit(payload)
     }
@@ -115,7 +115,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 </div>
                 {/* <Search /> */}
             </div>
-            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage,totalItems:totalItems }} wrapperClassName="max-h-[400px]" />
+            <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage, totalItems: totalItems }} wrapperClassName="max-h-[400px]" />
             <Modal
                 title="Delete Confirmation"
                 isOpen={isOpen}
