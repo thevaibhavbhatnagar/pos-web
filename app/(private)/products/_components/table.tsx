@@ -70,7 +70,23 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
         { key: "image", label: "Image", renderCell: (value) => <Image className='p-2' width={50} height={50} src={value?.image ?? NoImage} alt={value?.name} /> },
         { key: "price", label: "Price", renderCell: (value) => value?.price ?? "N/A" },
         { key: "category", label: "Category", renderCell: (value) => value?.category.name ?? "N/A" },
-        { key: "isKotRequired", label: "Kot Required", renderCell: (value) => value?.isKotRequired ? "Yes" : "No" },
+        {
+            key: "productAddons",
+            label: "Addons",
+            renderCell: (value) => {
+                const addons = value?.productAddons || [];
+                if (addons.length === 0) return "N/A";
+                return (
+                    <div className="flex flex-wrap gap-1 max-w-[200px]">
+                        {addons.map((pa) => (
+                            <Chip key={pa.id} size="sm" className="bg-primary/10 text-primary">
+                                {pa.name}
+                            </Chip>
+                        ))}
+                    </div>
+                );
+            }
+        },
         {
             key: "isActive", label: "Status", renderCell: (value) => (
                 <Chip size='sm'
