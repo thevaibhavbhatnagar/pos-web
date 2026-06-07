@@ -45,6 +45,13 @@ const apiEndpoints = {
 
     lookup: "/v1/categories/lookup",
   },
+  addon: {
+    create: "/v1/addons",
+    list: "/v1/addons",
+    update: "/v1/addons",
+    delete: "/v1/addons",
+    lookup: "/v1/addons/lookup",
+  },
   product: {
     create: "/v1/products",
     list: "/v1/products",
