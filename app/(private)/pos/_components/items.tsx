@@ -289,14 +289,12 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                                     <div>
                                         <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
                                         {item.selectedAddons && item.selectedAddons.length > 0 && (
-                                            <div className="flex flex-wrap gap-1 mt-1.5">
+                                            <div className="flex flex-col gap-1 mt-1 pl-3 text-xs text-default-500 border-l border-default-200">
                                                 {item.selectedAddons.map((addon) => (
-                                                    <span
-                                                        key={addon.id}
-                                                        className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20"
-                                                    >
-                                                        +{addon.name} (₹{addon.price})
-                                                    </span>
+                                                    <div key={addon.id} className="flex justify-between w-full">
+                                                        <span>+ {addon.name}</span>
+                                                        <span className="text-default-400">₹{addon.price}</span>
+                                                    </div>
                                                 ))}
                                             </div>
                                         )}
@@ -313,7 +311,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                                 </div>
 
                                 <div className="flex justify-between items-center mt-3">
-                                    <p className="font-semibold text-sm">₹{item.price}</p>
+                                    <p className="font-semibold text-sm">₹{item.basePrice}</p>
 
                                     <div className="flex items-center gap-2">
                                         <Button

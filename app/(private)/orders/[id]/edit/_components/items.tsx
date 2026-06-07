@@ -324,11 +324,14 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                         )}
                     </div>
                 </div>
+                
 
                 <div className="w-full col-span-1 flex flex-col gap-4">
+
+                     {/* Cart / New Items (To Add) */}
                     <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-lg font-semibold">
+                            <h2 className="text-lg font-semibold text-default-800">
                                 Cart
                             </h2>
 
@@ -348,34 +351,33 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                         className="border p-3 rounded-2xl bg-white shadow-sm"
                                     >
                                         <div className="flex justify-between items-center">
-                                            <div>
-                                                <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
+                                            <div className="w-full">
+                                                <div className="flex justify-between items-start">
+                                                    <h3 className="font-medium text-sm line-clamp-2 pr-2 leading-tight">{item.name}</h3>
+                                                    <Button
+                                                        className="rounded-full w-8 h-8 shrink-0 bg-danger-50 text-danger hover:bg-danger-100"
+                                                        onClick={() =>
+                                                            removeFromCart(item.id)
+                                                        }
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
                                                 {item.selectedAddons && item.selectedAddons.length > 0 && (
-                                                    <div className="flex flex-wrap gap-1 mt-1.5">
+                                                    <div className="flex flex-col gap-1 mt-1 pl-3 text-xs text-default-500 border-l border-default-200">
                                                         {item.selectedAddons.map((addon) => (
-                                                            <span
-                                                                key={addon.id}
-                                                                className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20"
-                                                            >
-                                                                +{addon.name} (₹{addon.price})
-                                                            </span>
+                                                            <div key={addon.id} className="flex justify-between w-full">
+                                                                <span>+ {addon.name}</span>
+                                                                <span className="text-default-400">₹{addon.price}</span>
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 )}
                                             </div>
-
-                                            <Button
-                                                className="rounded-full w-8 h-8 shrink-0 bg-danger-50 text-danger hover:bg-danger-100"
-                                                onClick={() =>
-                                                    removeFromCart(item.id)
-                                                }
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
                                         </div>
 
                                         <div className="flex justify-between items-center mt-3">
-                                            <p className="font-semibold text-sm">₹{item.price}</p>
+                                            <p className="font-semibold text-sm">₹{item.basePrice}</p>
 
                                             <div className="flex items-center gap-2">
                                                 <Button
@@ -437,43 +439,95 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                             {updateOrder.isPending ? 'Creating KOT...' : 'KOT & Print'}
                         </Button>
                     </div>
-                    <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm mb-4">
-                        <h2 className="flex items-center gap-2">
-                            <p className='text-lg font-semibold'> Previous KOTs </p>
-                            <span className="text-sm font-light text-gray-400">(Same Order)</span>
-                        </h2>
+                    {/* Current Order */}
+                    <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm">
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-lg font-semibold flex items-center gap-2 text-default-800">
+                                <span>Current Order</span>
+                            </h2>
+                            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                                {order?.items?.length || 0} {order?.items?.length === 1 ? 'Item' : 'Items'}
+                            </span>
+                        </div>
+
+                        <div className="flex flex-col gap-3 w-full">
+                            {order?.items?.length > 0 ? (
+                                order.items.map((item) => {
+                                    const basePrice = Number(item.product?.price || item.price);
+                                    return (
+                                        <div key={item.id} className="border-b border-default-100 pb-2.5 last:border-0 last:pb-0">
+                                            <div className="flex justify-between items-center text-sm font-medium text-default-800">
+                                                <span className="line-clamp-2 pr-2">{item.product?.name}</span>
+                                                <div className="flex items-center gap-4 shrink-0">
+                                                    <span className="text-default-400">x{item.quantity}</span>
+                                                    <span>₹{(basePrice * item.quantity).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Addons List */}
+                                            {item.addons && item.addons.length > 0 && (
+                                                <div className="flex flex-col gap-1 mt-1 pl-3 border-l border-default-200">
+                                                    {item.addons.map((addon) => (
+                                                        <div key={addon.id} className="flex justify-between items-center text-xs text-default-400">
+                                                            <span>+ {addon.name}</span>
+                                                            <span>₹{(addon.price * item.quantity).toFixed(2)}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div className="py-4 text-center">
+                                    <p className="text-sm text-default-500">No items ordered yet</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-between items-center border-t border-dashed mt-2 pt-3">
+                            <p className="font-semibold text-sm text-default-700">Current Total:</p>
+                            <p className="font-bold text-base text-default-900">₹{Number(order?.totalAmount || 0).toFixed(2)}</p>
+                        </div>
+                    </div>
+
+                    {/* KOT History */}
+                    <div className="flex flex-col gap-4 bg-surface p-4 border rounded-2xl shadow-sm">
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-lg font-semibold text-default-800">
+                                KOT History
+                            </h2>
+                            <span className="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">
+                                {order?.kots?.length || 0} {order?.kots?.length === 1 ? 'KOT' : 'KOTs'}
+                            </span>
+                        </div>
 
                         <div className="grid grid-cols-1 gap-4 w-full">
                             {order?.kots?.length > 0 ? (
-                                order.kots.map((kot, index) =>
-                                    <div key={kot.id} className="bg-gray-100 p-2 rounded-lg">
-                                        <div className="flex justify-between items-center">
-                                            <p className='text-sm font-semibold'>KOT #{index + 1}</p>
-                                            <p className={`text-xs font-light ${statusStyles[kot.status]}`}>{kot.status}</p>
+                                order.kots.map((kot, index) => (
+                                    <div key={kot.id} className="bg-default-50 border p-3 rounded-xl">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <p className='text-sm font-semibold text-default-700'>KOT #{index + 1}</p>
+                                            <Chip value={kot.status}>
+                                                {kot.status}
+                                            </Chip>
                                         </div>
-                                        <div className="flex justify-between"><div>Items</div> <div>Qty.</div> </div>
+                                        <div className="flex justify-between text-xs text-default-400 font-medium border-b pb-1 mb-1">
+                                            <div>Items</div>
+                                            <div>Qty</div>
+                                        </div>
 
                                         {kot.items.map((item) => (
-                                            <div
-                                                key={item.id}
-                                                className=""
-                                            >
-                                                <div className="flex justify-between items-center mt-2">
-                                                    <h3>{item.product.name}</h3>
-                                                    <p>{item.quantity}</p>
-                                                </div>
-
-                                                <div className="flex justify-between items-center mt-2">
-                                                    {/* <p>Qty: {item.quantity}</p> */}
-                                                    {/* <p>₹{item.product.price}</p> */}
-                                                </div>
+                                            <div key={item.id} className="flex justify-between items-center text-xs text-default-600 mt-1">
+                                                <span>{item.product?.name}</span>
+                                                <span className="font-medium">x{item.quantity}</span>
                                             </div>
                                         ))}
                                     </div>
-                                )
+                                ))
                             ) : (
-                                <div>
-                                    <p>No items in cart</p>
+                                <div className="py-4 text-center">
+                                    <p className="text-xs text-default-500">No KOTs generated yet</p>
                                 </div>
                             )}
                         </div>
@@ -481,8 +535,9 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                         <Button className="mt-2 w-full" onClick={() => router.push("/kots")} >
                             View All KOTs
                         </Button>
-
                     </div>
+
+                   
                 </div>
 
                 {/* {JSON.stringify(items)} */}
@@ -537,11 +592,10 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                                                     : [...prev, addon.id]
                                             );
                                         }}
-                                        className={`flex justify-between items-center p-3 rounded-xl border cursor-pointer transition-all duration-200 select-none ${
-                                            isSelected
+                                        className={`flex justify-between items-center p-3 rounded-xl border cursor-pointer transition-all duration-200 select-none ${isSelected
                                                 ? 'border-primary bg-primary/5 shadow-sm'
                                                 : 'border-default-200 hover:bg-default-50'
-                                        }`}
+                                            }`}
                                     >
                                         <div className="flex items-center gap-3">
                                             <div className="pointer-events-none">

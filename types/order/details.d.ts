@@ -40,6 +40,12 @@ export interface OrderDetailsType {
       name: string;
       price: number;
     };
+    addons?: {
+      id: string;
+      addonId: string;
+      name: string;
+      price: number;
+    }[];
   }[];
 
   kots: KotDetailsType[];

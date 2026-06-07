@@ -153,12 +153,12 @@ const KotComponent: React.FC<Props> = ({ kot }) => {
               </span>
             </div>
 
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <span className="text-default-500">Amount</span>
               <span className="font-semibold">
                 ₹{kot?.order?.totalAmount}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

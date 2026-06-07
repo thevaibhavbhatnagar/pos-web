@@ -51,8 +51,6 @@ export default async function Page({ params, searchParams }: Props) {
 
   const order: OrderDetailsType = orderResponse?.data?.data || {};
 
-  console.log("order________________", order)
-
   return (
     <OrderComponent order={order} products={products} categories={categories} id={id} />
   )
