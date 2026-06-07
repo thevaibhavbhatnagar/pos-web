@@ -26,10 +26,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const page = Number(params.page || 1);
   const limit = 10;
 
-  // Call backend API to fetch products list
-  const [productResponse,categoryResponse] = await Promise.all([
+  // Call backend API to fetch products list, category lookup, and addon lookup
+  const [productResponse, categoryResponse, addonResponse] = await Promise.all([
     axiosInstance.get(apiEndpoints.product.list, { params: { page, limit } }),
-    axiosInstance.get(apiEndpoints.category.lookup)
+    axiosInstance.get(apiEndpoints.category.lookup),
+    axiosInstance.get(apiEndpoints.addon.lookup)
   ])
 
   // Safely extract products array from API response
@@ -43,12 +44,18 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     return acc;
   }, []);
 
+  const addonsList = addonResponse?.data?.data || [];
+  const addons = addonsList.map((addon: any) => ({
+    label: addon.name,
+    value: addon.id
+  }));
+
   const totalPages = productResponse?.data?.meta?.totalPages;
 
   const totalItems = productResponse?.data?.meta?.total;
 
   return (
-    <ProductComponent products={products} categories={categories} statuses={statuses} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
+    <ProductComponent products={products} categories={categories} addons={addons} statuses={statuses} page={page} totalPages={totalPages} rowsPerPage={limit} totalItems={totalItems} />
   )
 }
 

@@ -49,7 +49,7 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
             isKotRequired: data.isKotRequired.toString(),
             categoryId: data.categoryId,
             isActive: data.isActive.toString(),
-            
+            addonIds: data.productAddons ? data.productAddons.map((pa) => pa.addon.id) : [],
         }
         onEdit(payload)
     }

@@ -18,11 +18,12 @@ type Props = {
   rowsPerPage: number; 
   products : ProductListType[];
   categories : { label: string; value: string }[];
+  addons : { label: string; value: string }[];
   statuses : { label: string; value: string }[];
   totalItems?: number;
 }
 
-const ProductComponent: React.FC<Props> = ({products,categories,page, totalPages, rowsPerPage,statuses,totalItems }) => {
+const ProductComponent: React.FC<Props> = ({products,categories,addons,page, totalPages, rowsPerPage,statuses,totalItems }) => {
 
   const [product, setProduct] = useState<ProductFormType | undefined>(undefined);
 
@@ -36,7 +37,7 @@ const ProductComponent: React.FC<Props> = ({products,categories,page, totalPages
 
   return (
     <div className='my-4 grid grid-cols-1 md:grid-cols-3 gap-4'>
-      <Add formik={useProductFormik} isEdit={!!product} onResetToAdd={() => setProduct(undefined)}  categories={categories} statuses={statuses}/>
+      <Add formik={useProductFormik} isEdit={!!product} onResetToAdd={() => setProduct(undefined)}  categories={categories} addons={addons} statuses={statuses}/>
       <Table data={products} onEdit={(product: ProductFormType) => setProduct(product)} onResetToAdd={() => setProduct(undefined)} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} totalItems={totalItems} />
     </div>
   )

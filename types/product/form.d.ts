@@ -6,4 +6,5 @@ export interface ProductFormType {
   isKotRequired: string;
   categoryId?: string;
   isActive: string; 
+  addonIds?: string[];
 }

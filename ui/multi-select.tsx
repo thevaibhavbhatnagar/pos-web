@@ -31,7 +31,7 @@ const MultiSelect: React.FC<Props> = ({
   options,
   formik,
   variant = "primary",
-  labelClassName = "font-medium",
+  labelClassName = "text-fields-foreground font-normal",
   onChange,
   required = true,
   disable,
@@ -72,8 +72,8 @@ const MultiSelect: React.FC<Props> = ({
         onChange={handleChange} // ✅ v3 correct
         variant={variant}
         isDisabled={disable}
-        isInvalid={touched && !!error}
-        className="w-full"
+        isInvalid={touched && !!error} 
+        className="rounded-lg border border-grey-600 bg-surface transition-all"
       >
         <Select.Trigger className="flex flex-wrap gap-1 min-h-[38px] py-1 px-2">
           <Select.Value
@@ -87,7 +87,7 @@ const MultiSelect: React.FC<Props> = ({
                       <Chip
                         key={val}
                         size="sm"
-                        className="bg-primary/10 text-primary flex items-center gap-1"
+                        className="bg-primary/20 text-black flex items-center gap-1"
                       >
                         <div className="flex items-center gap-1">
                           {option?.label || val}

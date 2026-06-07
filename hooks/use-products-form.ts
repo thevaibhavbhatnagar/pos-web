@@ -23,6 +23,7 @@ interface useProductFormValues {
     isKotRequired: string;
     categoryId?: string;
     isActive: string;
+    addonIds?: string[];
 }
 
 const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
@@ -37,6 +38,7 @@ const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
             isKotRequired: product?.isKotRequired ?? "true",
             categoryId: product?.categoryId ?? "",
             isActive: product?.isActive ?? "true",
+            addonIds: product?.addonIds ?? [],
         }, // Form initial values
         enableReinitialize: true, // Reinitialize when initialValues change
         validationSchema: productFormValidation, // Yup validation schema
@@ -51,10 +53,11 @@ const useProductForm = ({ product, onResetToAdd, onSuccess }: Props) => {
                 const payload = {
                     name: values.name ?? "",
                     image: values.image ?? "",
-                    price: Number(values.price) ?? "",
+                    price: Number(values.price) ?? 0,
                     isKotRequired: values.isKotRequired === "true" ? true : false,
                     categoryId: values.categoryId ?? "",
                     isActive: values.isActive === "true" ? true : false,
+                    addonIds: values.addonIds ?? [],
                 };
 
                 let response = null;

@@ -9,6 +9,7 @@ import { DiamondPlus } from 'lucide-react'
 
 import { ProductFormType } from '@/types/product/form'
 import Select from '@/ui/select'
+import MultiSelect from '@/ui/multi-select'
 import FileDragUpload from '@/ui/file-drag-upload'
 import axiosInstance from '@/utils/axiosInstance'
 import apiEndpoints from '@/utils/endpoints'
@@ -18,10 +19,11 @@ type Props = {
     isEdit?: boolean;
     onResetToAdd: () => void;
     statuses: { label: string; value: string }[];
-    categories: { label: string; value: string }[]
+    categories: { label: string; value: string }[];
+    addons: { label: string; value: string }[];
 }
 
-const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, categories }) => {
+const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, categories, addons }) => {
 
     const [uploading, setUploading] = React.useState(false);
     const [preview, setPreview] = React.useState("");
@@ -99,6 +101,15 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
                         placeholder="Select Category"
                         options={categories}
                         formik={formik}
+                    />
+
+                    <MultiSelect
+                        label="Select Addons"
+                        name="addonIds"
+                        placeholder="Select Addons"
+                        options={addons}
+                        formik={formik}
+                        required={false}
                     />
 
                     <Select
