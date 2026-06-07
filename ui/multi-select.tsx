@@ -94,6 +94,8 @@ const MultiSelect: React.FC<Props> = ({
 
                           <button
                             type="button"
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onMouseDown={(e) => e.stopPropagation()}
                             onClick={(e) => {
                               e.stopPropagation();
                               handleRemove(val);
