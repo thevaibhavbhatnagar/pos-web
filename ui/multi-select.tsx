@@ -40,8 +40,13 @@ const MultiSelect: React.FC<Props> = ({
   const error = getIn(formik.errors, name);
   const touched = getIn(formik.touched, name);
 
-  const handleSelectionChange = (keys: any) => {
-    const values = keys === "all" ? options.map((o) => o.value) : Array.from(keys).map(String);
+  const handleChange = (value: any) => {
+    const values = Array.isArray(value)
+      ? value.map(String)
+      : value
+        ? [String(value)]
+        : [];
+
     formik.setFieldValue(name, values);
     onChange?.(values);
   };
@@ -63,6 +68,8 @@ const MultiSelect: React.FC<Props> = ({
       <Select
         selectionMode="multiple"
         placeholder={placeholder}
+        value={selectedValues} // ✅ v3 correct
+        onChange={handleChange} // ✅ v3 correct
         variant={variant}
         isDisabled={disable}
         isInvalid={touched && !!error} 
@@ -87,7 +94,10 @@ const MultiSelect: React.FC<Props> = ({
 
                           <button
                             type="button"
-                            onClick={() => handleRemove(val)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemove(val);
+                            }}
                             className="ml-1 hover:text-red-500"
                           >
                             <X className="w-3 h-3" />
@@ -107,11 +117,7 @@ const MultiSelect: React.FC<Props> = ({
         <Select.Indicator />
 
         <Select.Popover className="z-[9999] bg-white dark:bg-zinc-900 border shadow-xl rounded-xl overflow-hidden min-w-[var(--trigger-width)]">
-          <ListBox
-            selectionMode="multiple"
-            selectedKeys={new Set(selectedValues)}
-            onSelectionChange={handleSelectionChange}
-          >
+          <ListBox>
             {options.map((option) => (
               <ListBox.Item
                 key={option.value}
