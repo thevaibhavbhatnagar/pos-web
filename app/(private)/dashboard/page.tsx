@@ -32,6 +32,7 @@ const Dashboard = async ({ searchParams }: Props) => {
     dashboardType = dashboardStats?.dashboardType || "";
     role = dashboardStats?.role || "";
     message = response?.data?.message || "";
+    console.log(response?.data?.data)
   } catch (error) {
     console.error("Dashboard API Error:", error);
 
@@ -73,30 +74,82 @@ const Dashboard = async ({ searchParams }: Props) => {
 
       {/* BRANCH DASHBOARD */}
       {dashboardType === "BRANCH" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Orders</CardTitle>
-            </CardHeader>
+        <div className="flex flex-col gap-6 py-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Total Orders</CardTitle>
+              </CardHeader>
 
-            <CardContent>
-              <h2 className="text-3xl font-bold">
-                {dashboardStats.totalOrders}
-              </h2>
-            </CardContent>
-          </Card>
+              <CardContent>
+                <h2 className="text-3xl font-bold">
+                  {dashboardStats.totalOrders}
+                </h2>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Pending KOT</CardTitle>
-            </CardHeader>
+            <Card>
+              <CardHeader>
+                <CardTitle>Pending KOT</CardTitle>
+              </CardHeader>
 
-            <CardContent>
-              <h2 className="text-3xl font-bold">
-                {dashboardStats.pendingKots}
-              </h2>
-            </CardContent>
-          </Card>
+              <CardContent>
+                <h2 className="text-3xl font-bold">
+                  {dashboardStats.pendingKots}
+                </h2>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Top Category</CardTitle>
+              </CardHeader>
+
+              <CardContent>
+                {dashboardStats.topCategory ? (
+                  <div>
+                    <h2 className="text-2xl font-bold text-primary">
+                      {dashboardStats.topCategory.categoryName}
+                    </h2>
+                    <p className="text-xs text-default-500 mt-1">
+                      {dashboardStats.topCategory.quantitySold} Items Sold
+                    </p>
+                  </div>
+                ) : (
+                  <h2 className="text-xl text-default-400">No Sales Today</h2>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Category Sales Breakdown */}
+          {dashboardStats.categorySales && dashboardStats.categorySales.length > 0 && (
+            <Card className="w-full">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Category Sales Breakdown</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                {dashboardStats.categorySales.map((sale: any) => {
+                  const maxSold = dashboardStats.topCategory?.quantitySold || 1;
+                  const percentage = Math.round((sale.quantitySold / maxSold) * 100);
+                  return (
+                    <div key={sale.categoryId} className="flex flex-col gap-1.5">
+                      <div className="flex justify-between items-center text-sm font-medium">
+                        <span className="text-default-700">{sale.categoryName}</span>
+                        <span className="text-default-500 font-semibold">{sale.quantitySold} sold</span>
+                      </div>
+                      <div className="w-full bg-default-100 rounded-full h-2">
+                        <div
+                          className="bg-primary h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+          )}
         </div>
       )}
     </div>

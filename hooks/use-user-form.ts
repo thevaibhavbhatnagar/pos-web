@@ -65,9 +65,9 @@ const useUserForm = ({ user, onResetToAdd, onSuccess }: Props) => {
                 };
 
                 //  Only send password if user typed it
-                if (values.password?.trim()) {
-                    payload.password = values.password;
-                }
+                // if (values.password?.trim()) {
+                //     payload.password = values.password;
+                // }
 
                 let response = null;
 
