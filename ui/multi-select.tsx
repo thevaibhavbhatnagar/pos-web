@@ -106,7 +106,7 @@ const MultiSelect: React.FC<Props> = ({
 
         <Select.Indicator />
 
-        <Select.Popover>
+        <Select.Popover className="z-[9999] bg-white dark:bg-zinc-900 border shadow-xl rounded-xl overflow-hidden min-w-[var(--trigger-width)]">
           <ListBox
             selectionMode="multiple"
             selectedKeys={new Set(selectedValues)}
