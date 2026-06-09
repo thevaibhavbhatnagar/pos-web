@@ -453,7 +453,7 @@ const Items: React.FC<Props> = ({ order, categories, products, id }) => {
                         <div className="flex flex-col gap-3 w-full">
                             {order?.items?.length > 0 ? (
                                 order.items.map((item) => {
-                                    const basePrice = Number(item.product?.price || item.price);
+                                    const basePrice = Number(item.product?.price );
                                     return (
                                         <div key={item.id} className="border-b border-default-100 pb-2.5 last:border-0 last:pb-0">
                                             <div className="flex justify-between items-center text-sm font-medium text-default-800">
