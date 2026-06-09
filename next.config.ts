@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  allowedDevOrigins: ["192.168.1.19"],
+  allowedDevOrigins: ["192.168.1.19", "*.ngrok-free.app", "*.ngrok.app"],
 };
 
 export default nextConfig;
