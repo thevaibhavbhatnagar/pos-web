@@ -2,12 +2,20 @@ import axios, { AxiosError } from "axios";
 import { authToken } from "./authToken";
 import apiEndpoints from "./endpoints";
 
+// const axiosInstance = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+//   timeout: 60000,
+//   // headers: {
+//   //   'Content-Type': 'application/json',
+//   // },
+// });
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 60000,
-  // headers: {
-  //   'Content-Type': 'application/json',
-  // },
+  headers: {
+    "ngrok-skip-browser-warning": "true",
+  },
 });
 
 const handleUnauthorized = async () => {
@@ -53,7 +61,9 @@ axiosInstance.interceptors.response.use(
     const isAuthRequest =
       url.includes(apiEndpoints.authentication.login) ||
       url.includes(apiEndpoints.authentication.loginVerify);
-    const isSessionValidationRequest = url.includes(apiEndpoints.system.session);
+    const isSessionValidationRequest = url.includes(
+      apiEndpoints.system.session,
+    );
 
     // logout ONLY for protected APIs
     if (status === 401 && !isAuthRequest && !isSessionValidationRequest) {
@@ -73,9 +83,13 @@ axiosInstance.interceptors.response.use(
     }
 
     if (!error.response) {
-      const networkError = new Error('Network Error: Backend server is unreachable (NXDOMAIN/Connection Refused)');
-      console.error(networkError);
-      return Promise.reject(networkError);
+      console.log("AXIOS ERROR", {
+        code: error.code,
+        message: error.message,
+        config: error.config,
+      });
+
+      return Promise.reject(error);
     }
 
     console.error("Axios error:", error);
@@ -88,9 +102,11 @@ export function isNetworkError(error: unknown): boolean {
     return !error.response || isServerUnavailableStatus(error.response.status);
   }
   if (error instanceof Error) {
-    return error.message.toLowerCase().includes('network error') || 
-           error.message.toLowerCase().includes('unreachable') ||
-           error.message.toLowerCase().includes('failed to fetch');
+    return (
+      error.message.toLowerCase().includes("network error") ||
+      error.message.toLowerCase().includes("unreachable") ||
+      error.message.toLowerCase().includes("failed to fetch")
+    );
   }
   return false;
 }
