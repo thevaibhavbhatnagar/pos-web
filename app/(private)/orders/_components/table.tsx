@@ -10,6 +10,7 @@ import { Column, DataTable } from '@/ui/data-table'
 import useOrderDelete from '@/hooks/use-order-delete';
 
 import { OrderListType } from '@/types/order/list'; 
+import { formatDate } from '@/utils/dateConvert';
 
 
 type Props = {
@@ -118,8 +119,8 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 );
             },
         },
-        { key: "createdAt", label: "Created At" },
-        { key: "updatedAt", label: "Updated At" },
+        { key: "createdAt", label: "Created At", renderCell:(value)=>formatDate(value.createdAt) },
+        { key: "updatedAt", label: "Updated At", renderCell:(value)=>formatDate(value.updatedAt) },
 
         {
             key: "action",

@@ -4,4 +4,7 @@ export interface KotListType {
   orderId: string;
   status: KotStatus;
   createdAt: Date;
+  order: {
+    billNo: string;
+  }
 }

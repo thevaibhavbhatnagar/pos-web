@@ -56,7 +56,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
             renderCell: (_, rowIndex) => (rowIndex ?? 0) + 1, // rowIndex starts at 0
         },
         { key: "kotNo", label: "Kot No", renderCell: (value) => value?.kotNo ?? "N/A" },
-        { key: "orderNo", label: "Order No", renderCell: (value) => value?.orderId ?? "N/A" },
+        { key: "orderNo", label: "Bill No", renderCell: (value) => value?.order?.billNo ?? "N/A" },
 
         {
             key: "status",
