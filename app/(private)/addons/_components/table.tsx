@@ -100,8 +100,8 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", onPress: () => onDelete(addon?.id) },
+                    { label: "Close", variant: "danger", onPress: () => onOpenChange() },
+                    { label: "Confirm", variant:"primary", onPress: () => onDelete(addon?.id) },
                 ]}
             >
                 <div className="flex items-center justify-center">

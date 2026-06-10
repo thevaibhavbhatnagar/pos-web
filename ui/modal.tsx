@@ -1,17 +1,15 @@
 import React from "react";
-import { Modal as HeroModal, Button } from "@heroui/react";
+import { Modal as HeroModal } from "@heroui/react";
+import HeroButton from "./button";
 
 type ModalAction = {
   label: string;
   onPress: () => void;
   variant?:
     | "primary"
-    | "secondary"
-    | "tertiary"
-    | "outline"
+    | "secondary" 
     | "ghost"
-    | "danger"
-    | "danger-soft"; 
+    | "danger" 
   type?: "submit" | "reset" | "button";
   className?: string;
 };
@@ -49,15 +47,15 @@ const Modal: React.FC<Props> = ({
                 {footerActions.length > 0 && (
                   <HeroModal.Footer className="flex items-center justify-center gap-2">
                     {footerActions.map((action, index) => (
-                      <Button
-                        key={index}
-                        variant={action.variant || "secondary"}
-                        className={`rounded-lg font-semibold shadow-lg bg-[image:var(--sidebar-active-bg)] backdrop-blur-md border border-[var(--sidebar-active-border)] shadow-[inset_0px_1px_1px_var(--sidebar-active-highlight)] text-[var(--sidebar-active-text)]  hover:opacity-100 transform transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] ${action.className}`}
+                      <HeroButton
+                        key={index} 
                         type={action.type}
-                        onPress={action.onPress}
+                        variant={action.variant}
+                        className={action.className}
+                        onClick={action.onPress}
                       >
                         {action.label}
-                      </Button>
+                      </HeroButton>
                     ))}
                   </HeroModal.Footer>
                 )}

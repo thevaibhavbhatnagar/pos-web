@@ -187,7 +187,7 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
                     <Button
                         type="submit"
                         disabled={uploading}
-                        className="w-24 rounded-lg"
+                        variant='primary'
                     >
                         {uploading
                             ? "Uploading..."
@@ -196,7 +196,7 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses, 
                                 : "Submit"}
                     </Button>
 
-                    {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
+                    {isEdit && <Button type='button' size='sm' onClick={onResetToAdd} variant='danger'>Cancel</Button>}
                 </div>
             </form>
         </div>

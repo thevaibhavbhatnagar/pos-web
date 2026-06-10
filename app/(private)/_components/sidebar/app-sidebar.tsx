@@ -386,8 +386,8 @@ export function AppSidebar() {
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           footerActions={[
-            { label: "Cancel", onPress: () => onOpenChange() },
-            { label: "Confirm", variant: "danger-soft", onPress: () => handleLogout() },
+            { label: "Cancel", variant: "danger", onPress: () => onOpenChange() },
+            { label: "Confirm", variant: "primary", className:"bg-white" , onPress: () => handleLogout() },
           ]} >
           <div className="flex flex-col items-center justify-center w-full gap-2">
             {/* <div className="w-16 h-16 flex items-center justify-center rounded-full mb-4 "> */}

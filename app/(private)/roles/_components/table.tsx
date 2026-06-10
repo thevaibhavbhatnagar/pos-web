@@ -93,7 +93,6 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 <div className="flex gap-4">
                     {/* <Search className='w-full' /> */}
                     <Button type="button" startIcon={PlusIcon} onClick={() => router.push("/roles/add")}>ADD</Button>
-
                 </div>
             </div>
             <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage, totalItems: totalItems }} wrapperClassName="max-h-[400px]" />
@@ -102,7 +101,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
+                    { label: "Close", variant: "danger", onPress: () => onOpenChange() },
                     { label: "Confirm", onPress: () => onDelete(role?.id) },
                 ]}
             >

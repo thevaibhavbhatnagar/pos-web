@@ -2,17 +2,14 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { Chip } from '@heroui/react';
-import { Delete, Edit, ListChevronsUpDown, Pencil, PlusIcon, Trash2, TriangleAlert } from 'lucide-react';
+import { ListChevronsUpDown, Pencil, Trash2, TriangleAlert } from 'lucide-react';
 
 import Modal from '@/ui/modal';
-import Search from '@/ui/search';
 import { Column, DataTable } from '@/ui/data-table'
 
 import useOrderDelete from '@/hooks/use-order-delete';
 
-import { OrderListType } from '@/types/order/list';
-import Button from '@/ui/button';
-import { button } from '@heroui/theme';
+import { OrderListType } from '@/types/order/list'; 
 
 
 type Props = {
@@ -177,12 +174,7 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                         <ListChevronsUpDown width={18} />
                     </div>
                     <h2 className='text-base font-medium'>Orders List</h2>
-                </div>
-                <div className="flex gap-4">
-                    {/* <Search className='w-full' /> */}
-                    <Button type="button" startIcon={PlusIcon} onClick={() => router.push("/orders/add")}>ADD</Button>
-
-                </div>
+                </div> 
             </div>
             <DataTable columns={columns} data={data} pagination={{ page: page, totalPages: totalPages, rowsPerPage: rowsPerPage, totalItems: totalItems }} />
             <Modal
@@ -190,8 +182,8 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", onPress: () => onDelete(order?.id) },
+                    { label: "Close", variant: "danger", onPress: () => onOpenChange() },
+                    { label: "Confirm", variant: "primary", onPress: () => onDelete(order?.id) },
                 ]}
             >
                 <div className="flex items-center justify-center">
@@ -209,11 +201,12 @@ const Table: React.FC<Props> = ({ data, page, totalPages, rowsPerPage, totalItem
                 footerActions={[
                     {
                         label: "Cancel",
-                        variant: "danger-soft",
+                        variant: "danger",
                         onPress: () => onPaymentModalChange(),
                     },
                     {
                         label: "Confirm Payment",
+                        variant: "primary",
                         onPress: () => {
                             console.log("Payment Confirmed");
                             onPaymentModalChange();

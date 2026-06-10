@@ -58,8 +58,8 @@ const Add: React.FC<Props> = ({ formik, isEdit = false, onResetToAdd, statuses }
 
                 </div>
                 <div className="flex gap-4">
-                    <Button type='submit' className='w-24 rounded-lg'>{isEdit ? 'Update' : 'Submit'}</Button>
-                    {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
+                    <Button type='submit' variant='primary' >{isEdit ? 'Update' : 'Submit'}</Button>
+                    {isEdit && <Button type='button' size='sm' variant='danger' onClick={onResetToAdd}>Cancel</Button>}
                 </div>
             </form>
         </div>

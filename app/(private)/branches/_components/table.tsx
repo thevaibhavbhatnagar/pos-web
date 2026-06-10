@@ -98,8 +98,8 @@ const Table: React.FC<Props> = ({ data, onEdit, onResetToAdd, page, totalPages, 
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 footerActions={[
-                    { label: "Close", variant: "danger-soft", onPress: () => onOpenChange() },
-                    { label: "Confirm", variant: "ghost", onPress: () => onDelete(branch?.id) },
+                    { label: "Close", variant: "danger", onPress: () => onOpenChange() },
+                    { label: "Confirm", variant: "primary", onPress: () => onDelete(branch?.id) },
                 ]}
                 size='sm'
             >

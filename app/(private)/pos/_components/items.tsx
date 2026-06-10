@@ -388,7 +388,7 @@ const Items: React.FC<Props> = ({ categories, products }) => {
                 footerActions={[
                     {
                         label: 'Cancel',
-                        variant: 'danger-soft',
+                        variant: 'danger',
                         onPress: () => {
                             setIsAddonModalOpen(false);
                             setActiveProduct(null);

@@ -18,7 +18,7 @@ type Props = {
     branches: { label: string; value: string }[]
 }
 
-const Add: React.FC<Props> = ({ useUserFormik, isEdit = false, onResetToAdd, roles,branches }) => {
+const Add: React.FC<Props> = ({ useUserFormik, isEdit = false, onResetToAdd, roles, branches }) => {
 
     return (
         <div className='py-3 w-full h-full flex flex-col gap-4 bg-surface'>
@@ -126,8 +126,8 @@ const Add: React.FC<Props> = ({ useUserFormik, isEdit = false, onResetToAdd, rol
                     )}
                 </div>
                 <div className="flex gap-4">
-                    <Button type='submit' className='w-24 rounded-lg'>{isEdit ? 'Update' : 'Submit'}</Button>
-                    {isEdit && <Button type='button' className='w-24 rounded-lg' size='sm' onClick={onResetToAdd}>Cancel</Button>}
+                    <Button type='submit' variant='primary'>{isEdit ? 'Update' : 'Submit'}</Button>
+                    {isEdit && <Button type='button' size='sm' onClick={onResetToAdd} variant='danger' >Cancel</Button>}
                 </div>
             </form>
         </div>
