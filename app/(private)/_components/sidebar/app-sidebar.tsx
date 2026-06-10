@@ -255,14 +255,14 @@ export function AppSidebar() {
           <div className="flex w-full items-center justify-between relative px-2">
             {/* <Image src={""} alt="logo" width={100} height={100} className="w-24" unoptimized /> */}
             <div className="flex gap-2 items-center w-full">
-              <ChartPie color="var(--primary)" size={25} />
+              {/* <ChartPie color="var(--primary)" size={25} /> */}
               {/* <Link href={"/"} className="text-xl font-bold">DashFlow</Link> */}
-              {/* <Image
+              <Image
                 src={Logo}
                 alt="Logo"
                 width={32}
                 height={32}
-              /> */}
+              />
               {/* Aamchi Mumbai */}
             </div>
             <div className="transition-colors p-1.5 rounded-full">

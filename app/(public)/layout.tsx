@@ -16,7 +16,7 @@ export default function RootLayout({
 
         <div className="relative z-10 flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-700">
           <div className="bg-white p-2.5 rounded-xl shadow-lg shadow-primary/30">
-            <ChartPie className="text-primary-foreground" size={28} />
+            {/* <ChartPie className="text-primary-foreground" size={28} /> */}
             <Image
               src={logo}
               alt="Logo"
@@ -46,7 +46,10 @@ export default function RootLayout({
           <span className="block mt-1 text-xs text-slate-400">
             Designed & Developed by
           </span>
-          © {new Date().getFullYear()} Vrinda AI. All rights reserved.
+          © {new Date().getFullYear()} <Link href="https://vrindaai.in/" target="_blank" className="text-primary-foreground pr-2">
+            Vrinda AI.  
+          </Link>
+          All rights reserved.
         </div>
       </div>
 
