@@ -37,7 +37,7 @@ export default function NetworkError() {
           <div className="flex gap-2">
             <Link href="/support" className="flex-1">
               <Button
-                variant="outline"
+                variant="danger"
                 className="w-full font-medium h-12 rounded-xl"
               >
                 Contact Support
