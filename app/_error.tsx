@@ -18,8 +18,8 @@ export default function Error({
   }, [error]);
 
   // Detect if this is a network/connection error
-  const isNetworkError = 
-    error.message?.toLowerCase().includes('network error') || 
+  const isNetworkError =
+    error.message?.toLowerCase().includes('network error') ||
     error.message?.toLowerCase().includes('failed to fetch') ||
     error.message?.toLowerCase().includes('unreachable') ||
     !navigator.onLine;
@@ -33,7 +33,7 @@ export default function Error({
               <WifiOff className="w-12 h-12 text-orange-500" />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               Connection Lost
@@ -48,13 +48,13 @@ export default function Error({
               onClick={reset}
               className="flex-1"
               startIcon={RefreshCw}
-              variant="primary"
+              variant="danger"
             >
               Retry
             </Button>
             <Link href="/" className="flex-1">
               <Button
-                variant="outline"
+                variant="primary"
                 startIcon={Home}
               >
                 Go Home
@@ -74,7 +74,7 @@ export default function Error({
             <AlertCircle className="w-12 h-12 text-red-500" />
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
             Something went wrong
@@ -98,13 +98,13 @@ export default function Error({
             onClick={reset}
             className="flex-1"
             startIcon={RefreshCw}
-            variant="primary"
+            variant="danger"
           >
             Try again
           </Button>
           <Link href="/" className="flex-1">
             <Button
-              variant="outline"
+              variant="primary"
               startIcon={Home}
             >
               Go home
