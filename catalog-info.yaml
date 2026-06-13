@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+
+metadata:
+  name: pos-web
+
+  annotations:
+    github.com/project-slug: thevaibhavbhatnagar/pos-web
+    backstage.io/techdocs-ref: dir:.
+
+spec:
+  type: website
+  lifecycle: production
+  owner: engineering
+  system: pos-platform
+
+  consumesApis:
+    - pos-api
